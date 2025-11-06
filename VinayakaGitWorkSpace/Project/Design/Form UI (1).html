@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Admission - University ERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary-blue: #6d28d9;
+            --secondary-blue: #b794f4;
+            --dark-blue: #4c1d95;
+            --light-blue: #f3e8ff;
+            --accent-gold: #f59e0b;
+            --light-bg: #f8fafc;
+            --dark-text: #1e293b;
+            --medium-text: #475569;
+            --light-text: #64748b;
+            --white: #ffffff;
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            color: var(--dark-text);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles - Compact */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 50px;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .institution-info {
+            line-height: 1.2;
+        }
+
+        .institution-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .institution-address {
+            font-size: 10px;
+            opacity: 0.9;
+        }
+
+        .header-center {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .financial-year {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.15);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            border: none;
+            color: white;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            height: calc(100vh - 50px);
+        }
+
+        /* Sidebar Styles - Compact */
+        .sidebar {
+            width: 200px;
+            background: var(--sidebar-bg);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .sidebar.collapsed {
+            width: 50px;
+        }
+
+        .sidebar.collapsed .sidebar-header-text,
+        .sidebar.collapsed .menu-item-text,
+        .sidebar.collapsed .submenu,
+        .sidebar.collapsed .submenu-item,
+        .sidebar.collapsed .menu-item-arrow,
+        .sidebar.collapsed .sidebar-footer-text {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .sidebar:hover {
+            width: 200px;
+        }
+
+        .sidebar:hover .sidebar-header-text,
+        .sidebar:hover .menu-item-text,
+        .sidebar:hover .submenu,
+        .sidebar:hover .submenu-item,
+        .sidebar:hover .menu-item-arrow,
+        .sidebar:hover .sidebar-footer-text {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar-header {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            cursor: pointer;
+            height: 48px;
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: auto;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-menu {
+            padding: 8px 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-menu::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .sidebar-menu::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-menu::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 1px;
+        }
+
+        .menu-item {
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 12px;
+            height: 36px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .menu-item:hover {
+            background: var(--sidebar-hover);
+        }
+
+        .menu-item.active {
+            background: var(--sidebar-hover);
+            border-left-color: var(--accent-gold);
+        }
+
+        .menu-item i {
+            width: 16px;
+            text-align: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 6px 12px;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 0;
+            flex-shrink: 0;
+            background: var(--sidebar-bg);
+        }
+
+        .sidebar-footer-item {
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 12px;
+            height: 36px;
+        }
+
+        .sidebar-footer-item:hover {
+            background: var(--sidebar-hover);
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 12px;
+            background: var(--light-bg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .page-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            color: var(--light-text);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        /* Form Container with Side Tabs */
+        .form-container {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+        }
+
+        /* Side Tabs */
+        .side-tabs {
+            width: 160px;
+            background: var(--light-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .side-tab {
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--light-text);
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .side-tab:hover {
+            color: var(--primary-blue);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .side-tab.active {
+            color: var(--primary-blue);
+            border-left-color: var(--primary-blue);
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .tab-number {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--light-text);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .side-tab.active .tab-number {
+            background: var(--primary-blue);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .tab-header {
+            padding: 12px 16px;
+            background: var(--light-bg);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .tab-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .tab-panes {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .tab-pane {
+            display: none;
+            padding: 16px;
+            height: 100%;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Form Actions - Compact */
+        .form-actions {
+            padding: 12px 16px;
+            background: var(--light-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+        }
+
+        .btn-sm {
+            padding: 6px 10px;
+            font-size: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-blue);
+        }
+
+        .btn-secondary {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--error);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        /* Compact Form Styles */
+        .form-section {
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* UPDATED: Changed grid to 6 equal columns for desktop */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .form-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--dark-text);
+        }
+
+        .form-label.required::after {
+            content: " *";
+            color: var(--error);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            padding: 6px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 11px;
+            transition: all 0.2s;
+            background: var(--white);
+            width: 100%;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-input.error, .form-select.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .form-checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .form-checkbox {
+            width: 14px;
+            height: 14px;
+            accent-color: var(--primary-blue);
+        }
+
+        .form-radio-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 6px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .form-radio {
+            width: 14px;
+            height: 14px;
+            accent-color: var(--primary-blue);
+        }
+
+        .file-upload-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .file-upload {
+            border: 1px dashed var(--border-color);
+            border-radius: 4px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary-blue);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .file-upload i {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 4px;
+        }
+
+        .file-upload-text {
+            font-size: 10px;
+            color: var(--light-text);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-preview {
+            display: none;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .file-preview img {
+            max-width: 100%;
+            max-height: 100px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .file-preview.active {
+            display: block;
+        }
+
+        .preview-name {
+            font-size: 10px;
+            margin-top: 4px;
+            color: var(--medium-text);
+        }
+
+        /* Custom Alerts - Compact */
+        .custom-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--white);
+            border-radius: 6px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            z-index: 1000;
+            max-width: 300px;
+            width: 90%;
+            text-align: center;
+            display: none;
+        }
+
+        .custom-alert.active {
+            display: block;
+        }
+
+        .alert-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .alert-overlay.active {
+            display: block;
+        }
+
+        .alert-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 16px;
+        }
+
+        .alert-success .alert-icon {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .alert-warning .alert-icon {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .alert-danger .alert-icon {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        .alert-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--dark-text);
+        }
+
+        .alert-message {
+            font-size: 11px;
+            color: var(--medium-text);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .alert-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        /* Footer - Compact */
+        .footer {
+            background: var(--light-bg);
+            padding: 8px 16px;
+            text-align: center;
+            color: var(--light-text);
+            font-size: 10px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+        }
+
+        /* Mobile Header */
+        .mobile-header-right {
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mobile-financial-year {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            /* UPDATED: For tablets, show 3 columns */
+            .form-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .side-tabs {
+                width: 140px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 6px 12px;
+            }
+            
+            .institution-address,
+            .header-center,
+            .header-right {
+                display: none;
+            }
+            
+            .mobile-nav-toggle {
+                display: block;
+            }
+            
+            .mobile-header-right {
+                display: flex;
+            }
+            
+            .sidebar {
+                position: fixed;
+                top: 50px;
+                left: -200px;
+                height: calc(100vh - 50px);
+                z-index: 90;
+            }
+            
+            .sidebar.open {
+                left: 0;
+            }
+            
+            .content {
+                padding: 8px;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+            
+            .form-container {
+                flex-direction: column;
+            }
+            
+            .side-tabs {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .side-tab {
+                flex: 1;
+                min-width: 120px;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                justify-content: center;
+            }
+            
+            .side-tab.active {
+                border-left-color: transparent;
+                border-bottom-color: var(--primary-blue);
+            }
+            
+            /* UPDATED: For mobile, show 2 columns */
+            .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .page-title {
+                font-size: 14px;
+            }
+            
+            .form-actions {
+                flex-wrap: wrap;
+            }
+            
+            .btn {
+                flex: 1;
+                min-width: 100px;
+                justify-content: center;
+            }
+            
+            /* UPDATED: For small mobile, show 1 column */
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Compact Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">EM</div>
+            <div class="institution-info">
+                <div class="institution-name">UNIVERSITY OF EDUCATION</div>
+                <div class="institution-address">123 Academic Way, Knowledge City</div>
+            </div>
+        </div>
+        
+        <div class="header-center">
+            <div class="financial-year">
+                <span>FY 2024-25</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <span>Welcome, John Doe</span>
+            </div>
+            
+            <div class="header-icons">
+                <div class="icon-btn" data-tooltip="Notifications">
+                    <i class="fas fa-bell"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Header Right -->
+        <div class="mobile-header-right">
+            <div class="mobile-financial-year">
+                <span>FY 2024-25</span>
+            </div>
+            <div class="icon-btn">
+                <i class="fas fa-bell"></i>
+            </div>
+            <button class="mobile-nav-toggle" id="mobileNavToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Compact Sidebar -->
+        <div class="sidebar collapsed" id="sidebar">
+            <div class="sidebar-header" id="moduleSwitcher">
+                <i class="fas fa-user-graduate"></i>
+                <div class="sidebar-header-text">
+                    <div class="sidebar-title">Student Module</div>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="sidebar-menu">
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-th-large"></i>
+                        <span class="menu-item-text">Dashboard</span>
+                    </a>
+                    
+                    <a href="student-module.html" class="menu-item">
+                        <i class="fas fa-users"></i>
+                        <span class="menu-item-text">Students</span>
+                    </a>
+                    
+                    <a href="student-admission.html" class="menu-item active">
+                        <i class="fas fa-user-plus"></i>
+                        <span class="menu-item-text">Admission</span>
+                    </a>
+                    
+                    <div class="menu-divider"></div>
+                    
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-cogs"></i>
+                        <span class="menu-item-text">Masters</span>
+                    </a>
+                </div>
+                
+                <!-- Sidebar Footer -->
+                <div class="sidebar-footer">
+                    <div class="sidebar-footer-item" id="settingsBtn">
+                        <i class="fas fa-cog"></i>
+                        <span class="sidebar-footer-text">Settings</span>
+                    </div>
+                    <div class="sidebar-footer-item logout" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="sidebar-footer-text">Logout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content" id="content">
+            <div class="content-header">
+                <div>
+                    <div class="page-title">Student Admission</div>
+                    <div class="breadcrumb">
+                        <a href="index.html">Home</a> / <a href="student-module.html">Students</a> / <span>Admission</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form Container with Side Tabs -->
+            <div class="form-container">
+                <!-- Side Tabs -->
+                <div class="side-tabs">
+                    <button class="side-tab active" data-tab="personal">
+                        <span class="tab-number">1</span>
+                        Personal
+                    </button>
+                    <button class="side-tab" data-tab="academic">
+                        <span class="tab-number">2</span>
+                        Academic
+                    </button>
+                    <button class="side-tab" data-tab="parent">
+                        <span class="tab-number">3</span>
+                        Parent
+                    </button>
+                    <button class="side-tab" data-tab="address">
+                        <span class="tab-number">4</span>
+                        Address
+                    </button>
+                    <button class="side-tab" data-tab="documents">
+                        <span class="tab-number">5</span>
+                        Documents
+                    </button>
+                </div>
+                
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Tab Header -->
+                    <div class="tab-header">
+                        <div class="tab-title" id="currentTabTitle">Personal Information</div>
+                    </div>
+                    
+                    <!-- Tab Panes -->
+                    <div class="tab-panes">
+                        <!-- Personal Information Tab -->
+                        <div class="tab-pane active" id="personal">
+                            <div class="form-section">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label required">First Name</label>
+                                        <input type="text" class="form-input" placeholder="First name" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Middle Name</label>
+                                        <input type="text" class="form-input" placeholder="Middle name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">Last Name</label>
+                                        <input type="text" class="form-input" placeholder="Last name" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">DOB</label>
+                                        <input type="date" class="form-input" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">Gender</label>
+                                        <select class="form-select" data-required="true">
+                                            <option value="">Select</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Blood Group</label>
+                                        <select class="form-select">
+                                            <option value="">Select</option>
+                                            <option value="A+">A+</option>
+                                            <option value="B+">B+</option>
+                                            <option value="O+">O+</option>
+                                            <option value="AB+">AB+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label required">Email</label>
+                                        <input type="email" class="form-input" placeholder="Email" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">Mobile</label>
+                                        <input type="tel" class="form-input" placeholder="Mobile" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Nationality</label>
+                                        <select class="form-select">
+                                            <option value="">Select</option>
+                                            <option value="indian">Indian</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Religion</label>
+                                        <select class="form-select">
+                                            <option value="">Select</option>
+                                            <option value="hindu">Hindu</option>
+                                            <option value="muslim">Muslim</option>
+                                            <option value="christian">Christian</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Category</label>
+                                        <select class="form-select">
+                                            <option value="">Select</option>
+                                            <option value="general">General</option>
+                                            <option value="obc">OBC</option>
+                                            <option value="sc">SC</option>
+                                            <option value="st">ST</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Aadhaar No</label>
+                                        <input type="text" class="form-input" placeholder="Aadhaar number">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Academic Details Tab -->
+                        <div class="tab-pane" id="academic">
+                            <div class="form-section">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label required">Academic Year</label>
+                                        <select class="form-select" data-required="true">
+                                            <option value="">Select Year</option>
+                                            <option value="2024-25">2024-25</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">Class</label>
+                                        <select class="form-select" data-required="true">
+                                            <option value="">Select Class</option>
+                                            <option value="1">Grade 1</option>
+                                            <option value="2">Grade 2</option>
+                                            <option value="3">Grade 3</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">Section</label>
+                                        <select class="form-select" data-required="true">
+                                            <option value="">Select Section</option>
+                                            <option value="A">Section A</option>
+                                            <option value="B">Section B</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Roll No</label>
+                                        <input type="text" class="form-input" placeholder="Auto-generated">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Admission Date</label>
+                                        <input type="date" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Admission No</label>
+                                        <input type="text" class="form-input" placeholder="Admission number">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Subjects</label>
+                                    <div class="form-checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" class="form-checkbox" value="maths"> Maths
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" class="form-checkbox" value="science"> Science
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" class="form-checkbox" value="english"> English
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" class="form-checkbox" value="computer"> Computer
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" class="form-checkbox" value="history"> History
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" class="form-checkbox" value="geography"> Geography
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Parent/Guardian Tab -->
+                        <div class="tab-pane" id="parent">
+                            <div class="form-section">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label required">Father's Name</label>
+                                        <input type="text" class="form-input" placeholder="Father's name" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Father's Occupation</label>
+                                        <input type="text" class="form-input" placeholder="Occupation">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">Father's Mobile</label>
+                                        <input type="tel" class="form-input" placeholder="Mobile" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Father's Email</label>
+                                        <input type="email" class="form-input" placeholder="Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">Mother's Name</label>
+                                        <input type="text" class="form-input" placeholder="Mother's name" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Mother's Occupation</label>
+                                        <input type="text" class="form-input" placeholder="Occupation">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label required">Mother's Mobile</label>
+                                        <input type="tel" class="form-input" placeholder="Mobile" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Mother's Email</label>
+                                        <input type="email" class="form-input" placeholder="Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Guardian Name</label>
+                                        <input type="text" class="form-input" placeholder="Guardian name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Guardian Relation</label>
+                                        <input type="text" class="form-input" placeholder="Relation">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Guardian Mobile</label>
+                                        <input type="tel" class="form-input" placeholder="Mobile">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Annual Income</label>
+                                        <input type="text" class="form-input" placeholder="Annual income">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Address Tab -->
+                        <div class="tab-pane" id="address">
+                            <div class="form-section">
+                                <div class="section-title">Current Address</div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label required">Address Line 1</label>
+                                        <input type="text" class="form-input" placeholder="Address line 1" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Address Line 2</label>
+                                        <input type="text" class="form-input" placeholder="Address line 2">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">City</label>
+                                        <input type="text" class="form-input" placeholder="City" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">State</label>
+                                        <select class="form-select" data-required="true">
+                                            <option value="">Select State</option>
+                                            <option value="maharashtra">Maharashtra</option>
+                                            <option value="karnataka">Karnataka</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">Pincode</label>
+                                        <input type="text" class="form-input" placeholder="Pincode" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Country</label>
+                                        <select class="form-select">
+                                            <option value="india">India</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" class="form-checkbox" id="sameAsCurrent"> Same as Current Address
+                                    </label>
+                                </div>
+                                
+                                <div class="section-title">Permanent Address</div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label required">Address Line 1</label>
+                                        <input type="text" class="form-input" placeholder="Address line 1" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Address Line 2</label>
+                                        <input type="text" class="form-input" placeholder="Address line 2">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">City</label>
+                                        <input type="text" class="form-input" placeholder="City" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">State</label>
+                                        <select class="form-select" data-required="true">
+                                            <option value="">Select State</option>
+                                            <option value="maharashtra">Maharashtra</option>
+                                            <option value="karnataka">Karnataka</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">Pincode</label>
+                                        <input type="text" class="form-input" placeholder="Pincode" data-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Country</label>
+                                        <select class="form-select">
+                                            <option value="india">India</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Documents Tab -->
+                        <div class="tab-pane" id="documents">
+                            <div class="form-section">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label required">Photo</label>
+                                        <div class="file-upload-container">
+                                            <div class="file-upload" data-file="passportPhoto">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <div class="file-upload-text">Upload Photo</div>
+                                                <input type="file" class="file-input" id="passportPhoto" accept="image/*" data-required="true">
+                                            </div>
+                                            <div class="file-preview" id="passportPhotoPreview">
+                                                <img src="" alt="Photo Preview">
+                                                <div class="preview-name"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label required">Birth Certificate</label>
+                                        <div class="file-upload-container">
+                                            <div class="file-upload" data-file="birthCertificate">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <div class="file-upload-text">Upload Birth Certificate</div>
+                                                <input type="file" class="file-input" id="birthCertificate" accept=".pdf,.jpg,.jpeg,.png" data-required="true">
+                                            </div>
+                                            <div class="file-preview" id="birthCertificatePreview">
+                                                <img src="" alt="Document Preview">
+                                                <div class="preview-name"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Aadhaar Card</label>
+                                        <div class="file-upload-container">
+                                            <div class="file-upload" data-file="aadhaarCard">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <div class="file-upload-text">Upload Aadhaar Card</div>
+                                                <input type="file" class="file-input" id="aadhaarCard" accept=".pdf,.jpg,.jpeg,.png">
+                                            </div>
+                                            <div class="file-preview" id="aadhaarCardPreview">
+                                                <img src="" alt="Document Preview">
+                                                <div class="preview-name"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Previous Marksheet</label>
+                                        <div class="file-upload-container">
+                                            <div class="file-upload" data-file="marksheet">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <div class="file-upload-text">Upload Marksheet</div>
+                                                <input type="file" class="file-input" id="marksheet" accept=".pdf,.jpg,.jpeg,.png">
+                                            </div>
+                                            <div class="file-preview" id="marksheetPreview">
+                                                <img src="" alt="Document Preview">
+                                                <div class="preview-name"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Transfer Certificate</label>
+                                        <div class="file-upload-container">
+                                            <div class="file-upload" data-file="transferCertificate">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <div class="file-upload-text">Upload TC</div>
+                                                <input type="file" class="file-input" id="transferCertificate" accept=".pdf,.jpg,.jpeg,.png">
+                                            </div>
+                                            <div class="file-preview" id="transferCertificatePreview">
+                                                <img src="" alt="Document Preview">
+                                                <div class="preview-name"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Caste Certificate</label>
+                                        <div class="file-upload-container">
+                                            <div class="file-upload" data-file="casteCertificate">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <div class="file-upload-text">Upload Caste Certificate</div>
+                                                <input type="file" class="file-input" id="casteCertificate" accept=".pdf,.jpg,.jpeg,.png">
+                                            </div>
+                                            <div class="file-preview" id="casteCertificatePreview">
+                                                <img src="" alt="Document Preview">
+                                                <div class="preview-name"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button class="btn btn-secondary btn-sm" id="prevBtn">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="btn btn-secondary btn-sm" id="nextBtn">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="saveBtn">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                        <button class="btn btn-danger btn-sm" id="resetBtn">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div>© 2024 University ERP System. All rights reserved.</div>
+    </footer>
+    
+    <!-- Custom Alert -->
+    <div class="custom-alert alert-danger" id="validationAlert">
+        <div class="alert-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="alert-title">Validation Error</div>
+        <div class="alert-message" id="validationMessage">Please fill all required fields.</div>
+        <div class="alert-actions">
+            <button class="btn btn-primary btn-sm" id="alertOkBtn">OK</button>
+        </div>
+    </div>
+    
+    <div class="alert-overlay" id="alertOverlay"></div>
+    
+    <script>
+        // Sidebar toggle functionality
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('collapsed');
+            const icon = sidebarToggle.querySelector('i');
+            if (sidebar.classList.contains('collapsed')) {
+                icon.classList.remove('fa-chevron-left');
+                icon.classList.add('fa-chevron-right');
+            } else {
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-left');
+            }
+        });
+        
+        mobileNavToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+        });
+        
+        // Tab functionality
+        const sideTabs = document.querySelectorAll('.side-tab');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        const currentTabTitle = document.getElementById('currentTabTitle');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        const tabTitles = {
+            'personal': 'Personal Information',
+            'academic': 'Academic Details',
+            'parent': 'Parent/Guardian Information',
+            'address': 'Address Details',
+            'documents': 'Document Upload'
+        };
+        
+        sideTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Update active tab
+                sideTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update active pane
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                
+                // Update tab title
+                currentTabTitle.textContent = tabTitles[tabId];
+                
+                // Update current tab index
+                currentTabIndex = Array.from(sideTabs).indexOf(this);
+                updateTabNavigation();
+            });
+        });
+        
+        // Next/Previous button functionality
+        let currentTabIndex = 0;
+        
+        function updateTabNavigation() {
+            prevBtn.disabled = currentTabIndex === 0;
+            nextBtn.disabled = currentTabIndex === sideTabs.length - 1;
+            
+            if (currentTabIndex === sideTabs.length - 1) {
+                nextBtn.style.display = 'none';
+            } else {
+                nextBtn.style.display = 'flex';
+            }
+        }
+        
+        nextBtn.addEventListener('click', function() {
+            if (currentTabIndex < sideTabs.length - 1) {
+                currentTabIndex++;
+                sideTabs[currentTabIndex].click();
+                updateTabNavigation();
+            }
+        });
+        
+        prevBtn.addEventListener('click', function() {
+            if (currentTabIndex > 0) {
+                currentTabIndex--;
+                sideTabs[currentTabIndex].click();
+                updateTabNavigation();
+            }
+        });
+        
+        // Initialize tab navigation
+        updateTabNavigation();
+        
+        // File upload functionality with preview
+        const fileUploads = document.querySelectorAll('.file-upload');
+        
+        fileUploads.forEach(upload => {
+            const fileInput = upload.querySelector('.file-input');
+            const fileId = fileInput.id;
+            const preview = document.getElementById(fileId + 'Preview');
+            
+            upload.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    const fileName = this.files[0].name;
+                    upload.querySelector('.file-upload-text').textContent = fileName;
+                    upload.style.borderColor = 'var(--success)';
+                    upload.style.backgroundColor = 'rgba(16, 185, 129, 0.05)';
+                    
+                    // Show preview for image files
+                    if (this.files[0].type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            preview.querySelector('img').src = e.target.result;
+                            preview.querySelector('.preview-name').textContent = fileName;
+                            preview.classList.add('active');
+                        }
+                        reader.readAsDataURL(this.files[0]);
+                    } else {
+                        // For non-image files, show a generic preview
+                        preview.querySelector('img').src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iNCIgZmlsbD0iI0UyRThGMCIvPgo8cGF0aCBkPSJNMzIgMzZMMzYgNDBMMzIgNDRMMjggNDBMMzIgMzZaIiBmaWxsPSIjOTdBQUFGIi8+CjxwYXRoIGQ9Ik00MCAyOEgyNEMyMi44OTU0IDI4IDIyIDI4Ljg5NTQgMjIgMzBWMzRWMzZWMzguODU3OEMyMiAzOS41ODg5IDIyLjM2ODQgNDAuMjcyMyAyMi45ODQyIDQwLjY4MThMMzEuOTg0MiA0Ny4zODE4QzMyLjYzNzMgNDcuODI1OCAzMy40NjI3IDQ3LjgyNTggMzQuMTE1OCA0Ny4zODE4TDQzLjExNTggNDAuNjgxOEM0My43MzE2IDQwLjI3MjMgNDQuMSAzOS41ODg5IDQ0LjEgMzguODU3OFYzNlYzNFYzMEM0NC4xIDI4Ljg5NTQgNDMuMjA0NiAyOCA0Mi4xIDI4SDQwWiIgZmlsbD0iIzk3QUFBRiIvPgo8Y2lyY2xlIGN4PSIzOCIgY3k9IjM0IiByPSIyIiBmaWxsPSIjOTdBQUFGIi8+Cjwvc3ZnPgo=';
+                        preview.querySelector('.preview-name').textContent = fileName;
+                        preview.classList.add('active');
+                    }
+                }
+            });
+        });
+        
+        // Same as current address checkbox
+        const sameAsCurrentCheckbox = document.getElementById('sameAsCurrent');
+        
+        sameAsCurrentCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                // In a real application, you would copy values from current address to permanent address
+                alert('Permanent address will be filled with current address values');
+            }
+        });
+        
+        // Save button functionality with validation
+        const saveBtn = document.getElementById('saveBtn');
+        const validationAlert = document.getElementById('validationAlert');
+        const validationMessage = document.getElementById('validationMessage');
+        const alertOverlay = document.getElementById('alertOverlay');
+        const alertOkBtn = document.getElementById('alertOkBtn');
+        
+        saveBtn.addEventListener('click', function() {
+            if (validateForm()) {
+                // Form is valid, show success message
+                alert('Student admission saved successfully!');
+            }
+        });
+        
+        function validateForm() {
+            let isValid = true;
+            let firstErrorField = null;
+            
+            // Clear previous error states
+            const errorFields = document.querySelectorAll('.form-input.error, .form-select.error');
+            errorFields.forEach(field => {
+                field.classList.remove('error');
+            });
+            
+            // Check all required fields
+            const requiredFields = document.querySelectorAll('[data-required="true"]');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('error');
+                    
+                    // Store the first error field to scroll to it
+                    if (!firstErrorField) {
+                        firstErrorField = field;
+                    }
+                }
+            });
+            
+            if (!isValid) {
+                // Show validation alert
+                validationMessage.textContent = 'Please fill all required fields marked with *.';
+                validationAlert.classList.add('active');
+                alertOverlay.classList.add('active');
+                
+                // Scroll to the first error field
+                if (firstErrorField) {
+                    firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstErrorField.focus();
+                }
+            }
+            
+            return isValid;
+        }
+        
+        alertOkBtn.addEventListener('click', function() {
+            validationAlert.classList.remove('active');
+            alertOverlay.classList.remove('active');
+        });
+        
+        // Reset button functionality
+        const resetBtn = document.getElementById('resetBtn');
+        
+        resetBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to reset all form data?')) {
+                // Reset all form fields
+                const formInputs = document.querySelectorAll('input, select, textarea');
+                formInputs.forEach(input => {
+                    if (input.type !== 'button' && input.type !== 'submit') {
+                        input.value = '';
+                    }
+                    if (input.type === 'checkbox' || input.type === 'radio') {
+                        input.checked = false;
+                    }
+                    input.classList.remove('error');
+                });
+                
+                // Reset file uploads
+                const filePreviews = document.querySelectorAll('.file-preview');
+                filePreviews.forEach(preview => {
+                    preview.classList.remove('active');
+                });
+                
+                const fileUploadTexts = document.querySelectorAll('.file-upload-text');
+                fileUploadTexts.forEach(text => {
+                    text.textContent = 'Upload File';
+                });
+                
+                const fileUploads = document.querySelectorAll('.file-upload');
+                fileUploads.forEach(upload => {
+                    upload.style.borderColor = '';
+                    upload.style.backgroundColor = '';
+                });
+                
+                // Go back to first tab
+                currentTabIndex = 0;
+                sideTabs[0].click();
+                updateTabNavigation();
+                
+                alert('Form has been reset');
+            }
+        });
+        
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        logoutBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to logout?')) {
+                // In a real application, you would redirect to logout page
+                alert('You have been logged out');
+            }
+        });
+        
+        // Settings functionality
+        const settingsBtn = document.getElementById('settingsBtn');
+        
+        settingsBtn.addEventListener('click', function() {
+            alert('Settings panel would open here');
+        });
+        
+        // Module switcher functionality
+        const moduleSwitcher = document.getElementById('moduleSwitcher');
+        
+        moduleSwitcher.addEventListener('click', function() {
+            alert('Module switcher would open here');
+        });
+    </script>
+</body>
+</html>

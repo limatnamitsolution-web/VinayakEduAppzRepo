@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP Dashboard - University Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary-blue: #6d28d9;
+            --secondary-blue: #b794f4;
+            --dark-blue: #4c1d95;
+            --light-blue: #f3e8ff;
+            --accent-gold: #f59e0b;
+            --light-bg: #f8fafc;
+            --dark-text: #1e293b;
+            --medium-text: #475569;
+            --light-text: #64748b;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            
+            /* Module colors */
+            --student-color: #3b82f6;
+            --fee-color: #10b981;
+            --payroll-color: #f59e0b;
+            --result-color: #ef4444;
+            --timetable-color: #8b5cf6;
+            --library-color: #06b6d4;
+            --transport-color: #f97316;
+            --hostel-color: #84cc16;
+            --attendance-color: #ec4899;
+            --inventory-color: #14b8a6;
+            --exam-color: #a855f7;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .institution-info {
+            line-height: 1.2;
+        }
+
+        .institution-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .institution-address {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .header-center {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .financial-year {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .financial-year:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.15);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--dark-blue);
+            width: 100%;
+            padding: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .mobile-nav-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .modules-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--primary-blue);
+            text-align: center;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .module-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .module-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .student-icon {
+            background: var(--student-color);
+        }
+
+        .fee-icon {
+            background: var(--fee-color);
+        }
+
+        .payroll-icon {
+            background: var(--payroll-color);
+        }
+
+        .result-icon {
+            background: var(--result-color);
+        }
+
+        .timetable-icon {
+            background: var(--timetable-color);
+        }
+
+        .library-icon {
+            background: var(--library-color);
+        }
+
+        .transport-icon {
+            background: var(--transport-color);
+        }
+
+        .hostel-icon {
+            background: var(--hostel-color);
+        }
+
+        .attendance-icon {
+            background: var(--attendance-color);
+        }
+
+        .inventory-icon {
+            background: var(--inventory-color);
+        }
+
+        .exam-icon {
+            background: var(--exam-color);
+        }
+
+        .module-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        /* Tooltip - Positioned at bottom for better readability */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark-text);
+            color: var(--white);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 10;
+            margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-width: 160px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--light-bg);
+            padding: 14px 24px;
+            text-align: center;
+            color: var(--light-text);
+            font-size: 14px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .modules-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .modules-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 12px 16px;
+            }
+            
+            .institution-address,
+            .header-center,
+            .header-right {
+                display: none;
+            }
+            
+            .mobile-nav-toggle {
+                display: block;
+            }
+            
+            .main-content {
+                padding: 16px;
+            }
+            
+            .modules-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 14px;
+            }
+            
+            .module-card {
+                padding: 20px 12px;
+            }
+            
+            .module-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .module-name {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .modules-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .section-title {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .module-card {
+                padding: 18px 10px;
+            }
+            
+            .tooltip::after {
+                white-space: normal;
+                width: 140px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">EM</div>
+            <div class="institution-info">
+                <div class="institution-name">UNIVERSITY OF EDUCATION</div>
+                <div class="institution-address">123 Academic Way, Knowledge City</div>
+            </div>
+        </div>
+        
+        <div class="header-center">
+            <div class="financial-year">
+                <span>FY 2024-25</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <span>Welcome, John Doe</span>
+            </div>
+            
+            <div class="header-icons">
+                <div class="icon-btn tooltip" data-tooltip="Notifications">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="icon-btn tooltip" data-tooltip="Settings">
+                    <i class="fas fa-cog"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" id="mobileNavToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>FY 2024-25</span>
+            </div>
+            <div class="mobile-nav-item">
+                <i class="fas fa-user"></i>
+                <span>Welcome, John Doe</span>
+            </div>
+            <div class="mobile-nav-item">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+            </div>
+            <div class="mobile-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="modules-section">
+            <h2 class="section-title">Management Modules</h2>
+            
+            <div class="modules-grid">
+                <!-- Student Module -->
+                <div class="module-card tooltip" data-tooltip="Manage student records, admissions, and profiles">
+                    <div class="module-icon student-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="module-name">Student</div>
+                </div>
+                
+                <!-- Fee Module -->
+                <div class="module-card tooltip" data-tooltip="Handle fee collection, invoices, and payments">
+                    <div class="module-icon fee-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="module-name">Fee</div>
+                </div>
+                
+                <!-- Payroll Module -->
+                <div class="module-card tooltip" data-tooltip="Manage employee salaries and payroll processing">
+                    <div class="module-icon payroll-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <div class="module-name">Payroll</div>
+                </div>
+                
+                <!-- Result Module -->
+                <div class="module-card tooltip" data-tooltip="Process and publish examination results">
+                    <div class="module-icon result-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="module-name">Result</div>
+                </div>
+                
+                <!-- Timetable Module -->
+                <div class="module-card tooltip" data-tooltip="Create and manage class schedules">
+                    <div class="module-icon timetable-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="module-name">Timetable</div>
+                </div>
+                
+                <!-- Library Module -->
+                <div class="module-card tooltip" data-tooltip="Manage library resources and book circulation">
+                    <div class="module-icon library-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="module-name">Library</div>
+                </div>
+                
+                <!-- Transport Module -->
+                <div class="module-card tooltip" data-tooltip="Manage transportation and vehicle routes">
+                    <div class="module-icon transport-icon">
+                        <i class="fas fa-bus"></i>
+                    </div>
+                    <div class="module-name">Transport</div>
+                </div>
+                
+                <!-- Hostel Module -->
+                <div class="module-card tooltip" data-tooltip="Manage hostel accommodations and residents">
+                    <div class="module-icon hostel-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <div class="module-name">Hostel</div>
+                </div>
+                
+                <!-- Attendance Module -->
+                <div class="module-card tooltip" data-tooltip="Track and manage student and staff attendance">
+                    <div class="module-icon attendance-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="module-name">Attendance</div>
+                </div>
+                
+                <!-- Inventory Module -->
+                <div class="module-card tooltip" data-tooltip="Manage institutional assets and inventory">
+                    <div class="module-icon inventory-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <div class="module-name">Inventory</div>
+                </div>
+                
+                <!-- Exam Module -->
+                <div class="module-card tooltip" data-tooltip="Schedule and manage examinations">
+                    <div class="module-icon exam-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="module-name">Exam</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Zentra Technologies Pvt. Ltd. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const mobileNav = document.getElementById('mobileNav');
+
+        mobileNavToggle.addEventListener('click', function() {
+            mobileNav.classList.toggle('active');
+            // Change icon based on state
+            const icon = this.querySelector('i');
+            if (mobileNav.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        // Close mobile nav when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.header')) {
+                mobileNav.classList.remove('active');
+                mobileNavToggle.querySelector('i').className = 'fas fa-bars';
+            }
+        });
+
+        // Add click functionality to module cards
+        document.querySelectorAll('.module-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const moduleName = this.querySelector('.module-name').textContent;
+                alert(`Navigating to ${moduleName} module...`);
+                // In a real application, this would redirect to the module page
+            });
+        });
+
+        // Add functionality to financial year dropdown
+        document.querySelector('.financial-year').addEventListener('click', function() {
+            alert('Financial year selection would appear here');
+        });
+
+        // Add functionality to notification and settings icons
+        document.querySelectorAll('.icon-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tooltip = this.getAttribute('data-tooltip');
+                alert(`${tooltip} panel would open here`);
+            });
+        });
+    </script>
+</body>
+</html>

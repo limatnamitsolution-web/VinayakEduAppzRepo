@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduZ – Student Overview</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* EduZ palette (updated) */
+      --primary-blue: #6d28d9; /* primary */
+      --secondary-blue: #b794f4; /* secondary */
+      --dark-blue: #4c1d95; /* dark accent */
+      --light-blue: #f3e8ff; /* light accent */
+
+      --accent-gold: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f97316;
+
+      --bg: #fafbfc;
+      --surface: #ffffff;
+      --muted-surface: #f6f7fb;
+      --border: #e5e7eb;
+      --text: #0f172a;
+      --text-2: #334155;
+      --text-3: #64748b;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+
+      --shadow-1: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-2: 0 6px 14px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { 
+      height: 100%; 
+      overflow: hidden;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    /* Layout Structure */
+    .app-layout {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Top Bar Component */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    
+    .topbar-inner {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 10px 16px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .brand-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-blue);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
+    }
+    
+    .brand-title { 
+      font-weight: 700; 
+      letter-spacing: 0.2px; 
+    }
+
+    .top-actions { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      margin-left: auto;
+    }
+    
+    .icon-btn {
+      width: 36px; 
+      height: 36px; 
+      border-radius: 10px;
+      display: grid; 
+      place-items: center; 
+      border: 1px solid var(--border);
+      background: #fff; 
+      color: var(--text-2); 
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+    }
+    
+    .icon-btn:hover { 
+      transform: translateY(-1px); 
+      background: var(--muted-surface); 
+    }
+
+    .profile {
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      padding-left: 8px;
+    }
+    
+    .avatar { 
+      width: 34px; 
+      height: 34px; 
+      border-radius: 50%; 
+      background: var(--light-blue); 
+      display: grid; 
+      place-items: center; 
+      color: var(--dark-blue); 
+      font-weight: 700; 
+    }
+
+    /* Module Switcher Button */
+    .module-switcher-btn {
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    
+    .module-switcher-btn:hover {
+      background: var(--dark-blue);
+      transform: translateY(-1px);
+    }
+    
+    /* Hide checkbox */
+    #moduleSwitcherToggle {
+      display: none;
+    }
+    
+    /* Module Switcher Overlay */
+    .module-switcher-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: none;
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Show overlay when checkbox is checked */
+    #moduleSwitcherToggle:checked ~ .module-switcher-overlay {
+      display: flex;
+    }
+    
+    /* Module Switcher Popup */
+    .module-switcher-popup {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      z-index: 1001;
+      position: relative;
+      animation: popupFadeIn 0.3s ease-out;
+    }
+    
+    @keyframes popupFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    
+    .module-switcher-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .module-switcher-title {
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text);
+    }
+    
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-3);
+      font-size: 18px;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      transition: all 0.2s ease;
+    }
+    
+    .close-btn:hover {
+      background: var(--muted-surface);
+      color: var(--danger);
+    }
+    
+    .close-btn-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    
+    .module-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px;
+      padding: 20px 24px;
+    }
+    
+    .module-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 12px;
+      color: var(--text-2);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .module-item:hover {
+      background: var(--muted-surface);
+      border-color: var(--primary-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
+    }
+    
+    .module-item.active {
+      background: var(--light-blue);
+      color: var(--dark-blue);
+      border-color: var(--primary-blue);
+    }
+    
+    .module-icon {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+    
+    .module-name {
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Left Panel Component */
+    .left-panel {
+      width: 240px; /* Start expanded by default */
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+      transition: width 0.3s ease;
+      z-index: 40;
+    }
+    
+    /* Sidebar menu styles */
+    .sidenav { 
+      background: var(--surface); 
+      border-radius: var(--radius-lg); 
+      height: 100%;
+      box-shadow: var(--shadow-1); 
+      transition: width 0.3s ease;
+      width: 100%;
+    }
+    
+    /* Hide sidebar collapse checkbox */
+    #sidebarToggle { display: none; }
+    
+    /* Collapsed state - Fixed selector */
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel {
+      width: 72px;
+    }
+    
+    .sidenav-header { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      padding: 12px 12px; 
+      border-bottom: 1px solid var(--border); 
+    }
+    
+    .sidenav-title { 
+      font-weight: 600; 
+      transition: opacity 0.2s ease;
+    }
+    
+    .sidenav-toggle { 
+      border: 1px solid var(--border); 
+      border-radius: 8px; 
+      background: #fff; 
+      width: 36px; 
+      height: 32px; 
+      cursor: pointer; 
+      color: var(--text-2); 
+      display: grid;
+      place-items: center;
+    }
+    
+    /* Rotate icon when collapsed - Fixed selector */
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .sidenav-toggle i {
+      transform: rotate(180deg);
+    }
+    
+    .sidenav-menu { 
+      display: grid; 
+      padding: 8px; 
+      gap: 4px; 
+      height: calc(100vh - 120px);
+    }
+    
+    .snav-item { 
+      display: grid; 
+      grid-template-columns: 20px 1fr; 
+      align-items: center; 
+      gap: 10px; 
+      padding: 10px 10px; 
+      border-radius: 10px; 
+      color: var(--text-2); 
+      text-decoration: none; 
+      border: 1px solid transparent; 
+      transition: all 0.2s ease;
+    }
+    
+    .snav-item:hover { 
+      background: var(--muted-surface); 
+      border-color: var(--border); 
+    }
+    
+    .snav-item.active { 
+      background: var(--light-blue); 
+      color: var(--dark-blue); 
+      border-color: transparent; 
+    }
+    
+    /* Hide submenu toggle checkboxes */
+    .snav-toggle-checkbox { display: none; }
+    
+    .snav-item.snav-toggle { 
+      width: 100%; 
+      text-align: left; 
+      display: grid; 
+      grid-template-columns: 20px 1fr 16px; 
+      align-items: center; 
+      background: transparent; 
+      cursor: pointer; 
+      border: 1px solid transparent; 
+    }
+    
+    .snav-item.snav-toggle .snav-caret { 
+      color: var(--text-3); 
+      transition: transform .2s ease; 
+    }
+    
+    /* Submenu open state */
+    .snav-toggle-checkbox:checked + .snav-item.snav-toggle {
+      background: var(--muted-surface); 
+      border-color: var(--border); 
+    }
+    
+    .snav-toggle-checkbox:checked + .snav-item.snav-toggle .snav-caret {
+      transform: rotate(180deg);
+    }
+    
+    .snav-sub { 
+      display: grid; 
+      gap: 4px; 
+      padding: 6px 0 6px 36px; 
+      max-height: 0; 
+      overflow: hidden; 
+      transition: max-height .25s ease; 
+    }
+    
+    /* Show submenu when checkbox is checked */
+    .snav-toggle-checkbox:checked ~ .snav-sub {
+      max-height: 400px;
+    }
+    
+    .snav-sub-item { 
+      display: block; 
+      padding: 8px 10px; 
+      border-radius: 8px; 
+      color: var(--text-2); 
+      text-decoration: none; 
+      border: 1px solid transparent; 
+      font-size: 13px; 
+    }
+    
+    .snav-sub-item:hover { 
+      background: var(--muted-surface); 
+      border-color: var(--border); 
+    }
+
+    .snav-divider { 
+      height: 1px; 
+      background: var(--border); 
+      margin: 6px 8px; 
+    }
+
+    /* Collapsed state visuals - Fixed selectors */
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .sidenav-title { 
+      display: none; 
+    }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item span { 
+      display: none; 
+    }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item { 
+      grid-template-columns: 1fr; 
+      place-items: center; 
+    }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item.snav-toggle { 
+      grid-template-columns: 1fr; 
+    }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-sub { 
+      display: none; 
+    }
+
+    /* Auto-hide functionality - Pure CSS */
+    .left-panel {
+      position: relative;
+    }
+    
+    /* Collapse on focus out and hover out */
+    .left-panel:not(:focus-within):not(:hover) {
+      width: 72px;
+    }
+    
+    .left-panel:not(:focus-within):not(:hover) .sidenav-title { 
+      display: none; 
+    }
+    
+    .left-panel:not(:focus-within):not(:hover) .snav-item span { 
+      display: none; 
+    }
+    
+    .left-panel:not(:focus-within):not(:hover) .snav-item { 
+      grid-template-columns: 1fr; 
+      place-items: center; 
+    }
+    
+    .left-panel:not(:focus-within):not(:hover) .snav-item.snav-toggle { 
+      grid-template-columns: 1fr; 
+    }
+    
+    .left-panel:not(:focus-within):not(:hover) .snav-sub { 
+      display: none; 
+    }
+    
+    .left-panel:not(:focus-within):not(:hover) .sidenav-toggle i {
+      transform: rotate(180deg);
+    }
+
+    /* Override with manual toggle when checked */
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel {
+      width: 72px;
+    }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel:hover,
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel:focus-within {
+      width: 72px;
+    }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .sidenav-title,
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item span {
+      display: none;
+    }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item {
+      grid-template-columns: 1fr;
+      place-items: center;
+    }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item.snav-toggle {
+      grid-template-columns: 1fr;
+    }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-sub {
+      display: none;
+    }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .sidenav-toggle i {
+      transform: rotate(180deg);
+    }
+
+    /* Content Container */
+    .content-container {
+      flex: 1;
+      overflow: hidden;
+      padding: 16px;
+      background: var(--bg);
+      transition: margin-left 0.3s ease;
+    }
+
+    .shell { 
+      max-width: 1400px; 
+      margin: 0 auto; 
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 16px;
+      align-items: start;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Panels */
+    .panel { 
+      background: var(--surface); 
+      border: 1px solid var(--border); 
+      border-radius: var(--radius-lg); 
+      box-shadow: var(--shadow-1); 
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .panel-header {
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between;
+      padding: 14px 16px; 
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    
+    .panel-title { 
+      font-size: 16px; 
+      font-weight: 600; 
+      letter-spacing: 0.2px; 
+    }
+    
+    .panel-body { 
+      padding: 16px; 
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* KPI row (distinct style – minimalist, larger numbers, no colorful cards) */
+    .kpis { 
+      display: grid; 
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 12px; 
+    }
+    
+    .kpi {
+      background: var(--muted-surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+    
+    .kpi-label { 
+      color: var(--text-3); 
+      font-size: 12px; 
+      letter-spacing: .2px; 
+    }
+    
+    .kpi-value { 
+      font-size: 24px; 
+      font-weight: 700; 
+      margin-top: 6px; 
+    }
+    
+    .kpi-trend { 
+      font-size: 12px; 
+      margin-top: 6px; 
+    }
+    
+    .up { color: var(--success); }
+    .down { color: var(--danger); }
+
+    /* Main content sections */
+    .section { 
+      margin-top: 16px; 
+      flex: 1;
+      overflow: hidden;
+    }
+    
+    .cards { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 12px; 
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .card { 
+      background: var(--surface); 
+      border: 1px solid var(--border); 
+      border-radius: var(--radius-md); 
+      box-shadow: var(--shadow-1); 
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-header { 
+      padding: 12px 14px; 
+      border-bottom: 1px solid var(--border); 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      flex-shrink: 0;
+    }
+    
+    .card-title { 
+      font-weight: 600; 
+    }
+    
+    .card-body { 
+      padding: 12px 14px; 
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .list { 
+      display: grid; 
+      gap: 10px; 
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    .list-item { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      padding: 10px 0; 
+      border-bottom: 1px dashed var(--border); 
+    }
+    
+    .list-item:last-child { 
+      border-bottom: 0; 
+    }
+    
+    .muted { 
+      color: var(--text-3); 
+      font-size: 12px; 
+    }
+
+    /* Right column – sticky meta panel */
+    .right-col { 
+      position: sticky; 
+      top: 68px; 
+      height: calc(100vh - 84px); 
+      display: grid; 
+      gap: 12px; 
+      align-content: start; 
+      overflow: hidden;
+    }
+
+    .pill { 
+      padding: 8px 12px; 
+      border-radius: 999px; 
+      border: 1px solid var(--border); 
+      color: var(--text-2); 
+      background: #fff; 
+      font-size: 12px; 
+      font-weight: 600; 
+    }
+    
+    .btn { 
+      padding: 10px 12px; 
+      border-radius: 999px; 
+      border: 1px solid var(--border); 
+      background: #fff; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: background .15s ease, transform .15s ease; 
+    }
+    
+    .btn:hover { 
+      background: var(--muted-surface); 
+      transform: translateY(-1px); 
+    }
+    
+    .btn-primary { 
+      background: var(--primary-blue); 
+      border-color: var(--primary-blue); 
+      color: #fff; 
+    }
+    
+    .btn-ghost { 
+      background: transparent; 
+      border-color: var(--border); 
+    }
+
+    /* Floating Action Button (bottom-right) */
+    .fab {
+      position: fixed; 
+      right: 20px; 
+      bottom: 20px; 
+      z-index: 60;
+      width: 56px; 
+      height: 56px; 
+      border-radius: 50%;
+      display: grid; 
+      place-items: center; 
+      color: #fff; 
+      background: var(--primary-blue);
+      box-shadow: var(--shadow-2);
+      cursor: pointer; 
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    
+    .fab:hover { 
+      transform: translateY(-2px); 
+      background: var(--dark-blue); 
+    }
+
+    /* Responsiveness */
+    @media (max-width: 1100px) {
+      .kpis { grid-template-columns: repeat(2, 1fr); }
+      .cards { grid-template-columns: 1fr; }
+      .layout { grid-template-columns: 1fr; }
+      .right-col { position: static; height: auto; }
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        flex-direction: column;
+      }
+      
+      .left-panel {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      
+      #sidebarToggle:checked ~ .app-layout .main-content .left-panel {
+        width: 100%;
+        height: 60px;
+        overflow: hidden;
+      }
+      
+      #sidebarToggle:checked ~ .app-layout .main-content .left-panel .sidenav-menu {
+        display: none;
+      }
+      
+      /* Disable auto-hide on mobile */
+      .left-panel:not(:focus-within):not(:hover) {
+        width: 100%;
+      }
+      
+      .left-panel:not(:focus-within):not(:hover) .sidenav-title,
+      .left-panel:not(:focus-within):not(:hover) .snav-item span {
+        display: block;
+      }
+      
+      .left-panel:not(:focus-within):not(:hover) .snav-item {
+        grid-template-columns: 20px 1fr;
+      }
+      
+      .left-panel:not(:focus-within):not(:hover) .snav-item.snav-toggle {
+        grid-template-columns: 20px 1fr 16px;
+      }
+      
+      .left-panel:not(:focus-within):not(:hover) .snav-sub {
+        display: grid;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner { grid-template-columns: auto 1fr; }
+      .brand { display: flex; }
+      .module-switcher-btn span { display: none; }
+      .module-switcher-btn { padding: 8px; }
+      .module-list {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hidden checkboxes for state management -->
+  <input type="checkbox" id="moduleSwitcherToggle" />
+  <input type="checkbox" id="sidebarToggle" />
+
+  <!-- App Layout Structure -->
+  <div class="app-layout">
+    
+    <!-- Top Bar Component -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">EZ</div>
+          <div class="brand-title">EduZ Platform</div>
+        </div>
+
+        <!-- Top actions shifted to the right -->
+        <div class="top-actions">
+          <button class="icon-btn" title="Notifications" id="btnNotify"><i class="fas fa-bell"></i></button>
+          <button class="icon-btn" title="Help" id="btnHelp"><i class="fas fa-circle-question"></i></button>
+          
+          <!-- Module Switcher Button -->
+          <div class="profile">
+            <label for="moduleSwitcherToggle" class="module-switcher-btn">
+              <i class="fas fa-layer-group"></i>
+              <span>Switch Module</span>
+            </label>
+            
+            <div class="avatar">JD</div>
+            <button class="icon-btn" id="btnProfile" title="Profile"><i class="fas fa-ellipsis-vertical"></i></button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      
+      <!-- Left Panel Component -->
+      <aside class="left-panel" tabindex="0">
+        <div class="sidenav">
+          <div class="sidenav-header">
+            <span class="sidenav-title">Menu</span>
+            <label for="sidebarToggle" class="sidenav-toggle" title="Toggle Collapse">
+              <i class="fas fa-angles-left"></i>
+            </label>
+          </div>
+          <nav class="sidenav-menu">
+            <a class="snav-item active" href="#" data-tab-link="overview">
+              <i class="fas fa-gauge"></i><span>Overview</span>
+            </a>
+
+            <!-- Students Menu Group -->
+            <div class="snav-group">
+              <input type="checkbox" id="studentsToggle" class="snav-toggle-checkbox" />
+              <label for="studentsToggle" class="snav-item snav-toggle" type="button">
+                <i class="fas fa-users"></i><span>Students</span>
+                <i class="fas fa-chevron-down snav-caret"></i>
+              </label>
+              <div class="snav-sub">
+                <a class="snav-sub-item" href="#" data-tab-link="students"><span>Student List</span></a>
+                <a class="snav-sub-item" href="#" data-tab-link="admissions"><span>Admissions</span></a>
+                <a class="snav-sub-item" href="#" data-tab-link="attendance"><span>Attendance</span></a>
+                <a class="snav-sub-item" href="#" data-tab-link="reports"><span>Reports</span></a>
+              </div>
+            </div>
+
+            <!-- ID & Cards Menu Group -->
+            <div class="snav-group">
+              <input type="checkbox" id="idCardsToggle" class="snav-toggle-checkbox" />
+              <label for="idCardsToggle" class="snav-item snav-toggle" type="button">
+                <i class="fas fa-id-card"></i><span>ID & Cards</span>
+                <i class="fas fa-chevron-down snav-caret"></i>
+              </label>
+              <div class="snav-sub">
+                <a class="snav-sub-item" href="#"><span>Generate ID Cards</span></a>
+                <a class="snav-sub-item" href="#"><span>Card Templates</span></a>
+                <a class="snav-sub-item" href="#"><span>Print Batches</span></a>
+              </div>
+            </div>
+
+            <!-- Library Menu Group -->
+            <div class="snav-group">
+              <input type="checkbox" id="libraryToggle" class="snav-toggle-checkbox" />
+              <label for="libraryToggle" class="snav-item snav-toggle" type="button">
+                <i class="fas fa-book"></i><span>Library</span>
+                <i class="fas fa-chevron-down snav-caret"></i>
+              </label>
+              <div class="snav-sub">
+                <a class="snav-sub-item" href="#"><span>Catalog</span></a>
+                <a class="snav-sub-item" href="#"><span>Issues/Returns</span></a>
+                <a class="snav-sub-item" href="#"><span>Fines</span></a>
+              </div>
+            </div>
+
+            <!-- Transport Menu Group -->
+            <div class="snav-group">
+              <input type="checkbox" id="transportToggle" class="snav-toggle-checkbox" />
+              <label for="transportToggle" class="snav-item snav-toggle" type="button">
+                <i class="fas fa-bus"></i><span>Transport</span>
+                <i class="fas fa-chevron-down snav-caret"></i>
+              </label>
+              <div class="snav-sub">
+                <a class="snav-sub-item" href="#"><span>Routes</span></a>
+                <a class="snav-sub-item" href="#"><span>Vehicles</span></a>
+                <a class="snav-sub-item" href="#"><span>Stops</span></a>
+              </div>
+            </div>
+
+            <a class="snav-item" href="#"><i class="fas fa-bed"></i><span>Hostel</span></a>
+            <a class="snav-item" href="#"><i class="fas fa-cogs"></i><span>Settings</span></a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Content Container -->
+      <main class="content-container">
+        <div class="shell">
+          <div class="layout">
+            <!-- MAIN COLUMN -->
+            <section class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Student Module – Overview</div>
+                <div class="panel-actions">
+                  <button class="btn btn-ghost" id="btnSync"><i class="fas fa-rotate"></i> Refresh</button>
+                  <button class="btn btn-primary" id="btnNew"><i class="fas fa-user-plus"></i> New Student</button>
+                </div>
+              </div>
+              <div class="panel-body">
+                <!-- KPIs -->
+                <div class="kpis">
+                  <div class="kpi">
+                    <div class="kpi-label">Total Students</div>
+                    <div class="kpi-value">2,847</div>
+                    <div class="kpi-trend up"><i class="fas fa-arrow-up"></i> 5.2% MoM</div>
+                  </div>
+                  <div class="kpi">
+                    <div class="kpi-label">Active Classes</div>
+                    <div class="kpi-value">42</div>
+                    <div class="kpi-trend up"><i class="fas fa-arrow-up"></i> +2 this month</div>
+                  </div>
+                  <div class="kpi">
+                    <div class="kpi-label">New Admissions</div>
+                    <div class="kpi-value">127</div>
+                    <div class="kpi-trend up"><i class="fas fa-arrow-up"></i> 12.8%</div>
+                  </div>
+                  <div class="kpi">
+                    <div class="kpi-label">Pending Tasks</div>
+                    <div class="kpi-value">23</div>
+                    <div class="kpi-trend down"><i class="fas fa-arrow-down"></i> 3 today</div>
+                  </div>
+                </div>
+
+                <!-- Sections -->
+                <div class="section">
+                  <div class="cards">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title">Recent Activity</div>
+                        <button class="btn pill" id="btnViewAllActivity">View All</button>
+                      </div>
+                      <div class="card-body">
+                        <div class="list">
+                          <div class="list-item">
+                            <div><strong>Sarah Johnson</strong> registered to Grade 9-B</div>
+                            <div class="muted">10m ago</div>
+                          </div>
+                          <div class="list-item">
+                            <div>Class allocation updated for <strong>10-A</strong></div>
+                            <div class="muted">2h ago</div>
+                          </div>
+                          <div class="list-item">
+                            <div>ID cards generated for <strong>2025 Intake</strong></div>
+                            <div class="muted">5h ago</div>
+                          </div>
+                          <div class="list-item">
+                            <div>Monthly admission report created</div>
+                            <div class="muted">Yesterday</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title">Quick Shortcuts</div>
+                      </div>
+                      <div class="card-body">
+                        <div style="display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px;">
+                          <button class="btn"><i class="fas fa-user-plus"></i> New Admission</button>
+                          <button class="btn"><i class="fas fa-clipboard-list"></i> Bulk Registration</button>
+                          <button class="btn"><i class="fas fa-id-card"></i> Generate ID Cards</button>
+                          <button class="btn"><i class="fas fa-chart-bar"></i> Open Reports</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title">Upcoming Events</div>
+                      </div>
+                      <div class="card-body">
+                        <div class="list">
+                          <div class="list-item">
+                            <div>Parent-Teacher Conference</div>
+                            <div class="muted">Mar 12</div>
+                          </div>
+                          <div class="list-item">
+                            <div>Science Fair – Finals</div>
+                            <div class="muted">Mar 20</div>
+                          </div>
+                          <div class="list-item">
+                            <div>Annual Sports Day</div>
+                            <div class="muted">Apr 05</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title">Top Performing Classes</div>
+                      </div>
+                      <div class="card-body">
+                        <div class="list">
+                          <div class="list-item"><div>Grade 10-A</div><div class="muted">Attendance 98%</div></div>
+                          <div class="list-item"><div>Grade 8-C</div><div class="muted">Attendance 97%</div></div>
+                          <div class="list-item"><div>Grade 12-B</div><div class="muted">Attendance 96%</div></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- RIGHT COLUMN (Sticky) -->
+            <aside class="right-col">
+              <section class="panel">
+                <div class="panel-header">
+                  <div class="panel-title">Tasks</div>
+                  <button class="btn pill" id="btnAddTask"><i class="fas fa-plus"></i> Add</button>
+                </div>
+                <div class="panel-body">
+                  <div class="list" id="taskList">
+                    <label style="display:flex; align-items:center; gap:10px;">
+                      <input type="checkbox" /> Verify 10-A attendance
+                    </label>
+                    <label style="display:flex; align-items:center; gap:10px;">
+                      <input type="checkbox" /> Approve 12 new admissions
+                    </label>
+                    <label style="display:flex; align-items:center; gap:10px;">
+                      <input type="checkbox" /> Review ID card batch #522
+                    </label>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel">
+                <div class="panel-header">
+                  <div class="panel-title">Announcements</div>
+                </div>
+                <div class="panel-body">
+                  <div class="list">
+                    <div class="list-item">
+                      <div>System maintenance window</div>
+                      <div class="muted">Fri 10pm–12am</div>
+                    </div>
+                    <div class="list-item">
+                      <div>New timetable module update</div>
+                      <div class="muted">Released</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel">
+                <div class="panel-header">
+                  <div class="panel-title">Filters</div>
+                  <button class="btn pill" id="btnClearFilters">Clear</button>
+                </div>
+                <div class="panel-body">
+                  <div style="display:grid; gap:10px;">
+                    <select class="pill" id="filterYear">
+                      <option value="2024-25">Year: 2024-25</option>
+                      <option value="2025-26">Year: 2025-26</option>
+                    </select>
+                    <select class="pill" id="filterClass">
+                      <option value="">Class: Any</option>
+                      <option value="10-A">10-A</option>
+                      <option value="10-B">10-B</option>
+                      <option value="12-B">12-B</option>
+                    </select>
+                    <select class="pill" id="filterStatus">
+                      <option value="">Status: Any</option>
+                      <option value="active">Active</option>
+                      <option value="alumni">Alumni</option>
+                      <option value="onhold">On Hold</option>
+                    </select>
+                  </div>
+                </div>
+              </section>
+            </aside>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Module Switcher Overlay -->
+  <div class="module-switcher-overlay">
+    <div class="module-switcher-popup">
+      <div class="module-switcher-header">
+        <div class="module-switcher-title">Switch Module</div>
+        <label for="moduleSwitcherToggle" class="close-btn">
+          <span class="close-btn-label">Close</span>
+          <i class="fas fa-times"></i>
+        </label>
+      </div>
+      <div class="module-list">
+        <label class="module-item active">
+          <div class="module-icon"><i class="fas fa-users"></i></div>
+          <span class="module-name">Student</span>
+        </label>
+        <label class="module-item">
+          <div class="module-icon"><i class="fas fa-money-bill-wave"></i></div>
+          <span class="module-name">Fee</span>
+        </label>
+        <label class="module-item">
+          <div class="module-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+          <span class="module-name">Payroll</span>
+        </label>
+        <label class="module-item">
+          <div class="module-icon"><i class="fas fa-chart-line"></i></div>
+          <span class="module-name">Result</span>
+        </label>
+        <label class="module-item">
+          <div class="module-icon"><i class="fas fa-calendar-alt"></i></div>
+          <span class="module-name">Timetable</span>
+        </label>
+        <label class="module-item">
+          <div class="module-icon"><i class="fas fa-book"></i></div>
+          <span class="module-name">Library</span>
+        </label>
+        <label class="module-item">
+          <div class="module-icon"><i class="fas fa-bus"></i></div>
+          <span class="module-name">Transport</span>
+        </label>
+        <label class="module-item">
+          <div class="module-icon"><i class="fas fa-bed"></i></div>
+          <span class="module-name">Hostel</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Action Button -->
+  <button class="fab" id="fab" title="Quick Add">
+    <i class="fas fa-plus"></i>
+  </button>
+</body>
+</html>
