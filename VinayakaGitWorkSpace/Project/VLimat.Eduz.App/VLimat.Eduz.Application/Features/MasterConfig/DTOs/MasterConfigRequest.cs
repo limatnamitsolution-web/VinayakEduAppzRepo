@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VLimat.Eduz.Application.DTOs
+namespace VLimat.Eduz.Application.Features.MasterConfig.DTOs
 {
     public class MasterConfigRequest
     {

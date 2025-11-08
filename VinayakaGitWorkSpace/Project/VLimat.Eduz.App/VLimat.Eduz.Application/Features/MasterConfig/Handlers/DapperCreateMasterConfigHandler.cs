@@ -2,8 +2,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using VLimat.Eduz.Application.DTOs;
 using VLimat.Eduz.Application.Features.MasterConfig.Commands;
+using VLimat.Eduz.Application.Features.MasterConfig.DTOs;
 using VLimat.Eduz.Domain.Features.Masters;
 using VLimat.Eduz.Domain.Repositories;
 

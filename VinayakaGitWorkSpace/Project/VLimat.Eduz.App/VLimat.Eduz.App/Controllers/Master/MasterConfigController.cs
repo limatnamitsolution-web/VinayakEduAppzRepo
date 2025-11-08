@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using VLimat.Eduz.Application.Features.MasterConfig.Commands;
 using VLimat.Eduz.Application.Features.MasterConfig.Queries;
-using VLimat.Eduz.Application.DTOs;
 using VLimat.Eduz.Application.Common;
+using VLimat.Eduz.Application.Features.MasterConfig.DTOs;
 
 namespace VLimat.Eduz.App.Controllers.Master
 {
-    [Route("api/[controller]")]
+
+    [Area("Master")]
+    [Route("api/[area]/[controller]")]
     [ApiController]
     public class MasterConfigController  : ControllerBase
     {
@@ -39,8 +41,8 @@ namespace VLimat.Eduz.App.Controllers.Master
         {
             var command = new CreateMasterConfigCommand(request);
             var created = await _mediator.Send(command, cancellationToken);
-            // Assuming created.ConfigKey or other identifier exists
-            return CreatedAtAction(nameof(GetAllByConfiguration), new { academicId = created.AcademicId, configKey = created.ConfigKey }, created);
+            // Return Created pointing to GetAllByConfiguration; ensure route values match action parameter names
+            return CreatedAtAction(nameof(GetAllByConfiguration), new { academicId = created.AcademicId, Configuration = created.Configuration }, created);
         }
     }
 }

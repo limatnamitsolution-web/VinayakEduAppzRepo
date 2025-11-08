@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using VLimat.Eduz.Application.DTOs;
+using VLimat.Eduz.Application.Features.MasterConfig.DTOs;
 using VLimat.Eduz.Application.Features.MasterConfig.Queries;
 using VLimat.Eduz.Domain.Repositories;
 

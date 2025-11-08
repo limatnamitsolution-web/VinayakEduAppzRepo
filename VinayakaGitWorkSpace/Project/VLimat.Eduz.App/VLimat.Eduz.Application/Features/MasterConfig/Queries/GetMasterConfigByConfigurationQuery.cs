@@ -1,6 +1,6 @@
 
 using MediatR;
-using VLimat.Eduz.Application.DTOs;
+using VLimat.Eduz.Application.Features.MasterConfig.DTOs;
 
 namespace VLimat.Eduz.Application.Features.MasterConfig.Queries
 {
