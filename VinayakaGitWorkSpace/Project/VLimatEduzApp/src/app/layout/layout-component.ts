@@ -11,18 +11,7 @@ import { SidebarComponent } from "./sidebar-component";
   selector: 'app-layout',
   standalone: true,
   imports: [CommonModule, RouterOutlet, HeaderComponent, SidebarComponent],
-  template: `
-    <div class="app-layout">
-      <app-header></app-header>
-      
-      <div class="main-content">
-        <app-sidebar></app-sidebar>
-        
-        <main class="content-container">
-          <router-outlet></router-outlet>
-        </main>
-      </div>
-    </div>
-  `
+  templateUrl: './layout-component.html',
+  styleUrls: ['./layout-component.css']
 })
 export class LayoutComponent { }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace VLimat.Eduz.Application.Features.MasterConfig.DTOs
 {
     public class MasterConfigRequest
