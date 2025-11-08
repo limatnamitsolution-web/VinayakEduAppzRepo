@@ -715,6 +715,39 @@ body {
   visibility: hidden;
 }
 
+/* Show a small submenu indicator when the sidebar is collapsed so users know this item has children */
+.left-panel.collapsed .snav-item.snav-toggle .snav-icon {
+  position: relative;
+}
+
+.left-panel.collapsed .snav-item.snav-toggle .snav-icon::after {
+  content: '';
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--text-3);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.02) inset;
+  display: block;
+  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+  opacity: 0.95;
+}
+
+/* On hover, make the indicator match the active/hover state */
+.left-panel.collapsed .snav-item.snav-toggle:hover .snav-icon::after,
+.left-panel.collapsed .snav-group:has(.snav-sub-item.active) > .snav-item.snav-toggle .snav-icon::after {
+  background: var(--primary-blue);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Hide label tooltip shift so indicator isn't overlapped (optional) */
+.left-panel.collapsed .snav-item .tooltip {
+  left: calc(100% + 16px);
+}
+
 .sidenav { 
   background: var(--surface); 
   border-radius: var(--radius-lg); 
@@ -931,12 +964,15 @@ body {
   max-height: 400px;
 }
 
-.snav-sub-item { 
-  display: block; 
+.snav-sub-item {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: center;
+  gap: 8px;
   padding: 6px 10px;
-  border-radius: 4px; 
-  text-decoration: none; 
-  border: 1px solid transparent; 
+  border-radius: 4px;
+  text-decoration: none;
+  border: 1px solid transparent;
   font-size: 13px;
   min-height: 32px;
   color: var(--text-2);
@@ -944,6 +980,19 @@ body {
   box-sizing: border-box;
   transition: all 0.2s ease;
 }
+
+.snav-sub-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--text-2);
+  font-size: 12px;
+}
+
+.snav-sub-icon i { font-size: 12px; }
 
 .snav-sub-item:hover { 
   background: var(--muted-surface); 
@@ -996,6 +1045,17 @@ body {
   border-color: var(--primary-blue);
   color: var(--dark-blue);
   font-weight: 600;
+}
+
+.left-panel.collapsed .snav-sub-item {
+  padding: 6px 8px;
+  text-align: center;
+  grid-template-columns: 40px;
+  justify-content: center;
+}
+
+.left-panel.collapsed .snav-sub-item span {
+  display: none;
 }
 
 .snav-divider { 

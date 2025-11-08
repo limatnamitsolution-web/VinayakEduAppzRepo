@@ -29,6 +29,9 @@
                      [class.active]="isSubMenuActive(item.key, child.key)"
                      [routerLink]="child.route"
                      (click)="setActiveSubMenu(item.key, child.key)">
+                    <div class="snav-sub-icon">
+                      <i [class]="child.icon"></i>
+                    </div>
                     <span>{{ child.label }}</span>
                   </a>
                 }

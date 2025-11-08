@@ -10,10 +10,10 @@
     "label": "Students",
     "icon": "fas fa-users",
     "children": [
-      { "key": "list", "label": "Student List", "route": "/student/list" },
-      { "key": "admissions", "label": "Admissions", "route": "/student/admissions" },
-      { "key": "attendance", "label": "Attendance", "route": "/student/attendance" },
-      { "key": "reports", "label": "Reports", "route": "/student/reports" }
+      { "key": "list", "label": "Student List", "route": "/student/list", "icon": "fas fa-list" },
+      { "key": "admissions", "label": "Admissions", "route": "/student/admissions", "icon": "fas fa-user-plus" },
+      { "key": "attendance", "label": "Attendance", "route": "/student/attendance", "icon": "fas fa-calendar-check" },
+      { "key": "reports", "label": "Reports", "route": "/student/reports", "icon": "fas fa-chart-line" }
     ]
   },
   {
@@ -21,9 +21,9 @@
     "label": "ID & Cards",
     "icon": "fas fa-id-card",
     "children": [
-      { "key": "generate", "label": "Generate ID Cards", "route": "/student/id-cards" },
-      { "key": "templates", "label": "Card Templates", "route": "/student/templates" },
-      { "key": "print", "label": "Print Batches", "route": "/student/print" }
+      { "key": "generate", "label": "Generate ID Cards", "route": "/student/id-cards", "icon": "fas fa-id-badge" },
+      { "key": "templates", "label": "Card Templates", "route": "/student/templates", "icon": "fas fa-file-invoice" },
+      { "key": "print", "label": "Print Batches", "route": "/student/print", "icon": "fas fa-print" }
     ]
   },
   {
