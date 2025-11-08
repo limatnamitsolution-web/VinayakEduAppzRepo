@@ -8,11 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      /* EduZ palette (updated) */
-      --primary-blue: #6d28d9; /* primary */
-      --secondary-blue: #b794f4; /* secondary */
-      --dark-blue: #4c1d95; /* dark accent */
-      --light-blue: #f3e8ff; /* light accent */
+      /* Light theme (default) */
+      --primary-blue: #6d28d9;
+      --secondary-blue: #b794f4;
+      --dark-blue: #4c1d95;
+      --light-blue: #f3e8ff;
 
       --accent-gold: #f59e0b;
       --success: #10b981;
@@ -27,26 +27,368 @@
       --text-2: #334155;
       --text-3: #64748b;
 
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
 
       --shadow-1: 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-2: 0 6px 14px rgba(0,0,0,0.06);
+      --shadow-2: 0 4px 8px rgba(0,0,0,0.06);
+      --shadow-3: 0 8px 16px rgba(0,0,0,0.08);
     }
 
-    * { box-sizing: border-box; }
+    /* Dark theme */
+    [data-theme="dark"] {
+      --primary-blue: #8b5cf6;
+      --secondary-blue: #a78bfa;
+      --dark-blue: #7c3aed;
+      --light-blue: #4c1d95;
+
+      --accent-gold: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f97316;
+
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --muted-surface: #334155;
+      --border: #475569;
+      --text: #f1f5f9;
+      --text-2: #cbd5e1;
+      --text-3: #94a3b8;
+    }
+
+    /* Color theme */
+    [data-theme="color"] {
+      --primary-blue: #dc2626;
+      --secondary-blue: #fca5a5;
+      --dark-blue: #b91c1c;
+      --light-blue: #fef2f2;
+
+      --accent-gold: #ea580c;
+      --success: #059669;
+      --danger: #dc2626;
+      --warning: #d97706;
+
+      --bg: #fef7ed;
+      --surface: #ffffff;
+      --muted-surface: #fffbeb;
+      --border: #fed7aa;
+      --text: #431407;
+      --text-2: #78350f;
+      --text-3: #92400e;
+    }
+
+    /* Dark Color theme - Dark background with colorful accents */
+    [data-theme="dark-color"] {
+      --primary-blue: #ec4899;
+      --secondary-blue: #f0abfc;
+      --dark-blue: #db2777;
+      --light-blue: #701a75;
+
+      --accent-gold: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f97316;
+
+      --bg: #0f172a;
+      --surface: #1e1b4b;
+      --muted-surface: #312e81;
+      --border: #6366f1;
+      --text: #e0e7ff;
+      --text-2: #c7d2fe;
+      --text-3: #a5b4fc;
+
+      --shadow-1: 0 1px 3px rgba(99, 102, 241, 0.2);
+      --shadow-2: 0 4px 6px rgba(99, 102, 241, 0.3);
+      --shadow-3: 0 10px 15px rgba(99, 102, 241, 0.4);
+    }
+
+    /* Crazy theme - Joyful and vibrant */
+    [data-theme="crazy"] {
+      --primary-blue: #ec4899;
+      --secondary-blue: #f0abfc;
+      --dark-blue: #db2777;
+      --light-blue: #fce7f3;
+
+      --accent-gold: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f97316;
+
+      --bg: linear-gradient(135deg, #fef3c7, #dbeafe, #fce7f3);
+      --surface: rgba(255, 255, 255, 0.9);
+      --muted-surface: rgba(255, 255, 255, 0.7);
+      --border: #fbbf24;
+      --text: #7c2d12;
+      --text-2: #92400e;
+      --text-3: #b45309;
+
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+
+      --shadow-1: 0 4px 12px rgba(251, 191, 36, 0.2);
+      --shadow-2: 0 8px 24px rgba(251, 191, 36, 0.3);
+      --shadow-3: 0 16px 48px rgba(251, 191, 36, 0.4);
+    }
+
+    * { 
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     html, body { 
       height: 100%; 
       overflow: hidden;
     }
+    
     body {
-      margin: 0;
       font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.4;
+      transition: all 0.3s ease;
       color: var(--text);
       background: var(--bg);
     }
 
+    /* ===== FIXED THEME SWITCHER POSITIONING ===== */
+    .theme-toggle {
+      position: relative;
+      display: inline-block;
+    }
+
+    .theme-switcher {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 5px;
+      z-index: 100;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 8px;
+      box-shadow: var(--shadow-3);
+      width: 150px;
+      display: none;
+      backdrop-filter: blur(10px);
+    }
+
+    .theme-switcher.active {
+      display: block;
+      animation: slideDown 0.2s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .theme-options {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .theme-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      background: var(--muted-surface);
+      position: relative;
+      min-height: 36px;
+    }
+
+    .theme-option:hover {
+      background: var(--surface);
+      border-color: var(--border);
+      transform: translateX(1px);
+      box-shadow: var(--shadow-1);
+    }
+
+    .theme-option input[type="radio"] {
+      margin: 0;
+      accent-color: var(--primary-blue);
+      transform: scale(0.8);
+    }
+
+    .theme-color-box {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      border: 1.5px solid var(--border);
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-1);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .theme-preview {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .preview-bar {
+      width: 12px;
+      height: 3px;
+      border-radius: 1px;
+      background: currentColor;
+      opacity: 0.7;
+      position: absolute;
+      top: 6px;
+      left: 4px;
+    }
+
+    .preview-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.9;
+      position: absolute;
+      bottom: 6px;
+      right: 4px;
+    }
+
+    .theme-option:hover .theme-color-box {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-2);
+    }
+
+    .theme-light .theme-color-box {
+      background: linear-gradient(135deg, #ffffff, #f1f5f9);
+      border-color: #e2e8f0;
+      color: #64748b;
+    }
+
+    .theme-dark .theme-color-box {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-color: #475569;
+      color: #94a3b8;
+    }
+
+    .theme-color .theme-color-box {
+      background: linear-gradient(135deg, #ffffff, #fef7ed);
+      border-color: #fed7aa;
+      color: #92400e;
+    }
+
+    .theme-dark-color .theme-color-box {
+      background: linear-gradient(135deg, #1e1b4b, #0f172a);
+      border-color: #6366f1;
+      color: #a5b4fc;
+    }
+
+    .theme-crazy .theme-color-box {
+      background: linear-gradient(135deg, #ec4899, #f59e0b, #10b981, #3b82f6);
+      border-color: #fbbf24;
+      color: #7c2d12;
+    }
+
+    .theme-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text);
+      flex: 1;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
+
+    .theme-badge {
+      font-size: 8px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 8px;
+      background: var(--primary-blue);
+      color: white;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .theme-badge.accent {
+      background: var(--accent-gold);
+      color: var(--text);
+    }
+
+    .theme-badge.warning {
+      background: var(--warning);
+      color: white;
+    }
+
+    .theme-option.active {
+      background: var(--light-blue);
+      border-color: var(--primary-blue);
+      box-shadow: inset 0 0 0 1px var(--primary-blue);
+    }
+
+    .theme-option.active .theme-label {
+      color: var(--dark-blue);
+      font-weight: 700;
+    }
+
+    .theme-option.active .theme-color-box {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 1px var(--light-blue), var(--shadow-1);
+    }
+
+    /* Theme Toggle Button - Updated */
+    .theme-toggle-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 8px;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      font-weight: 600;
+      color: var(--text);
+      box-shadow: var(--shadow-1);
+      letter-spacing: 0.2px;
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--muted-surface);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-2);
+      border-color: var(--primary-blue);
+    }
+
+    .theme-toggle-btn i {
+      color: var(--primary-blue);
+      font-size: 10px;
+    }
+
+    /* Animation for theme switch */
+    @keyframes themeSwitch {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .theme-option input[type="radio"]:checked ~ .theme-color-box {
+      animation: themeSwitch 0.3s ease;
+    }
+
+    /* Rest of the CSS remains the same... */
     /* Layout Structure */
     .app-layout {
       display: flex;
@@ -62,6 +404,7 @@
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     
     .topbar-inner {
@@ -77,88 +420,99 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     
     .brand-badge {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: var(--primary-blue);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
       color: #fff;
       display: grid;
       place-items: center;
       font-weight: 700;
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
+      font-size: 12px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
     }
     
     .brand-title { 
-      font-weight: 700; 
+      font-weight: 700;
+      font-size: 16px;
       letter-spacing: 0.2px; 
+      background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
 
     .top-actions { 
       display: flex; 
       align-items: center; 
-      gap: 8px; 
+      gap: 6px; 
       margin-left: auto;
     }
     
     .icon-btn {
-      width: 36px; 
-      height: 36px; 
-      border-radius: 10px;
+      width: 32px;
+      height: 32px; 
+      border-radius: 8px;
       display: grid; 
       place-items: center; 
       border: 1px solid var(--border);
-      background: #fff; 
-      color: var(--text-2); 
+      background: var(--surface); 
       cursor: pointer;
-      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      font-size: 12px;
+      color: var(--text-2);
     }
     
     .icon-btn:hover { 
       transform: translateY(-1px); 
       background: var(--muted-surface); 
+      box-shadow: var(--shadow-2);
     }
 
     .profile {
       display: flex; 
       align-items: center; 
-      gap: 10px; 
+      gap: 8px; 
       padding-left: 8px;
     }
     
     .avatar { 
-      width: 34px; 
-      height: 34px; 
+      width: 30px;
+      height: 30px; 
       border-radius: 50%; 
-      background: var(--light-blue); 
+      background: linear-gradient(135deg, var(--light-blue), var(--secondary-blue));
       display: grid; 
       place-items: center; 
-      color: var(--dark-blue); 
-      font-weight: 700; 
+      font-weight: 600; 
+      font-size: 12px;
+      color: var(--text);
     }
 
     /* Module Switcher Button */
     .module-switcher-btn {
-      background: var(--primary-blue);
+      background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
       color: white;
       border: none;
       border-radius: 999px;
-      padding: 8px 16px;
-      font-weight: 600;
-      font-size: 14px;
+      padding: 6px 12px;
+      font-weight: 500;
+      font-size: 12px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(109, 40, 217, 0.2);
     }
     
     .module-switcher-btn:hover {
-      background: var(--dark-blue);
+      background: linear-gradient(135deg, var(--dark-blue), #3c136f);
       transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(109, 40, 217, 0.3);
     }
     
     /* Hide checkbox */
@@ -190,10 +544,10 @@
     .module-switcher-popup {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
       width: 90%;
-      max-width: 500px;
+      max-width: 480px;
       max-height: 80vh;
       overflow-y: auto;
       z-index: 1001;
@@ -204,7 +558,7 @@
     @keyframes popupFadeIn {
       from {
         opacity: 0;
-        transform: scale(0.9) translateY(-20px);
+        transform: scale(0.95) translateY(-10px);
       }
       to {
         opacity: 1;
@@ -216,33 +570,32 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 24px;
+      padding: 16px 20px;
       border-bottom: 1px solid var(--border);
     }
     
     .module-switcher-title {
       font-weight: 600;
-      font-size: 18px;
+      font-size: 15px;
       color: var(--text);
     }
     
     .close-btn {
       background: transparent;
       border: none;
-      color: var(--text-3);
-      font-size: 18px;
+      font-size: 14px;
       cursor: pointer;
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
       display: grid;
       place-items: center;
       transition: all 0.2s ease;
+      color: var(--text-3);
     }
     
     .close-btn:hover {
       background: var(--muted-surface);
-      color: var(--danger);
     }
     
     .close-btn-label {
@@ -259,48 +612,49 @@
     
     .module-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 8px;
-      padding: 20px 24px;
+      padding: 16px 20px;
     }
     
     .module-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 16px;
-      border-radius: 12px;
-      color: var(--text-2);
+      gap: 10px;
+      padding: 12px;
+      border-radius: 8px;
       text-decoration: none;
       border: 1px solid var(--border);
       transition: all 0.2s ease;
       cursor: pointer;
+      font-size: 13px;
+      color: var(--text-2);
     }
     
     .module-item:hover {
       background: var(--muted-surface);
       border-color: var(--primary-blue);
-      transform: translateY(-2px);
+      transform: translateY(-1px);
       box-shadow: var(--shadow-2);
     }
     
     .module-item.active {
       background: var(--light-blue);
-      color: var(--dark-blue);
       border-color: var(--primary-blue);
+      color: var(--dark-blue);
     }
     
     .module-icon {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
       display: grid;
       place-items: center;
-      font-size: 18px;
+      font-size: 12px;
     }
     
     .module-name {
       font-weight: 500;
-      font-size: 15px;
+      font-size: 13px;
     }
 
     /* Main Content Area */
@@ -311,18 +665,19 @@
       position: relative;
     }
 
-    /* Left Panel Component */
+    /* Left Panel Component - FIXED SCROLLBARS */
     .left-panel {
-      width: 240px; /* Start expanded by default */
+      width: 220px;
       flex-shrink: 0;
       background: var(--surface);
       border-right: 1px solid var(--border);
       overflow: hidden;
       transition: width 0.3s ease;
       z-index: 40;
+      box-shadow: 1px 0 6px rgba(0,0,0,0.02);
     }
     
-    /* Sidebar menu styles */
+    /* Sidebar menu styles - UPDATED FOR ROUNDED ICONS */
     .sidenav { 
       background: var(--surface); 
       border-radius: var(--radius-lg); 
@@ -330,6 +685,8 @@
       box-shadow: var(--shadow-1); 
       transition: width 0.3s ease;
       width: 100%;
+      display: flex;
+      flex-direction: column;
     }
     
     /* Hide sidebar collapse checkbox */
@@ -337,32 +694,37 @@
     
     /* Collapsed state - Fixed selector */
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel {
-      width: 72px;
+      width: 60px;
     }
     
     .sidenav-header { 
       display: flex; 
       align-items: center; 
       justify-content: space-between; 
-      padding: 12px 12px; 
+      padding: 10px 12px; 
       border-bottom: 1px solid var(--border); 
+      min-height: 44px;
+      flex-shrink: 0;
     }
     
     .sidenav-title { 
       font-weight: 600; 
+      font-size: 13px;
       transition: opacity 0.2s ease;
+      color: var(--text);
     }
     
     .sidenav-toggle { 
       border: 1px solid var(--border); 
-      border-radius: 8px; 
-      background: #fff; 
-      width: 36px; 
-      height: 32px; 
+      border-radius: 6px; 
+      background: var(--surface); 
+      width: 28px; 
+      height: 24px; 
       cursor: pointer; 
-      color: var(--text-2); 
       display: grid;
       place-items: center;
+      font-size: 11px;
+      color: var(--text-2);
     }
     
     /* Rotate icon when collapsed - Fixed selector */
@@ -371,23 +733,56 @@
     }
     
     .sidenav-menu { 
-      display: grid; 
-      padding: 8px; 
-      gap: 4px; 
-      height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+      padding: 6px 8px;
+      gap: 2px;
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .sidenav-menu::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .sidenav-menu::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidenav-menu::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .sidenav-menu::-webkit-scrollbar-thumb:hover {
+      background: var(--text-3);
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .sidenav-menu {
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
     }
     
+    /* UPDATED: Rounded icon menu items */
     .snav-item { 
       display: grid; 
-      grid-template-columns: 20px 1fr; 
+      grid-template-columns: 36px 1fr; 
       align-items: center; 
-      gap: 10px; 
-      padding: 10px 10px; 
-      border-radius: 10px; 
-      color: var(--text-2); 
+      gap: 8px; 
+      padding: 6px 8px; 
+      border-radius: 6px; 
       text-decoration: none; 
       border: 1px solid transparent; 
       transition: all 0.2s ease;
+      font-size: 13px;
+      min-height: 40px;
+      position: relative;
+      color: var(--text-2);
+      width: 100%;
+      box-sizing: border-box;
     }
     
     .snav-item:hover { 
@@ -397,8 +792,98 @@
     
     .snav-item.active { 
       background: var(--light-blue); 
-      color: var(--dark-blue); 
       border-color: transparent; 
+      font-weight: 500;
+      color: var(--dark-blue);
+    }
+    
+    /* FIXED: Keep parent menu highlighted when submenu is hovered */
+    .snav-group:hover > .snav-item.snav-toggle,
+    .snav-group:focus-within > .snav-item.snav-toggle {
+      background: var(--muted-surface); 
+      border-color: var(--border);
+    }
+    
+    .snav-group:hover > .snav-item.snav-toggle .snav-icon,
+    .snav-group:focus-within > .snav-item.snav-toggle .snav-icon {
+      background: var(--primary-blue);
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    /* Rounded icon container */
+    .snav-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--muted-surface);
+      color: var(--text-2);
+      font-size: 13px;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    
+    .snav-item:hover .snav-icon {
+      background: var(--primary-blue);
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    .snav-item.active .snav-icon {
+      background: var(--primary-blue);
+      color: white;
+    }
+    
+    /* Tooltip for collapsed state */
+    .snav-item .tooltip {
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--surface);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      box-shadow: var(--shadow-2);
+      border: 1px solid var(--border);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      z-index: 100;
+      pointer-events: none;
+    }
+    
+    .snav-item .tooltip::before {
+      content: '';
+      position: absolute;
+      right: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent var(--border) transparent transparent;
+    }
+    
+    .snav-item .tooltip::after {
+      content: '';
+      position: absolute;
+      right: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 4px;
+      border-style: solid;
+      border-color: transparent var(--surface) transparent transparent;
+    }
+    
+    .snav-item:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      left: calc(100% + 10px);
     }
     
     /* Hide submenu toggle checkboxes */
@@ -408,7 +893,7 @@
       width: 100%; 
       text-align: left; 
       display: grid; 
-      grid-template-columns: 20px 1fr 16px; 
+      grid-template-columns: 36px 1fr 14px; 
       align-items: center; 
       background: transparent; 
       cursor: pointer; 
@@ -416,8 +901,8 @@
     }
     
     .snav-item.snav-toggle .snav-caret { 
-      color: var(--text-3); 
       transition: transform .2s ease; 
+      font-size: 10px;
     }
     
     /* Submenu open state */
@@ -431,12 +916,14 @@
     }
     
     .snav-sub { 
-      display: grid; 
-      gap: 4px; 
-      padding: 6px 0 6px 36px; 
+      display: flex;
+      flex-direction: column;
+      gap: 1px; 
+      padding: 2px 0 2px 44px; 
       max-height: 0; 
       overflow: hidden; 
       transition: max-height .25s ease; 
+      width: 100%;
     }
     
     /* Show submenu when checkbox is checked */
@@ -446,23 +933,41 @@
     
     .snav-sub-item { 
       display: block; 
-      padding: 8px 10px; 
-      border-radius: 8px; 
-      color: var(--text-2); 
+      padding: 5px 8px; 
+      border-radius: 4px; 
       text-decoration: none; 
       border: 1px solid transparent; 
-      font-size: 13px; 
+      font-size: 12px; 
+      min-height: 28px;
+      color: var(--text-2);
+      width: 100%;
+      box-sizing: border-box;
     }
     
     .snav-sub-item:hover { 
       background: var(--muted-surface); 
       border-color: var(--border); 
     }
-
+    
+    /* FIXED: Keep parent highlighted when submenu item is hovered */
+    .snav-group:hover .snav-item.snav-toggle,
+    .snav-group:focus-within .snav-item.snav-toggle {
+      background: var(--muted-surface); 
+      border-color: var(--border);
+    }
+    
+    .snav-group:hover .snav-item.snav-toggle .snav-icon,
+    .snav-group:focus-within .snav-item.snav-toggle .snav-icon {
+      background: var(--primary-blue);
+      color: white;
+      transform: scale(1.1);
+    }
+    
     .snav-divider { 
       height: 1px; 
       background: var(--border); 
-      margin: 6px 8px; 
+      margin: 4px 8px; 
+      width: calc(100% - 16px);
     }
 
     /* Collapsed state visuals - Fixed selectors */
@@ -477,6 +982,7 @@
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item { 
       grid-template-columns: 1fr; 
       place-items: center; 
+      padding: 8px;
     }
     
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item.snav-toggle { 
@@ -486,6 +992,10 @@
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-sub { 
       display: none; 
     }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item .snav-icon {
+      margin: 0 auto;
+    }
 
     /* Auto-hide functionality - Pure CSS */
     .left-panel {
@@ -494,7 +1004,7 @@
     
     /* Collapse on focus out and hover out */
     .left-panel:not(:focus-within):not(:hover) {
-      width: 72px;
+      width: 60px;
     }
     
     .left-panel:not(:focus-within):not(:hover) .sidenav-title { 
@@ -508,6 +1018,7 @@
     .left-panel:not(:focus-within):not(:hover) .snav-item { 
       grid-template-columns: 1fr; 
       place-items: center; 
+      padding: 8px;
     }
     
     .left-panel:not(:focus-within):not(:hover) .snav-item.snav-toggle { 
@@ -521,15 +1032,19 @@
     .left-panel:not(:focus-within):not(:hover) .sidenav-toggle i {
       transform: rotate(180deg);
     }
+    
+    .left-panel:not(:focus-within):not(:hover) .snav-item .snav-icon {
+      margin: 0 auto;
+    }
 
     /* Override with manual toggle when checked */
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel {
-      width: 72px;
+      width: 60px;
     }
     
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel:hover,
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel:focus-within {
-      width: 72px;
+      width: 60px;
     }
     
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel .sidenav-title,
@@ -540,6 +1055,7 @@
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item {
       grid-template-columns: 1fr;
       place-items: center;
+      padding: 8px;
     }
     
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item.snav-toggle {
@@ -553,11 +1069,15 @@
     #sidebarToggle:checked ~ .app-layout .main-content .left-panel .sidenav-toggle i {
       transform: rotate(180deg);
     }
+    
+    #sidebarToggle:checked ~ .app-layout .main-content .left-panel .snav-item .snav-icon {
+      margin: 0 auto;
+    }
 
     /* Content Container */
     .content-container {
       flex: 1;
-      overflow: hidden;
+      overflow: auto;
       padding: 16px;
       background: var(--bg);
       transition: margin-left 0.3s ease;
@@ -572,11 +1092,10 @@
     
     .layout {
       display: grid;
-      grid-template-columns: 1fr 360px;
+      grid-template-columns: 1fr 320px;
       gap: 16px;
       align-items: start;
-      height: 100%;
-      overflow: hidden;
+      min-height: 100%;
     }
 
     /* Panels */
@@ -589,27 +1108,33 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: box-shadow 0.2s ease;
+    }
+    
+    .panel:hover {
+      box-shadow: var(--shadow-2);
     }
     
     .panel-header {
       display: flex; 
       align-items: center; 
       justify-content: space-between;
-      padding: 14px 16px; 
+      padding: 12px 16px; 
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
     
     .panel-title { 
-      font-size: 16px; 
+      font-size: 14px; 
       font-weight: 600; 
       letter-spacing: 0.2px; 
+      color: var(--text);
     }
     
     .panel-body { 
       padding: 16px; 
       flex: 1;
-      overflow: hidden;
+      overflow: auto;
     }
 
     /* KPI row (distinct style – minimalist, larger numbers, no colorful cards) */
@@ -623,24 +1148,33 @@
       background: var(--muted-surface);
       border: 1px dashed var(--border);
       border-radius: var(--radius-md);
-      padding: 14px;
+      padding: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .kpi:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-2);
     }
     
     .kpi-label { 
-      color: var(--text-3); 
-      font-size: 12px; 
+      font-size: 11px; 
       letter-spacing: .2px; 
+      font-weight: 500;
+      color: var(--text-3);
     }
     
     .kpi-value { 
-      font-size: 24px; 
+      font-size: 20px; 
       font-weight: 700; 
-      margin-top: 6px; 
+      margin-top: 4px; 
+      color: var(--text);
     }
     
     .kpi-trend { 
-      font-size: 12px; 
-      margin-top: 6px; 
+      font-size: 11px; 
+      margin-top: 4px; 
+      font-weight: 500;
     }
     
     .up { color: var(--success); }
@@ -658,7 +1192,7 @@
       grid-template-columns: 1fr 1fr; 
       gap: 12px; 
       height: 100%;
-      overflow: hidden;
+      overflow: auto;
     }
 
     .card { 
@@ -668,10 +1202,16 @@
       box-shadow: var(--shadow-1); 
       display: flex;
       flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-2);
     }
     
     .card-header { 
-      padding: 12px 14px; 
+      padding: 10px 12px; 
       border-bottom: 1px solid var(--border); 
       display: flex; 
       justify-content: space-between; 
@@ -681,27 +1221,30 @@
     
     .card-title { 
       font-weight: 600; 
+      font-size: 13px;
+      color: var(--text);
     }
     
     .card-body { 
-      padding: 12px 14px; 
+      padding: 12px; 
       flex: 1;
-      overflow: hidden;
+      overflow: auto;
     }
 
     .list { 
       display: grid; 
-      gap: 10px; 
+      gap: 8px; 
       height: 100%;
-      overflow: hidden;
+      overflow: auto;
     }
     
     .list-item { 
       display: flex; 
       align-items: center; 
       justify-content: space-between; 
-      padding: 10px 0; 
+      padding: 8px 0; 
       border-bottom: 1px dashed var(--border); 
+      color: var(--text-2);
     }
     
     .list-item:last-child { 
@@ -709,8 +1252,9 @@
     }
     
     .muted { 
-      color: var(--text-3); 
-      font-size: 12px; 
+      font-size: 11px; 
+      font-weight: 500;
+      color: var(--text-3);
     }
 
     /* Right column – sticky meta panel */
@@ -721,66 +1265,56 @@
       display: grid; 
       gap: 12px; 
       align-content: start; 
-      overflow: hidden;
+      overflow: auto;
     }
 
     .pill { 
-      padding: 8px 12px; 
+      padding: 6px 10px; 
       border-radius: 999px; 
       border: 1px solid var(--border); 
-      color: var(--text-2); 
-      background: #fff; 
-      font-size: 12px; 
-      font-weight: 600; 
+      background: var(--surface); 
+      font-size: 11px; 
+      font-weight: 500; 
+      transition: all 0.2s ease;
+      color: var(--text-2);
+    }
+    
+    .pill:hover {
+      background: var(--muted-surface);
+      transform: translateY(-1px);
     }
     
     .btn { 
-      padding: 10px 12px; 
+      padding: 8px 10px; 
       border-radius: 999px; 
       border: 1px solid var(--border); 
-      background: #fff; 
-      font-weight: 600; 
+      background: var(--surface); 
+      font-weight: 500; 
       cursor: pointer; 
-      transition: background .15s ease, transform .15s ease; 
+      transition: background .15s ease, transform .15s ease, box-shadow .2s ease; 
+      font-size: 12px;
+      color: var(--text);
     }
     
     .btn:hover { 
       background: var(--muted-surface); 
       transform: translateY(-1px); 
+      box-shadow: var(--shadow-2);
     }
     
     .btn-primary { 
-      background: var(--primary-blue); 
+      background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
       border-color: var(--primary-blue); 
       color: #fff; 
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--dark-blue), #3c136f);
     }
     
     .btn-ghost { 
       background: transparent; 
       border-color: var(--border); 
-    }
-
-    /* Floating Action Button (bottom-right) */
-    .fab {
-      position: fixed; 
-      right: 20px; 
-      bottom: 20px; 
-      z-index: 60;
-      width: 56px; 
-      height: 56px; 
-      border-radius: 50%;
-      display: grid; 
-      place-items: center; 
-      color: #fff; 
-      background: var(--primary-blue);
-      box-shadow: var(--shadow-2);
-      cursor: pointer; 
-      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
-    }
-    
-    .fab:hover { 
-      transform: translateY(-2px); 
-      background: var(--dark-blue); 
     }
 
     /* Responsiveness */
@@ -824,15 +1358,24 @@
       }
       
       .left-panel:not(:focus-within):not(:hover) .snav-item {
-        grid-template-columns: 20px 1fr;
+        grid-template-columns: 36px 1fr;
       }
       
       .left-panel:not(:focus-within):not(:hover) .snav-item.snav-toggle {
-        grid-template-columns: 20px 1fr 16px;
+        grid-template-columns: 36px 1fr 16px;
       }
       
       .left-panel:not(:focus-within):not(:hover) .snav-sub {
         display: grid;
+      }
+
+      .theme-switcher {
+        position: fixed;
+        top: auto;
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+        width: auto;
       }
     }
 
@@ -840,15 +1383,15 @@
       .topbar-inner { grid-template-columns: auto 1fr; }
       .brand { display: flex; }
       .module-switcher-btn span { display: none; }
-      .module-switcher-btn { padding: 8px; }
+      .module-switcher-btn { padding: 6px; }
       .module-list {
         grid-template-columns: 1fr;
-        padding: 16px;
+        padding: 12px;
       }
     }
   </style>
 </head>
-<body>
+<body data-theme="light">
   <!-- Hidden checkboxes for state management -->
   <input type="checkbox" id="moduleSwitcherToggle" />
   <input type="checkbox" id="sidebarToggle" />
@@ -866,6 +1409,72 @@
 
         <!-- Top actions shifted to the right -->
         <div class="top-actions">
+          <!-- Theme Toggle -->
+          <div class="theme-toggle">
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+              <i class="fas fa-palette"></i>
+              <span>Themes</span>
+            </button>
+            <div class="theme-switcher" id="themeSwitcher">
+              <div class="theme-options">
+                <label class="theme-option theme-light">
+                  <input type="radio" name="theme" value="light" checked>
+                  <div class="theme-color-box">
+                    <div class="theme-preview">
+                      <div class="preview-bar"></div>
+                      <div class="preview-dot"></div>
+                    </div>
+                  </div>
+                  <span class="theme-label">Light</span>
+                  <div class="theme-badge">Default</div>
+                </label>
+                <label class="theme-option theme-dark active">
+                  <input type="radio" name="theme" value="dark">
+                  <div class="theme-color-box">
+                    <div class="theme-preview">
+                      <div class="preview-bar"></div>
+                      <div class="preview-dot"></div>
+                    </div>
+                  </div>
+                  <span class="theme-label">Dark</span>
+                  <div class="theme-badge">Popular</div>
+                </label>
+                <label class="theme-option theme-color">
+                  <input type="radio" name="theme" value="color">
+                  <div class="theme-color-box">
+                    <div class="theme-preview">
+                      <div class="preview-bar"></div>
+                      <div class="preview-dot"></div>
+                    </div>
+                  </div>
+                  <span class="theme-label">Amber</span>
+                </label>
+                <label class="theme-option theme-dark-color">
+                  <input type="radio" name="theme" value="dark-color">
+                  <div class="theme-color-box">
+                    <div class="theme-preview">
+                      <div class="preview-bar"></div>
+                      <div class="preview-dot"></div>
+                    </div>
+                  </div>
+                  <span class="theme-label">Neon</span>
+                  <div class="theme-badge accent">New</div>
+                </label>
+                <label class="theme-option theme-crazy">
+                  <input type="radio" name="theme" value="crazy">
+                  <div class="theme-color-box">
+                    <div class="theme-preview">
+                      <div class="preview-bar"></div>
+                      <div class="preview-dot"></div>
+                    </div>
+                  </div>
+                  <span class="theme-label">Rainbow</span>
+                  <div class="theme-badge warning">Fun</div>
+                </label>
+              </div>
+            </div>
+          </div>
+
           <button class="icon-btn" title="Notifications" id="btnNotify"><i class="fas fa-bell"></i></button>
           <button class="icon-btn" title="Help" id="btnHelp"><i class="fas fa-circle-question"></i></button>
           
@@ -897,15 +1506,19 @@
           </div>
           <nav class="sidenav-menu">
             <a class="snav-item active" href="#" data-tab-link="overview">
-              <i class="fas fa-gauge"></i><span>Overview</span>
+              <div class="snav-icon"><i class="fas fa-gauge"></i></div>
+              <span>Overview</span>
+              <div class="tooltip">Overview</div>
             </a>
 
             <!-- Students Menu Group -->
             <div class="snav-group">
               <input type="checkbox" id="studentsToggle" class="snav-toggle-checkbox" />
               <label for="studentsToggle" class="snav-item snav-toggle" type="button">
-                <i class="fas fa-users"></i><span>Students</span>
+                <div class="snav-icon"><i class="fas fa-users"></i></div>
+                <span>Students</span>
                 <i class="fas fa-chevron-down snav-caret"></i>
+                <div class="tooltip">Students</div>
               </label>
               <div class="snav-sub">
                 <a class="snav-sub-item" href="#" data-tab-link="students"><span>Student List</span></a>
@@ -919,8 +1532,10 @@
             <div class="snav-group">
               <input type="checkbox" id="idCardsToggle" class="snav-toggle-checkbox" />
               <label for="idCardsToggle" class="snav-item snav-toggle" type="button">
-                <i class="fas fa-id-card"></i><span>ID & Cards</span>
+                <div class="snav-icon"><i class="fas fa-id-card"></i></div>
+                <span>ID & Cards</span>
                 <i class="fas fa-chevron-down snav-caret"></i>
+                <div class="tooltip">ID & Cards</div>
               </label>
               <div class="snav-sub">
                 <a class="snav-sub-item" href="#"><span>Generate ID Cards</span></a>
@@ -933,8 +1548,10 @@
             <div class="snav-group">
               <input type="checkbox" id="libraryToggle" class="snav-toggle-checkbox" />
               <label for="libraryToggle" class="snav-item snav-toggle" type="button">
-                <i class="fas fa-book"></i><span>Library</span>
+                <div class="snav-icon"><i class="fas fa-book"></i></div>
+                <span>Library</span>
                 <i class="fas fa-chevron-down snav-caret"></i>
+                <div class="tooltip">Library</div>
               </label>
               <div class="snav-sub">
                 <a class="snav-sub-item" href="#"><span>Catalog</span></a>
@@ -947,8 +1564,10 @@
             <div class="snav-group">
               <input type="checkbox" id="transportToggle" class="snav-toggle-checkbox" />
               <label for="transportToggle" class="snav-item snav-toggle" type="button">
-                <i class="fas fa-bus"></i><span>Transport</span>
+                <div class="snav-icon"><i class="fas fa-bus"></i></div>
+                <span>Transport</span>
                 <i class="fas fa-chevron-down snav-caret"></i>
+                <div class="tooltip">Transport</div>
               </label>
               <div class="snav-sub">
                 <a class="snav-sub-item" href="#"><span>Routes</span></a>
@@ -957,8 +1576,16 @@
               </div>
             </div>
 
-            <a class="snav-item" href="#"><i class="fas fa-bed"></i><span>Hostel</span></a>
-            <a class="snav-item" href="#"><i class="fas fa-cogs"></i><span>Settings</span></a>
+            <a class="snav-item" href="#">
+              <div class="snav-icon"><i class="fas fa-bed"></i></div>
+              <span>Hostel</span>
+              <div class="tooltip">Hostel</div>
+            </a>
+            <a class="snav-item" href="#">
+              <div class="snav-icon"><i class="fas fa-cogs"></i></div>
+              <span>Settings</span>
+              <div class="tooltip">Settings</div>
+            </a>
           </nav>
         </div>
       </aside>
@@ -1036,7 +1663,7 @@
                         <div class="card-title">Quick Shortcuts</div>
                       </div>
                       <div class="card-body">
-                        <div style="display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px;">
+                        <div style="display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px;">
                           <button class="btn"><i class="fas fa-user-plus"></i> New Admission</button>
                           <button class="btn"><i class="fas fa-clipboard-list"></i> Bulk Registration</button>
                           <button class="btn"><i class="fas fa-id-card"></i> Generate ID Cards</button>
@@ -1093,13 +1720,13 @@
                 </div>
                 <div class="panel-body">
                   <div class="list" id="taskList">
-                    <label style="display:flex; align-items:center; gap:10px;">
+                    <label style="display:flex; align-items:center; gap:8px;">
                       <input type="checkbox" /> Verify 10-A attendance
                     </label>
-                    <label style="display:flex; align-items:center; gap:10px;">
+                    <label style="display:flex; align-items:center; gap:8px;">
                       <input type="checkbox" /> Approve 12 new admissions
                     </label>
-                    <label style="display:flex; align-items:center; gap:10px;">
+                    <label style="display:flex; align-items:center; gap:8px;">
                       <input type="checkbox" /> Review ID card batch #522
                     </label>
                   </div>
@@ -1130,7 +1757,7 @@
                   <button class="btn pill" id="btnClearFilters">Clear</button>
                 </div>
                 <div class="panel-body">
-                  <div style="display:grid; gap:10px;">
+                  <div style="display:grid; gap:8px;">
                     <select class="pill" id="filterYear">
                       <option value="2024-25">Year: 2024-25</option>
                       <option value="2025-26">Year: 2025-26</option>
@@ -1204,9 +1831,55 @@
     </div>
   </div>
 
-  <!-- Floating Action Button -->
-  <!-- <button class="fab" id="fab" title="Quick Add">
-    <i class="fas fa-plus"></i>
-  </button> -->
+  <script>
+    // Theme switcher functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const themeSwitcher = document.getElementById('themeSwitcher');
+      const themeRadios = document.querySelectorAll('input[name="theme"]');
+      const body = document.body;
+      
+      // Load saved theme from localStorage
+      const savedTheme = localStorage.getItem('eduz-theme') || 'light';
+      body.setAttribute('data-theme', savedTheme);
+      
+      // Set the correct radio button
+      document.querySelector(`input[name="theme"][value="${savedTheme}"]`).checked = true;
+      
+      // Update active state for theme options
+      function updateActiveTheme() {
+        const activeTheme = body.getAttribute('data-theme');
+        document.querySelectorAll('.theme-option').forEach(option => {
+          option.classList.remove('active');
+        });
+        document.querySelector(`.theme-${activeTheme}`).classList.add('active');
+      }
+      
+      updateActiveTheme();
+      
+      // Toggle theme switcher visibility
+      themeToggleBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        themeSwitcher.classList.toggle('active');
+      });
+      
+      // Add event listeners to theme radios
+      themeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          const selectedTheme = this.value;
+          body.setAttribute('data-theme', selectedTheme);
+          localStorage.setItem('eduz-theme', selectedTheme);
+          updateActiveTheme();
+        });
+      });
+      
+      // Close theme switcher when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!themeSwitcher.contains(event.target) && !themeToggleBtn.contains(event.target)) {
+          themeSwitcher.classList.remove('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
