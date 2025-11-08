@@ -695,28 +695,24 @@ body {
   padding: 8px;
 }
 
-.left-panel.collapsed .snav-item.snav-toggle {
-  grid-template-columns: 40px 16px;
-  justify-content: center;
-}
-
-.left-panel.collapsed .snav-item.snav-toggle .snav-caret {
-  opacity: 0;
-  visibility: hidden;
-}
+ 
 
 .left-panel.collapsed .snav-sub {
   padding-left: 0;
   padding-right: 0;
 }
 
-.left-panel.collapsed .snav-sub-item {
-  padding: 6px 8px;
-  text-align: center;
+.left-panel.collapsed .snav-item.snav-toggle {
+  /* When collapsed, remove the caret column so the icon centers correctly */
+  grid-template-columns: 40px;
+  justify-content: center;
 }
 
-.left-panel.collapsed .snav-sub-item span {
+.left-panel.collapsed .snav-item.snav-toggle .snav-caret {
+  /* completely hide the caret instead of just making it invisible so it doesn't occupy grid space */
   display: none;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .sidenav { 

@@ -1,11 +1,13 @@
 // app/layout/sidebar.component.ts
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 interface MenuItem {
+  key: string;
   label: string;
-  icon: string;
+  icon?: string;
   route?: string;
   isActive?: boolean;
   children?: MenuItem[];
@@ -15,11 +17,12 @@ interface MenuItem {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, HttpClientModule],
   templateUrl: './sidebar-component.html',
-
+  styleUrls : ['./sidebar-component.scss']
 })
 export class SidebarComponent {
+  menuItems: MenuItem[] = [];
    isCollapsed = false;
   activeMenu: string = 'overview';
   activeSubMenu: string = '';
@@ -29,6 +32,29 @@ export class SidebarComponent {
     'library': false,
     'transport': false
   };
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    // fetch sidebar JSON from public folder (served as asset). Using absolute path so it works with different base href.
+    this.http.get<MenuItem[]>('/sidebar-data.json').subscribe({
+      next: (data) => {
+        this.menuItems = data || [];
+        // initialize expandedMenus for groups
+        for (const item of this.menuItems) {
+          if (item.children && item.children.length) {
+            if (!(item.key in this.expandedMenus)) {
+              this.expandedMenus[item.key] = false;
+            }
+          }
+        }
+      },
+      error: (err) => {
+        // silent fallback: keep hard-coded behavior if fetch fails
+        console.error('Failed to load sidebar-data.json', err);
+      }
+    });
+  }
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;

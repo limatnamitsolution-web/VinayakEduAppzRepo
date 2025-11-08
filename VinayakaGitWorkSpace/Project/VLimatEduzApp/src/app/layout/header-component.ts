@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './header-component.html',
-  styles: ['./header-component.scss']
+  styleUrls: ['./header-component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isThemeSwitcherOpen = false;
