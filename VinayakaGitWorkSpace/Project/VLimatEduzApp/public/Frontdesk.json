@@ -1,52 +1,14 @@
 [
   {
-    "key": "frontdesk",
-    "label": "FrontDesk",
+    "key": "receptionHub",
+    "label": "Reception Hub",
     "icon": "fas fa-desktop",
     "children": [
-      {
-        "key": "registration",
-        "label": "Registration",
-        "icon": "fas fa-user-plus",
-        "route": "/frontdesk/registration"
-      },
-      {
-        "key": "gatepass",
-        "label": "GatePass",
-        "icon": "fas fa-id-card",
-        "children": [
-          {
-            "key": "student-gatepass-out",
-            "label": "Student GatePass Out",
-            "icon": "fas fa-person-walking-arrow-right",
-            "route": "/frontdesk/gatepass/student-out"
-          },
-          {
-            "key": "staff-gatepass-out",
-            "label": "Staff GatePass Out",
-            "icon": "fas fa-person-walking-arrow-right",
-            "route": "/frontdesk/gatepass/staff-out"
-          }
-        ]
-      },
-      {
-        "key": "enquiry",
-        "label": "Enquiry",
-        "icon": "fas fa-question-circle",
-        "route": "/frontdesk/enquiry"
-      },
-      {
-        "key": "visitors",
-        "label": "Visitors Details IN",
-        "icon": "fas fa-user-group",
-        "route": "/frontdesk/visitors"
-      },
-      {
-        "key": "reports",
-        "label": "Reports Details",
-        "icon": "fas fa-file-lines",
-        "route": "/frontdesk/reports"
-      }
+      { "key": "frontdeskRegister", "label": "Register at Frontdesk", "icon": "fas fa-user-plus", "route": "/frontdesk/registration" },
+      { "key": "frontdeskGatePass", "label": "Manage Gate Pass", "icon": "fas fa-id-card", "children": [ { "key": "frontdeskStudentExit", "label": "Student Exit Pass", "icon": "fas fa-person-walking-arrow-right", "route": "/frontdesk/gatepass/student-out" }, { "key": "frontdeskStaffExit", "label": "Staff Exit Pass", "icon": "fas fa-person-walking-arrow-right", "route": "/frontdesk/gatepass/staff-out" } ] },
+      { "key": "frontdeskVisitorEntry", "label": "Visitor Entry Log", "icon": "fas fa-user-group", "route": "/frontdesk/visitors" },
+      { "key": "frontdeskEnquiry", "label": "Frontdesk Enquiry", "icon": "fas fa-question-circle", "route": "/frontdesk/enquiry" },
+      { "key": "frontdeskReports", "label": "Frontdesk Reports", "icon": "fas fa-file-lines", "route": "/frontdesk/reports" }
     ]
   },
   {
@@ -54,109 +16,19 @@
     "label": "Student",
     "icon": "fas fa-graduation-cap",
     "children": [
-      {
-        "key": "registration",
-        "label": "Registration",
-        "icon": "fas fa-user-plus",
-        "route": "/student/registration"
-      },
-      {
-        "key": "quick-admission",
-        "label": "Quick Admission",
-        "icon": "fas fa-bolt",
-        "route": "/student/quick-admission"
-      },
-      {
-        "key": "admission",
-        "label": "Admission",
-        "icon": "fas fa-user-check",
-        "route": "/student/admission"
-      },
-      {
-        "key": "alumni",
-        "label": "Alumni - Passout Students BPS",
-        "icon": "fas fa-user-graduate",
-        "route": "/student/alumni"
-      },
-      {
-        "key": "leaving-certificate",
-        "label": "Student Leaving Certificate",
-        "icon": "fas fa-file-export",
-        "route": "/student/leaving-certificate"
-      },
-      {
-        "key": "admission-cancel",
-        "label": "Admission Cancel",
-        "icon": "fas fa-user-times",
-        "route": "/student/admission-cancel"
-      },
-      {
-        "key": "student-drop-out",
-        "label": "Student Drop Out",
-        "icon": "fas fa-user-slash",
-        "route": "/student/drop-out"
-      },
-      {
-        "key": "promotion",
-        "label": "Promotion",
-        "icon": "fas fa-arrow-up",
-        "route": "/student/promotion"
-      },
-      {
-        "key": "revert",
-        "label": "Revert",
-        "icon": "fas fa-undo",
-        "route": "/student/revert"
-      },
-      {
-        "key": "certificates",
-        "label": "Certificates",
-        "icon": "fas fa-certificate",
-        "children": [
-          {
-            "key": "bonafied",
-            "label": "Bonified Certificate",
-            "icon": "fas fa-file-alt",
-            "route": "/student/certificates/bonafied"
-          },
-          {
-            "key": "character",
-            "label": "Character Certificate",
-            "icon": "fas fa-file-alt",
-            "route": "/student/certificates/character"
-          },
-          {
-            "key": "caste",
-            "label": "Caste Certificate",
-            "icon": "fas fa-file-alt",
-            "route": "/student/certificates/caste"
-          }
-        ]
-      },
-      {
-        "key": "copy-branch",
-        "label": "Copy to Branch(EWS)",
-        "icon": "fas fa-copy",
-        "route": "/student/copy-branch"
-      },
-      {
-        "key": "details-update",
-        "label": "Student Details Update",
-        "icon": "fas fa-user-edit",
-        "route": "/student/details-update"
-      },
-      {
-        "key": "photo-update",
-        "label": "Student Photo Update",
-        "icon": "fas fa-camera",
-        "route": "/student/photo-update"
-      },
-      {
-        "key": "reports",
-        "label": "Reports",
-        "icon": "fas fa-chart-bar",
-        "route": "/student/reports"
-      }
+      { "key": "studentProfileCreate", "label": "Create Student Profile", "icon": "fas fa-user-plus", "route": "/student/registration" },
+      { "key": "studentFullAdmission", "label": "Full Admission Process", "icon": "fas fa-user-check", "route": "/student/admission" },
+      { "key": "studentQuickEnroll", "label": "Quick Student Enrollment", "icon": "fas fa-bolt", "route": "/student/quick-admission" },
+      { "key": "studentPromotionProcess", "label": "Promotion Process", "icon": "fas fa-arrow-up", "route": "/student/promotion" },
+      { "key": "studentDocsSection", "label": "Student Documents", "icon": "fas fa-certificate", "children": [ { "key": "studentBonafideCert", "label": "Issue Bonafide Certificate", "icon": "fas fa-file-alt", "route": "/student/certificates/bonafied" }, { "key": "studentCharacterCert", "label": "Issue Character Certificate", "icon": "fas fa-file-alt", "route": "/student/certificates/character" }, { "key": "studentCasteCert", "label": "Issue Caste Certificate", "icon": "fas fa-file-alt", "route": "/student/certificates/caste" } ] },
+      { "key": "studentAlumniList", "label": "Alumni List", "icon": "fas fa-user-graduate", "route": "/student/alumni" },
+      { "key": "studentDropoutRecord", "label": "Record Dropout", "icon": "fas fa-user-slash", "route": "/student/drop-out" },
+      { "key": "studentAdmissionCancel", "label": "Cancel Admission", "icon": "fas fa-user-times", "route": "/student/admission-cancel" },
+      { "key": "studentDetailsModify", "label": "Modify Details", "icon": "fas fa-user-edit", "route": "/student/details-update" },
+      { "key": "studentPhotoModify", "label": "Modify Photo", "icon": "fas fa-camera", "route": "/student/photo-update" },
+      { "key": "studentBranchCopy", "label": "Copy to Branch", "icon": "fas fa-copy", "route": "/student/copy-branch" },
+      { "key": "studentStatusRevert", "label": "Revert Status", "icon": "fas fa-undo", "route": "/student/revert" },
+      { "key": "studentReports", "label": "Student Reports", "icon": "fas fa-chart-bar", "route": "/student/reports" }
     ]
   },
   {
@@ -164,66 +36,16 @@
     "label": "Transport",
     "icon": "fas fa-bus",
     "children": [
-      {
-        "key": "allocation",
-        "label": "Transport Allocation",
-        "icon": "fas fa-tasks",
-        "route": "/transport/allocation"
-      },
-      {
-        "key": "routes",
-        "label": "Routes Details",
-        "icon": "fas fa-route",
-        "route": "/transport/routes"
-      },
-      {
-        "key": "stands",
-        "label": "Stand Masters",
-        "icon": "fas fa-map-marker-alt",
-        "route": "/transport/stands"
-      },
-      {
-        "key": "drivers",
-        "label": "Drivers Details",
-        "icon": "fas fa-id-card",
-        "route": "/transport/drivers"
-      },
-      {
-        "key": "conductors",
-        "label": "Conductor Details",
-        "icon": "fas fa-user-tie",
-        "route": "/transport/conductors"
-      },
-      {
-        "key": "vehicles",
-        "label": "Vehicle Details",
-        "icon": "fas fa-bus",
-        "route": "/transport/vehicles"
-      },
-      {
-        "key": "km-charges",
-        "label": "KM Charges",
-        "icon": "fas fa-money-bill",
-        "route": "/transport/km-charges"
-      },
-      {
-        "key": "area-charges",
-        "label": "Area Charges",
-        "icon": "fas fa-map",
-        "route": "/transport/area-charges"
-      },
-      {
-        "key": "fixed-charges",
-        "label": "Fixed Charges",
-        "icon": "fas fa-money-check",
-        "route": "/transport/fixed-charges"
-      },
-      {
-        "key": "reports",
-        "label": "Reports",
-        "icon": "fas fa-file-alt",
-        "route": "/transport/reports"
-      }
+      { "key": "transportAssign", "label": "Assign Transport", "icon": "fas fa-tasks", "route": "/transport/allocation" },
+      { "key": "transportRoutesInfo", "label": "Route Information", "icon": "fas fa-route", "route": "/transport/routes" },
+      { "key": "transportVehicleInfo", "label": "Vehicle Information", "icon": "fas fa-bus", "route": "/transport/vehicles" },
+      { "key": "transportDriverInfo", "label": "Driver Information", "icon": "fas fa-id-card", "route": "/transport/drivers" },
+      { "key": "transportConductorInfo", "label": "Conductor Information", "icon": "fas fa-user-tie", "route": "/transport/conductors" },
+      { "key": "transportStandMaster", "label": "Manage Stands", "icon": "fas fa-map-marker-alt", "route": "/transport/stands" },
+      { "key": "transportKmCharges", "label": "KM Charges", "icon": "fas fa-money-bill", "route": "/transport/km-charges" },
+      { "key": "transportAreaCharges", "label": "Area Charges", "icon": "fas fa-map", "route": "/transport/area-charges" },
+      { "key": "transportFixedCharges", "label": "Fixed Charges", "icon": "fas fa-money-check", "route": "/transport/fixed-charges" },
+      { "key": "transportReports", "label": "Transport Reports", "icon": "fas fa-file-alt", "route": "/transport/reports" }
     ]
   },
   {
@@ -231,129 +53,23 @@
     "label": "Fees",
     "icon": "fas fa-money-bill-wave",
     "children": [
-      {
-        "key": "fees-head",
-        "label": "Fees Head",
-        "icon": "fas fa-list",
-        "route": "/fees/head"
-      },
-      {
-        "key": "fees-structure",
-        "label": "Fees Structure",
-        "icon": "fas fa-table",
-        "route": "/fees/structure"
-      },
-      {
-        "key": "concession",
-        "label": "Concession Category/Head",
-        "icon": "fas fa-percentage",
-        "route": "/fees/concession-category"
-      },
-      {
-        "key": "concession-details",
-        "label": "Concession Details",
-        "icon": "fas fa-receipt",
-        "route": "/fees/concession-details"
-      },
-      {
-        "key": "collection",
-        "label": "Fees Collection",
-        "icon": "fas fa-cash-register",
-        "route": "/fees/collection"
-      },
-      {
-        "key": "transport-fees",
-        "label": "Transport Fees Collection",
-        "icon": "fas fa-bus",
-        "route": "/fees/transport-collection"
-      },
-      {
-        "key": "cheque-bounce",
-        "label": "Cheque Bounce",
-        "icon": "fas fa-times-circle",
-        "route": "/fees/cheque-bounce"
-      },
-      {
-        "key": "cheque-clear",
-        "label": "Cheque Clear",
-        "icon": "fas fa-check-circle",
-        "route": "/fees/cheque-clear"
-      },
-      {
-        "key": "fees-refund",
-        "label": "Fees Refund",
-        "icon": "fas fa-undo",
-        "route": "/fees/refund"
-      },
-      {
-        "key": "cash-deposit",
-        "label": "Cash Deposit To Bank",
-        "icon": "fas fa-university",
-        "route": "/fees/cash-deposit"
-      },
-      {
-        "key": "fees-certificate",
-        "label": "Fees Certificate",
-        "icon": "fas fa-certificate",
-        "route": "/fees/certificate"
-      },
-      {
-        "key": "late-fine",
-        "label": "Late Fine",
-        "icon": "fas fa-clock",
-        "children": [
-          {
-            "key": "fixed",
-            "label": "Late Fine Fixed",
-            "route": "/fees/late-fine/fixed"
-          },
-          {
-            "key": "day",
-            "label": "Late Fine Day",
-            "route": "/fees/late-fine/day"
-          },
-          {
-            "key": "month",
-            "label": "Late Fine Month",
-            "route": "/fees/late-fine/month"
-          },
-          {
-            "key": "quarter",
-            "label": "Late Fine Quarter",
-            "route": "/fees/late-fine/quarter"
-          }
-        ]
-      },
-      {
-        "key": "optional-fees",
-        "label": "Optional Fees",
-        "icon": "fas fa-plus-circle",
-        "route": "/fees/optional"
-      },
-      {
-        "key": "reports",
-        "label": "Reports",
-        "icon": "fas fa-chart-bar",
-        "route": "/fees/reports"
-      },
-      {
-        "key": "fine-section",
-        "label": "Fine Section",
-        "icon": "fas fa-exclamation-circle",
-        "route": "/fees/fine-section"
-      },
-      {
-        "key": "document-fine",
-        "label": "Document Fine",
-        "icon": "fas fa-file-invoice",
-        "route": "/fees/document-fine"
-      },
-      {
-        "key": "attendance-fine",
-        "label": "Attendance Fine",
-        "icon": "fas fa-calendar-times",
-        "route": "/fees/attendance-fine"
-      }
+      { "key": "feesCollect", "label": "Collect Fees", "icon": "fas fa-cash-register", "route": "/fees/collection" },
+      { "key": "feesTransportCollect", "label": "Collect Transport Fees", "icon": "fas fa-bus", "route": "/fees/transport-collection" },
+      { "key": "feesStructureInfo", "label": "Structure Information", "icon": "fas fa-table", "route": "/fees/structure" },
+      { "key": "feesCategoryHead", "label": "Category Head", "icon": "fas fa-list", "route": "/fees/head" },
+      { "key": "feesConcessionType", "label": "Concession Type", "icon": "fas fa-percentage", "route": "/fees/concession-category" },
+      { "key": "feesConcessionDetails", "label": "Concession Details", "icon": "fas fa-receipt", "route": "/fees/concession-details" },
+      { "key": "feesRefundProcess", "label": "Refund Process", "icon": "fas fa-undo", "route": "/fees/refund" },
+      { "key": "feesChequeBounce", "label": "Cheque Bounce", "icon": "fas fa-times-circle", "route": "/fees/cheque-bounce" },
+      { "key": "feesChequeClear", "label": "Cheque Clear", "icon": "fas fa-check-circle", "route": "/fees/cheque-clear" },
+      { "key": "feesBankDeposit", "label": "Deposit to Bank", "icon": "fas fa-university", "route": "/fees/cash-deposit" },
+      { "key": "feesCertificateIssue", "label": "Issue Certificate", "icon": "fas fa-certificate", "route": "/fees/certificate" },
+      { "key": "feesLateFine", "label": "Late Fine", "icon": "fas fa-clock", "children": [ { "key": "feesLateFineFixed", "label": "Fixed Late Fine", "route": "/fees/late-fine/fixed" }, { "key": "feesLateFineDay", "label": "Daily Late Fine", "route": "/fees/late-fine/day" }, { "key": "feesLateFineMonth", "label": "Monthly Late Fine", "route": "/fees/late-fine/month" }, { "key": "feesLateFineQuarter", "label": "Quarterly Late Fine", "route": "/fees/late-fine/quarter" } ] },
+      { "key": "feesOptionalStream", "label": "Optional Stream Fees", "icon": "fas fa-plus-circle", "route": "/fees/optional" },
+      { "key": "feesReports", "label": "Fees Reports", "icon": "fas fa-chart-bar", "route": "/fees/reports" },
+      { "key": "feesFineSection", "label": "Fine Section", "icon": "fas fa-exclamation-circle", "route": "/fees/fine-section" },
+      { "key": "feesDocumentFine", "label": "Document Fine", "icon": "fas fa-file-invoice", "route": "/fees/document-fine" },
+      { "key": "feesAttendanceFine", "label": "Attendance Fine", "icon": "fas fa-calendar-times", "route": "/fees/attendance-fine" }
     ]
   },
   {
@@ -361,66 +77,16 @@
     "label": "LMS",
     "icon": "fas fa-chalkboard-teacher",
     "children": [
-      {
-        "key": "notes",
-        "label": "Notes",
-        "icon": "fas fa-book",
-        "route": "/lms/notes"
-      },
-      {
-        "key": "live-classes",
-        "label": "Live Classes",
-        "icon": "fas fa-video",
-        "route": "/lms/live-classes"
-      },
-      {
-        "key": "assignment",
-        "label": "Assignment",
-        "icon": "fas fa-tasks",
-        "route": "/lms/assignment"
-      },
-      {
-        "key": "homework",
-        "label": "Home Work",
-        "icon": "fas fa-home",
-        "route": "/lms/homework"
-      },
-      {
-        "key": "classwork",
-        "label": "Class Work",
-        "icon": "fas fa-pencil-alt",
-        "route": "/lms/classwork"
-      },
-      {
-        "key": "datesheet",
-        "label": "Date Sheet",
-        "icon": "fas fa-calendar-alt",
-        "route": "/lms/datesheet"
-      },
-      {
-        "key": "project",
-        "label": "Project",
-        "icon": "fas fa-project-diagram",
-        "route": "/lms/project"
-      },
-      {
-        "key": "syllabus",
-        "label": "Syllabus",
-        "icon": "fas fa-book-open",
-        "route": "/lms/syllabus"
-      },
-      {
-        "key": "newspaper",
-        "label": "News Paper",
-        "icon": "fas fa-newspaper",
-        "route": "/lms/newspaper"
-      },
-      {
-        "key": "books",
-        "label": "Books",
-        "icon": "fas fa-books",
-        "route": "/lms/books"
-      }
+      { "key": "lmsLiveSession", "label": "Live Session", "icon": "fas fa-video", "route": "/lms/live-classes" },
+      { "key": "lmsAssignmentTask", "label": "Assignment Task", "icon": "fas fa-tasks", "route": "/lms/assignment" },
+      { "key": "lmsHomeworkTask", "label": "Homework Task", "icon": "fas fa-home", "route": "/lms/homework" },
+      { "key": "lmsClassworkTask", "label": "Classwork Task", "icon": "fas fa-pencil-alt", "route": "/lms/classwork" },
+      { "key": "lmsNotes", "label": "Study Notes", "icon": "fas fa-book", "route": "/lms/notes" },
+      { "key": "lmsDateSheet", "label": "Date Sheet", "icon": "fas fa-calendar-alt", "route": "/lms/datesheet" },
+      { "key": "lmsProjectWork", "label": "Project Work", "icon": "fas fa-project-diagram", "route": "/lms/project" },
+      { "key": "lmsSyllabusInfo", "label": "Syllabus Information", "icon": "fas fa-book-open", "route": "/lms/syllabus" },
+      { "key": "lmsNewsResource", "label": "News Resource", "icon": "fas fa-newspaper", "route": "/lms/newspaper" },
+      { "key": "lmsBookList", "label": "Book List", "icon": "fas fa-books", "route": "/lms/books" }
     ]
   },
   {
@@ -428,48 +94,13 @@
     "label": "Attendance",
     "icon": "fas fa-calendar-check",
     "children": [
-      {
-        "key": "year-calendar",
-        "label": "Year Calendar",
-        "icon": "fas fa-calendar",
-        "route": "/attendance/year-calendar"
-      },
-      {
-        "key": "holiday",
-        "label": "Holiday",
-        "icon": "fas fa-umbrella-beach",
-        "route": "/attendance/holiday"
-      },
-      {
-        "key": "symbols",
-        "label": "Symbol-P,H,HD,W",
-        "icon": "fas fa-icons",
-        "route": "/attendance/symbols"
-      },
-      {
-        "key": "mark-attendance",
-        "label": "Mark Attendance",
-        "icon": "fas fa-user-check",
-        "route": "/attendance/mark"
-      },
-      {
-        "key": "mark-ptm",
-        "label": "Mark PTM Attendance",
-        "icon": "fas fa-users",
-        "route": "/attendance/mark-ptm"
-      },
-      {
-        "key": "mark-transport",
-        "label": "Mark Transport Attendance",
-        "icon": "fas fa-bus",
-        "route": "/attendance/mark-transport"
-      },
-      {
-        "key": "mark-lecture",
-        "label": "Mark Attendance Lecture Wise(College)",
-        "icon": "fas fa-clock",
-        "route": "/attendance/mark-lecture"
-      }
+      { "key": "mark-attendance", "label": "Mark Attendance", "icon": "fas fa-user-check", "route": "/attendance/mark" },
+      { "key": "mark-ptm", "label": "Mark PTM Attendance", "icon": "fas fa-users", "route": "/attendance/mark-ptm" },
+      { "key": "mark-transport", "label": "Mark Transport Attendance", "icon": "fas fa-bus", "route": "/attendance/mark-transport" },
+      { "key": "mark-lecture", "label": "Mark Attendance Lecture Wise(College)", "icon": "fas fa-clock", "route": "/attendance/mark-lecture" },
+      { "key": "symbols", "label": "Symbol-P,H,HD,W", "icon": "fas fa-icons", "route": "/attendance/symbols" },
+      { "key": "year-calendar", "label": "Year Calendar", "icon": "fas fa-calendar", "route": "/attendance/year-calendar" },
+      { "key": "holiday", "label": "Holiday", "icon": "fas fa-umbrella-beach", "route": "/attendance/holiday" }
     ]
   }
 ]
