@@ -1,3 +1,72 @@
+/* Sidebar menu global styles */
+.sidebar-heading {
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  min-height: 22px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #222;
+}
+.sidebar-heading-icon {
+  font-size: 13px;
+  width: 16px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+.snav-item {
+  padding: 3px 10px;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+.snav-item span {
+  font-size: 13px;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.snav-icon {
+  font-size: 11px;
+  width: 16px;
+  margin-right: 5px;
+  flex-shrink: 0;
+}
+.snav-caret {
+  font-size: 10px;
+  margin-left: auto;
+}
+.snav-sub-item {
+  padding: 4px 10px 4px 34px;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+.snav-sub-item span {
+  font-size: 11px;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.snav-sub-icon {
+  font-size: 9px;
+  width: 13px;
+  margin-right: 5px;
+  flex-shrink: 0;
+}
+[data-long-label] span {
+  font-size: 10px;
+  letter-spacing: -0.2px;
+}
+.snav-group {
+  margin-bottom: 2px;
+  padding: 0;
+}
 /* styles.css */
 :root {
   /* Updated Light theme - Attractive Light Blue (#95f0f7) */
@@ -167,6 +236,20 @@ body {
   background: var(--bg);
   height: 100vh;
   width: 100vw;
+}
+
+/* Ensure sidebar icons use theme color for visibility in all themes */
+.snav-icon i,
+.snav-sub-icon i {
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+[data-theme="dark"] .snav-icon i,
+[data-theme="dark"] .snav-sub-icon i,
+[data-theme="dark-color"] .snav-icon i,
+[data-theme="dark-color"] .snav-sub-icon i {
+  color: var(--primary-blue) !important;
 }
 
 /* ===== LAYOUT STYLES ===== */
@@ -695,8 +778,6 @@ body {
   padding: 8px;
 }
 
- 
-
 .left-panel.collapsed .snav-sub {
   padding-left: 0;
   padding-right: 0;
@@ -873,6 +954,12 @@ body {
   transform: scale(1.1);
 }
 
+[data-theme="dark"] .snav-item.snav-toggle:hover .snav-icon i,
+[data-theme="dark-color"] .snav-item.snav-toggle:hover .snav-icon i {
+  color: var(--surface) !important;
+}
+
+
 .snav-item.active .snav-icon {
   background: var(--primary-blue);
   color: white;
@@ -981,6 +1068,9 @@ body {
   width: 100%;
   box-sizing: border-box;
   transition: all 0.2s ease;
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 10px !important; /* override previous indent */
 }
 
 .snav-sub-icon {
@@ -1022,6 +1112,12 @@ body {
   color: white;
   transform: scale(1.1);
 }
+
+[data-theme="dark"] .snav-group:has(.snav-sub-item:hover) > .snav-item.snav-toggle .snav-icon i,
+[data-theme="dark-color"] .snav-group:has(.snav-sub-item:hover) > .snav-item.snav-toggle .snav-icon i {
+  color: var(--surface) !important;
+}
+
 
 .snav-group:has(.snav-sub-item.active) > .snav-item.snav-toggle {
   background: var(--light-blue);
@@ -1594,4 +1690,34 @@ body {
 .sidenav-menu::-webkit-scrollbar-thumb:hover,
 .right-col::-webkit-scrollbar-thumb:hover {
   background: var(--text-3);
+}
+
+/* Sidebar icon circle backgrounds */
+.snav-icon, .sidebar-heading-icon, .snav-sub-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--muted-surface);
+}
+
+/* Parent menu icon circle size matches font size */
+.snav-icon, .sidebar-heading-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+}
+
+/* Child menu icon circle size matches font size */
+.snav-sub-icon {
+  width: 16px;
+  height: 16px;
+  font-size: 11px;
+}
+
+/* For extra small/long label icons */
+[data-long-label] .snav-sub-icon {
+  width: 14px;
+  height: 14px;
+  font-size: 10px;
 }

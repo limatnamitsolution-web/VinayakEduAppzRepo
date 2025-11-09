@@ -37,7 +37,7 @@ export class SidebarComponent {
 
   ngOnInit(): void {
     // fetch sidebar JSON from public folder (served as asset). Using absolute path so it works with different base href.
-    this.http.get<MenuItem[]>('/sidebar-data.json').subscribe({
+    this.http.get<MenuItem[]>('/Frontdesk.json').subscribe({
       next: (data) => {
         this.menuItems = data || [];
         // initialize expandedMenus for groups
