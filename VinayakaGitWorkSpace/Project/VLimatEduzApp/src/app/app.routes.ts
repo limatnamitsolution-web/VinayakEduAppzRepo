@@ -15,8 +15,8 @@ export const routes: Routes = [
       // Add other module routes here
      
       { 
-        path: 'fees', 
-        loadChildren: () => import('./modules/fee/fee.routes').then(m => m.FeeRoutes)
+        path: 'mastersConfig', 
+        loadChildren: () => import('./modules/mastersConfig/masters.routes').then(m => m.mastersConfigRoutes)
       }
     ]
   }

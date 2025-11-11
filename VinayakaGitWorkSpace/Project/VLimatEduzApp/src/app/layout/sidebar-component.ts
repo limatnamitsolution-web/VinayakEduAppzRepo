@@ -61,7 +61,10 @@ export class SidebarComponent {
   }
 
   toggleSubMenu(menuKey: string) {
-    this.expandedMenus[menuKey] = !this.expandedMenus[menuKey];
+    // Accordion behavior: collapse all other menus
+    Object.keys(this.expandedMenus).forEach(key => {
+      this.expandedMenus[key] = (key === menuKey) ? !this.expandedMenus[key] : false;
+    });
   }
 
   setActiveMenu(menu: string) {

@@ -271,7 +271,7 @@ body {
 .content-container {
   flex: 1;
   overflow: auto;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   background: var(--bg);
   min-height: 0;
 }
@@ -1417,6 +1417,9 @@ body {
   background: transparent; 
   border-color: var(--border); 
 }
+
+/* When a module needs internal-only scrolling, add this class to body to hide page scroll */
+/* body.no-page-scroll removed — rely on layout and .panel-body internal scrolling like student dashboard */
 
 /* ===== CRAZY THEME STYLES ===== */
 [data-theme="crazy"] body {
