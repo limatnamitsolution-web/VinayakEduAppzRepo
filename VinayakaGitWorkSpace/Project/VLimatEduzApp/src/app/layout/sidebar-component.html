@@ -1,7 +1,9 @@
 <aside class="left-panel" tabindex="0" [class.collapsed]="isCollapsed">
   <div class="sidenav">
     <div class="sidenav-header">
-      <span class="sidenav-title">Menu</span>
+      <span class="sidenav-title" style="display: flex; align-items: center; justify-content: center; width: 100%;">
+        <span *ngIf="!isCollapsed" style="text-align: center; width: auto;">Student</span>
+      </span>
       <button class="sidenav-toggle" (click)="toggleSidebar()" title="Toggle Collapse">
         <i class="fas fa-angles-left" [class.rotated]="isCollapsed"></i>
       </button>
