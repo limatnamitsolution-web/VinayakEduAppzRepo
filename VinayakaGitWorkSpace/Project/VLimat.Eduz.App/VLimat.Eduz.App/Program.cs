@@ -22,6 +22,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // register DbContext (replace ApplicationDbContext with your context type)
 // register DbContext (replace ApplicationDbContext with your context type)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDev", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+        // .AllowCredentials(); // enable if your Angular app sends credentials (cookies/auth)
+    });
+});
+// Enable CORS middleware using the named policy
 
 builder.Services.AddControllers().Services.AddControllers();
     //.AddJsonOptions(options =>
@@ -61,7 +72,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
-
+app.UseCors("AllowAngularDev");
 // ✅ Add authentication/authorization in correct order
 app.UseAuthentication(); // optional, but must come before authorization
 app.UseAuthorization();

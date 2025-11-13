@@ -1,6 +1,6 @@
 // app/app.routes.ts
 import { Routes } from '@angular/router';
-import { LayoutComponent } from './layout/layout-component';
+import { LayoutComponent } from './shared/components/layout/layout-component';
 
 export const routes: Routes = [
   {
@@ -10,13 +10,13 @@ export const routes: Routes = [
       { path: '', redirectTo: 'student', pathMatch: 'full' },
       { 
         path: 'student', 
-        loadChildren: () => import('./modules/student/student.routes').then(m => m.StudentRoutes)
+        loadChildren: () => import('./features/student/student.routes').then(m => m.StudentRoutes)
       },
       // Add other module routes here
      
       { 
         path: 'mastersConfig', 
-        loadChildren: () => import('./modules/mastersConfig/masters.routes').then(m => m.mastersConfigRoutes)
+        loadChildren: () => import('./features/mastersConfig/masters.routes').then(m => m.mastersConfigRoutes)
       }
     ]
   }

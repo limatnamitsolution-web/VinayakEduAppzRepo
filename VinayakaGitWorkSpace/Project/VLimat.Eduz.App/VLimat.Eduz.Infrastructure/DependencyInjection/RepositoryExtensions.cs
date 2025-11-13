@@ -19,12 +19,12 @@ namespace VLimat.Eduz.Infrastructure.DependencyInjection
             {
                 throw new Exception("Connection string is null or empty");
             }
-            services.AddScoped<IMasterConfigRepository, EfMasterConfigRepository>();
+            services.AddScoped<IEntityMasterConfigRepository, EfMasterConfigRepository>();
 
             
 
 
-            services.AddScoped<IDapperMasterConfigRepository, DapperMasterConfigRepository>();
+            services.AddScoped<IMasterConfigRepository, MasterConfigRepository>();
             services.AddSingleton(sp =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();

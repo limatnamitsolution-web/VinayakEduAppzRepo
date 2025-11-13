@@ -8,18 +8,18 @@ using VLimat.Eduz.Infrastructure.Persistence;
 
 namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
 {
-    public class EfMasterConfigRepository : IMasterConfigRepository
+    public class EfMasterConfigRepository : IEntityMasterConfigRepository
     {
         private readonly ApplicationDbContext _db;
 
         public EfMasterConfigRepository(ApplicationDbContext db) => _db = db;
 
-        public async Task<MasterConfig?> GetByConfigurationAsync(int academicId, string Configuration, CancellationToken cancellationToken = default)
+        public async Task<MasterConfig?> GetAsync(int Id, CancellationToken cancellationToken = default)
         {
             return await _db.MasterConfigs
-                .FirstOrDefaultAsync(m => m.AcademicId == academicId && m.Configuration == Configuration, cancellationToken);
+                .FirstOrDefaultAsync(m => m.Id == Id, cancellationToken);
         }
-        public async Task<IEnumerable<MasterConfig?>> GetAllByConfigurationAsync(int academicId, string Configuration, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<MasterConfig?>> GetAllAsync(int academicId, string Configuration, CancellationToken cancellationToken = default)
         {
             return await _db.MasterConfigs
                 .Where(m => m.AcademicId == academicId && m.Configuration == Configuration && m.IsActive)

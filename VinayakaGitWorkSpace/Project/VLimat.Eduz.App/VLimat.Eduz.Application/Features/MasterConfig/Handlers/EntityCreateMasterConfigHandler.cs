@@ -1,20 +1,18 @@
-﻿using MediatR;
-using System;
+using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using VLimat.Eduz.Application.Features.MasterConfig.Commands;
-using VLimat.Eduz.Application.Features.MasterConfig.DTOs;
-using VLimat.Eduz.Domain.Features.Masters;
 using VLimat.Eduz.Domain.Repositories;
+using VLimat.Eduz.Application.Features.MasterConfig.Commands;
+using VLimat.Eduz.Domain.Features.Masters;
+using VLimat.Eduz.Application.Features.MasterConfig.DTOs;
 
 namespace VLimat.Eduz.Application.Features.MasterConfig.Handlers
 {
-    // Uses IMasterConfigRepository so DI can provide the Dapper implementation (DapperMasterConfigRepository).
-    public class CreateMasterConfigHandler : IRequestHandler<EntityCreateCommand, MasterConfigResponse>
+    public class EntityCreateMasterConfigHandler : IRequestHandler<EntityCreateCommand, MasterConfigResponse>
     {
         private readonly IEntityMasterConfigRepository _repo;
 
-        public CreateMasterConfigHandler(IEntityMasterConfigRepository repo) => _repo = repo;
+        public EntityCreateMasterConfigHandler(IEntityMasterConfigRepository repo) => _repo = repo;
 
         public async Task<MasterConfigResponse> Handle(EntityCreateCommand request, CancellationToken cancellationToken)
         {
@@ -29,11 +27,11 @@ namespace VLimat.Eduz.Application.Features.MasterConfig.Handlers
                 SortOrder = r.SortOrder,
                 AC_Yr = r.AC_Yr,
                 CreatedBy = r.CreatedBy,
-                IsActive = true,
+                IsActive = true, // Set default values as needed
                 CreatedDate = DateTime.UtcNow
             };
 
-            var added = await _repo.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+            var added = await _repo.AddAsync(entity, cancellationToken);
 
             return new MasterConfigResponse
             {

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using VLimat.Eduz.Domain.Features.Masters;
 
 namespace VLimat.Eduz.Domain.Repositories
 {
-    public interface IMasterConfigRepository
+    public interface IEntityMasterConfigRepository
     {
         Task<MasterConfig?> GetAsync(int Id, CancellationToken cancellationToken = default);
         Task<IEnumerable<MasterConfig?>> GetAllAsync(int academicId, string configKey, CancellationToken cancellationToken = default);

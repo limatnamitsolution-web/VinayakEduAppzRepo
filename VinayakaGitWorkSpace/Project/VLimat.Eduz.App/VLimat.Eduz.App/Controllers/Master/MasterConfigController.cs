@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using VLimat.Eduz.Application.Features.MasterConfig.Commands;
-using VLimat.Eduz.Application.Features.MasterConfig.Queries;
+using VLimat.Eduz.App.Common;
 using VLimat.Eduz.Application.Common;
+using VLimat.Eduz.Application.Features.MasterConfig.Commands;
 using VLimat.Eduz.Application.Features.MasterConfig.DTOs;
+using VLimat.Eduz.Application.Features.MasterConfig.Providers;
 
 namespace VLimat.Eduz.App.Controllers.Master
 {
@@ -15,34 +16,52 @@ namespace VLimat.Eduz.App.Controllers.Master
     {
         private readonly MediatR.IMediator _mediator;
 
-        public MasterConfigController(MediatR.IMediator mediator) => _mediator = mediator;
+        private readonly IProviderMasterConfigFactory _queryFactory;
+        public MasterConfigController(MediatR.IMediator mediator, IProviderMasterConfigFactory queryFactory)
+            => (_mediator, _queryFactory) = (mediator, queryFactory);
 
-        //[HttpGet("{academicId}/{Configuration}")]
-        //public async Task<IActionResult> GetByConfiguration(int academicId, string Configuration, CancellationToken cancellationToken)
+
+
+        //[HttpGet("GetAll")]
+        //public async Task<IActionResult> GetAllMasterConfig(int academicId, string Configuration, CancellationToken cancellationToken)
         //{
-        //    var query = new GetMasterConfigByConfigurationQuery(academicId, Configuration);
+        //   // var query = _queryFactory.CreateEntityGetAllMaster(academicId, Configuration);
+        //    var query = _queryFactory.CreateGetAllMasterConfig(academicId, Configuration);
         //    var result = await _mediator.Send(query, cancellationToken);
         //    if (result == null) return NotFound();
         //    return Ok(result);
         //}
-
-        [HttpGet("{academicId}/{Configuration}")]
-        public async Task<IActionResult> GetAllByConfiguration(int academicId, string Configuration, CancellationToken cancellationToken)
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAllMasterConfig(string encryptedAcademicId, string encryptedConfiguration, CancellationToken cancellationToken)
         {
-            var query = new GetAllMasterConfigByConfigurationQuery(academicId, Configuration);
-            //var query = new DapperGetAllMasterConfigByConfigurationQuery(academicId, Configuration);
+            // Use your secret key (must match Angular)
+            string secretKey = "your-strong-secret-key";
+
+            // Decrypt values
+            int academicId = int.Parse(CryptoHelper.DecryptString(encryptedAcademicId, secretKey));
+            string configuration = CryptoHelper.DecryptString(encryptedConfiguration, secretKey);
+
+            var query = _queryFactory.CreateGetAllMasterConfig(academicId, configuration);
             var result = await _mediator.Send(query, cancellationToken);
             if (result == null) return NotFound();
             return Ok(result);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] MasterConfigRequest request, CancellationToken cancellationToken)
+        [HttpGet("Get")]
+        public async Task<IActionResult> GetByConfiguration(int Id, CancellationToken cancellationToken)
         {
-            var command = new CreateMasterConfigCommand(request);
-            var created = await _mediator.Send(command, cancellationToken);
-            // Return Created pointing to GetAllByConfiguration; ensure route values match action parameter names
-            return CreatedAtAction(nameof(GetAllByConfiguration), new { academicId = created.AcademicId, Configuration = created.Configuration }, created);
+            //var query = _queryFactory.CreateEntityGetMasterConfig(Id);
+            var query = _queryFactory.CreateGetMasterConfig(Id);
+            var result = await _mediator.Send(query, cancellationToken);
+            if (result == null) return NotFound();
+            return Ok(result);
         }
+        //[HttpPost]
+        //public async Task<IActionResult> Create([FromBody] MasterConfigRequest request, CancellationToken cancellationToken)
+        //{
+        //    var command = new CreateCommand(request);
+        //    var created = await _mediator.Send(command, cancellationToken);
+        //    // Return Created pointing to GetAllByConfiguration; ensure route values match action parameter names
+        //    return CreatedAtAction(nameof(GetAllByConfiguration), new { academicId = created.AcademicId, Configuration = created.Configuration }, created);
+        //}
     }
 }

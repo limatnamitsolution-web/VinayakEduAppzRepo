@@ -1,0 +1,18 @@
+// app/layout/layout.component.ts
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from "./header-component";
+import { SidebarComponent } from "./sidebar-component";
+import { LoaderComponent } from '../loader/loader.component';
+
+
+
+@Component({
+  selector: 'app-layout',
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, HeaderComponent, SidebarComponent, LoaderComponent],
+  templateUrl: './layout-component.html',
+  styleUrls: ['./layout-component.scss']
+})
+export class LayoutComponent { }
