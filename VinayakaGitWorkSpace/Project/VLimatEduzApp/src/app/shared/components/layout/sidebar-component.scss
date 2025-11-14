@@ -71,6 +71,7 @@
     min-height: 28px;
     display: flex;
     align-items: center;
+      cursor: pointer;
     
     span {
       font-size: 11px;
@@ -86,6 +87,18 @@
       margin-right: 5px;
       flex-shrink: 0;
     }
+
+      .hover-symbol {
+        display: none;
+        font-size: 12px;
+        margin-left: auto;
+        color: #888;
+        transition: color 0.2s;
+      }
+      &:hover .hover-symbol {
+        display: inline-block;
+        color: #007bff;
+      }
   }
 }
 
