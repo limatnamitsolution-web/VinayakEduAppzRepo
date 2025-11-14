@@ -2,7 +2,7 @@
   <div class="sidenav">
     <div class="sidenav-header">
       <span class="sidenav-title" style="display: flex; align-items: center; justify-content: center; width: 100%;">
-        <span *ngIf="!isCollapsed" style="text-align: center; width: auto;">Student</span>
+        <span *ngIf="!isCollapsed" style="text-align: center; width: auto;">{{ selectedLabel || 'Student' }}</span>
       </span>
       <button class="sidenav-toggle" (click)="toggleSidebar()" title="Toggle Collapse">
         <i class="fas fa-angles-left" [class.rotated]="isCollapsed"></i>
@@ -27,10 +27,9 @@
               <div class="snav-sub" [class.expanded]="expandedMenus[item.key]">
                 @for (child of item.children; track child) {
                   <a
-                     class="snav-sub-item"
-                     [class.active]="isSubMenuActive(item.key, child.key)"
-                     [routerLink]="child.route"
-                     (click)="setActiveSubMenu(item.key, child.key)">
+                    class="snav-sub-item"
+                    [class.active]="isSubMenuActive(item.key, child.key)"
+                    (click)="setActiveSubMenu(item.key, child.key); navigateToDashboard(child.key)">
                     <div class="snav-sub-icon">
                       <i [class]="child.icon"></i>
                     </div>
@@ -42,8 +41,7 @@
           } @else {
             <a class="snav-item"
                [class.active]="activeMenu === item.key"
-               [routerLink]="item.route"
-               (click)="setActiveMenu(item.key)">
+               (click)="navigateToDashboard(item.key)">
               <div class="snav-icon">
                 <i [class]="item.icon"></i>
               </div>

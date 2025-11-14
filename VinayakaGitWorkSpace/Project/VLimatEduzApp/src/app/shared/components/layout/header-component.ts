@@ -2,6 +2,8 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../services/theme.service';
+import { MenuLabelService } from '../../services/menu-label.service';
+import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,18 +18,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isModuleSwitcherOpen = false;
   currentTheme: string = 'light';
   private themeSubscription!: Subscription;
+  private labelSubscription!: Subscription;
+  selectedMenuLabel: string = '';
+  selectedLabel: string = '';
 
-  constructor(private themeService: ThemeService) {}
+  constructor(
+    private themeService: ThemeService,
+    private menuLabelService: MenuLabelService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.themeSubscription = this.themeService.currentTheme$.subscribe(theme => {
       this.currentTheme = theme;
+    });
+    this.labelSubscription = this.menuLabelService.label$.subscribe(label => {
+      this.selectedMenuLabel = label;
+      this.selectedLabel = label;
+      this.cdr.detectChanges();
     });
   }
 
   ngOnDestroy() {
     if (this.themeSubscription) {
       this.themeSubscription.unsubscribe();
+    }
+    if (this.labelSubscription) {
+      this.labelSubscription.unsubscribe();
     }
   }
 

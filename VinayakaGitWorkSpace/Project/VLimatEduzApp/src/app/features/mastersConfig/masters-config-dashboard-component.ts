@@ -30,9 +30,10 @@ export class MastersConfigDashboardComponent implements OnInit {
   keyParam: string = '';
 
   constructor() {
+    console.log('MastersConfigDashboardComponent initialized');
     this.route.paramMap.subscribe(params => {
       this.keyParam = params.get('key') || 'ClassGroup';
-      this.mastersConfig.fetchMasterConfig(1, this.keyParam);
+      this.mastersConfig.fetchMasterConfig("1klk", this.keyParam);
     });
     effect(() => {
       const data = this.mastersConfig.masterConfig();

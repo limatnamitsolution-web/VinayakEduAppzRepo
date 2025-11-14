@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EncryptionService {
-  private secretKey = 'your-strong-secret-key'; // Change this to a secure key
+  private secretKey = 'MyVerySecretKey_1234567890ABCDEF'; // 32 characters for AES-256
 
   encrypt(value: string): string {
     return CryptoJS.AES.encrypt(value, this.secretKey).toString();

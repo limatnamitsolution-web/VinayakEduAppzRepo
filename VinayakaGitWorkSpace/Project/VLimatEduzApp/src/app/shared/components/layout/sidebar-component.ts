@@ -3,6 +3,9 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { EncryptionService } from '../../services/encryption.service';
+import { MenuLabelService } from '../../services/menu-label.service';
 
 interface MenuItem {
   key: string;
@@ -17,13 +20,13 @@ interface MenuItem {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './sidebar-component.html',
   styleUrls : ['./sidebar-component.scss']
 })
 export class SidebarComponent {
   menuItems: MenuItem[] = [];
-   isCollapsed = false;
+  isCollapsed = false;
   activeMenu: string = 'overview';
   activeSubMenu: string = '';
   expandedMenus: { [key: string]: boolean } = {
@@ -32,8 +35,37 @@ export class SidebarComponent {
     'library': false,
     'transport': false
   };
+  selectedLabel: string = '';
+  labelChanged: ((label: string) => void) | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private encryptionService: EncryptionService,
+    private menuLabelService: MenuLabelService
+  ) {}
+  // Call this method to navigate to dashboard with encrypted key
+  navigateToDashboard(menuKey: string) {
+    const encryptedKey = this.encryptionService.encrypt(menuKey);
+    // Find label for main or submenu
+    let label = '';
+    const main = this.menuItems.find(item => item.key === menuKey);
+    if (main) {
+      label = main.label;     
+    } else {
+      for (const item of this.menuItems) {
+        const child = item.children?.find(c => c.key === menuKey);
+        
+        if (child) {
+          label = child.label;
+          break;
+        }
+      }
+    }
+    this.selectedLabel = label;
+    this.menuLabelService.setLabel(label);
+    this.router.navigate(['/mastersConfig/dashboard', encryptedKey]);
+  }
 
   ngOnInit(): void {
     // fetch sidebar JSON from public folder (served as asset). Using absolute path so it works with different base href.
@@ -69,12 +101,23 @@ export class SidebarComponent {
 
   setActiveMenu(menu: string) {
     this.activeMenu = menu;
-    this.activeSubMenu = ''; // Reset submenu when clicking main menu
+    this.activeSubMenu = '';
+    const found = this.menuItems.find(item => item.key === menu);
+    if (found) {
+      this.selectedLabel = found.label;
+      this.menuLabelService.setLabel(found.label);
+    }
   }
 
   setActiveSubMenu(parentMenu: string, subMenu: string) {
     this.activeMenu = parentMenu;
     this.activeSubMenu = subMenu;
+    const parent = this.menuItems.find(item => item.key === parentMenu);
+    const child = parent?.children?.find(c => c.key === subMenu);
+    if (child) {
+      this.selectedLabel = child.label;
+      this.menuLabelService.setLabel(child.label);
+    }
   }
 
   isSubMenuActive(parentMenu: string, subMenuLabel: string): boolean {
