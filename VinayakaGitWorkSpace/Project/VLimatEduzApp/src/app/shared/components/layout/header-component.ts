@@ -5,11 +5,12 @@ import { ThemeService } from '../../services/theme.service';
 import { MenuLabelService } from '../../services/menu-label.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { ModuleSwitcherComponent } from "../module-switcher/module-switcher.component";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ModuleSwitcherComponent],
   templateUrl: './header-component.html',
   styleUrls: ['./header-component.scss']
 })
