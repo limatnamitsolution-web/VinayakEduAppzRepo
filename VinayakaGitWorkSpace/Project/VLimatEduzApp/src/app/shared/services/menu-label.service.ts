@@ -1,30 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class MenuLabelService {
-  private labelSubject = new BehaviorSubject<MenuItem>({
+  labelSubject = signal<MenuDisplay>({
     key: '',
-    label: '',
-    icon: '',
-    route: '',
-    isActive: false,
-    children: [],
-    isExpanded: false
   });
-  
-  label$ = this.labelSubject.asObservable();
 
-  setLabel(label: MenuItem) {
-    this.labelSubject.next(label);
+  label$ = this.labelSubject;
+
+  setLabel(labelKey: MenuDisplay) {
+    this.labelSubject.set(labelKey);
   }
-}
-interface MenuItem {
-  key: string;
-  label: string;
-  icon?: string;
-  route?: string;
-  isActive?: boolean;
-  children?: MenuItem[];
-  isExpanded?: boolean;
 }

@@ -10,7 +10,7 @@
             <button type="button" (click)="resetForm()" style="padding:6px 16px; background:#f44336; color:#fff; border:none; border-radius:4px; font-weight:500; cursor:pointer;">Reset</button>
         </form>
           <app-data-grid
-            [data]="gridData"
+            [data]="gridData()"
             [title]="gridTitle"
             [hideHeader]="true"
             (modify)="onModify($event)"

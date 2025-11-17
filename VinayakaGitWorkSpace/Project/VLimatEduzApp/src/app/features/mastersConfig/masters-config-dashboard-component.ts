@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, effect, signal, Inject } from '@angular/core';
+import { Component, OnInit, inject, effect, signal, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MasterConfig } from './models/MasterConfig.model';
 import { MastersConfig } from './Services/masters-config';
@@ -13,13 +13,14 @@ import { EncryptionService } from '../../shared/services/encryption.service';
   selector: 'app-masters-config-dashboard-component',
   imports: [CommonModule, DataGridComponent, ReactiveFormsModule],
   templateUrl: './masters-config-dashboard-component.html',
-  styleUrl: './masters-config-dashboard-component.scss'
+  styleUrl: './masters-config-dashboard-component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MastersConfigDashboardComponent implements OnInit {
   private mastersConfig = inject(MastersConfig);
   private route = inject(ActivatedRoute);
-  gridData: MasterConfig[] = [];
+  gridData = signal<MasterConfig[]>([]);
   gridTitle: string = 'Master Configuration';
   form: FormGroup;
   private fb = inject(FormBuilder);
@@ -27,7 +28,6 @@ export class MastersConfigDashboardComponent implements OnInit {
   keyParam: string = '';
   private encryptionService = inject(EncryptionService);
   constructor() {
-    
     this.form = this.fb.group({
       id:0,
       configValue: ['', Validators.required],
@@ -35,16 +35,10 @@ export class MastersConfigDashboardComponent implements OnInit {
       description: ['', Validators.required],
       configuration: ['', Validators.required]
     });
-    this.route.paramMap.subscribe(params => {
-      this.keyParam = params.get('key') || 'ClassGroup';
-    let key =   this.encryptionService.decrypt( this.keyParam);
-      this.form.patchValue({ configuration: key });
-      this.mastersConfig.fetchMasterConfig("1klk", this.keyParam);
-    });
     effect(() => {
       const data = this.mastersConfig.masterConfigList();
       if (data && Array.isArray(data)) {
-        this.gridData = data;      
+        this.gridData.set([...data]); // force new reference for change detection
       }
     });
     effect(() => {
@@ -59,7 +53,6 @@ export class MastersConfigDashboardComponent implements OnInit {
         });
       }
     });
-   
   }
 
   addGridItem() {
@@ -111,7 +104,12 @@ export class MastersConfigDashboardComponent implements OnInit {
     }
 
   ngOnInit() {
-   
+    this.route.paramMap.subscribe(params => {
+      this.keyParam = params.get('key') || 'ClassGroup';
+      let key = this.encryptionService.decrypt(this.keyParam);      
+      this.form.patchValue({ configuration: key });
+      this.mastersConfig.fetchMasterConfig("1klk", this.keyParam);
+    });
   }
 
   onModify(item: MasterConfig) {
@@ -122,7 +120,7 @@ export class MastersConfigDashboardComponent implements OnInit {
   }
 
   onDelete(item: MasterConfig) {
-    this.gridData = this.gridData.filter(i => i.id !== item.id);
+    this.gridData.set(this.gridData().filter(i => i.id !== item.id));
   }
 
 

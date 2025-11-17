@@ -1,31 +1,26 @@
 // app/layout/sidebar.component.ts
-import { Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { EncryptionService } from '../../services/encryption.service';
 import { MenuLabelService } from '../../services/menu-label.service';
-
-interface MenuItem {
-  key: string;
-  label: string;
-  icon?: string;
-  route?: string;
-  isActive?: boolean;
-  children?: MenuItem[];
-  isExpanded?: boolean;
-}
+import { LoadingMenuItemService } from '../../services/loading-menu-item.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './sidebar-component.html',
   styleUrls : ['./sidebar-component.scss']
 })
 export class SidebarComponent {
-  menuItems: MenuItem[] = [];
+  // Use signal from LoadingMenuItemService
+  get menuItems(): MenuItem[] {
+    return this.loadingMenuItemService.getMenuItems();
+  }
   isCollapsed = false;
   activeMenu: string = 'overview';
   activeSubMenu: string = '';
@@ -42,36 +37,40 @@ export class SidebarComponent {
     private http: HttpClient,
     private router: Router,
     private encryptionService: EncryptionService,
-    private menuLabelService: MenuLabelService
+    private menuLabelService: MenuLabelService,
+    private loadingMenuItemService: LoadingMenuItemService
   ) {}
+  // If label$ is consumed, use signal: this.menuLabelService.label$()
   // Call this method to navigate to dashboard with encrypted key
+  child: MenuItem | undefined;
+  main: MenuItem | undefined;
   navigateToDashboard(menuKey: string) {
     const encryptedKey = this.encryptionService.encrypt(menuKey);
     // Find label for main or submenu
     let label = '';
-    const main = this.menuItems.find(item => item.key === menuKey);
-    if (main) {
-      label = main.label;     
+     this.main = this.menuItems.find(item => item.key === menuKey);
+    if (this.main) {
+      label = this.main.label;     
     } else {
       for (const item of this.menuItems) {
-        const child = item.children?.find(c => c.key === menuKey);
+         this.child = item.children?.find(c => c.key === menuKey);
         
-        if (child) {
-          label = child.label;
+        if (this.child) {
+          label = this.child.label;
           break;
         }
       }
     }
     this.selectedLabel = label;
-    this.menuLabelService.setLabel(main || { key: '', label: '', icon: '', route: '', isActive: false, children: [], isExpanded: false });
+    this.menuLabelService.setLabel({ key: this.main?.label||this.child?.label||'' });
     this.router.navigate(['/mastersConfig/dashboard', encryptedKey]);
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // fetch sidebar JSON from public folder (served as asset). Using absolute path so it works with different base href.
     this.http.get<MenuItem[]>('/Frontdesk.json').subscribe({
-      next: (data) => {
-        this.menuItems = data || [];
+      next: async (data) => {
+        await this.loadingMenuItemService.setMenuItems(data || []);
         // initialize expandedMenus for groups
         for (const item of this.menuItems) {
           if (item.children && item.children.length) {

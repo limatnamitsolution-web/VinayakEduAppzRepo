@@ -1,5 +1,5 @@
 // modules/fee/fee-layout.component.ts
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -11,6 +11,7 @@ import { RouterOutlet } from '@angular/router';
     <div class="fee-module">
       <router-outlet></router-outlet>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeeLayoutComponent { }

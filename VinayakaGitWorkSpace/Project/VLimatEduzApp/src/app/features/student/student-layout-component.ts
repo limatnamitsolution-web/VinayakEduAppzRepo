@@ -1,5 +1,6 @@
 // app/modules/student/student-layout.component.ts
-import { Component } from '@angular/core';
+
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -7,6 +8,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-student-layout',
   standalone: true,
   imports: [CommonModule, RouterOutlet],
+   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="student-module">
       <router-outlet></router-outlet>
@@ -18,4 +20,5 @@ import { RouterOutlet } from '@angular/router';
     }
   `]
 })
+ 
 export class StudentLayoutComponent { }

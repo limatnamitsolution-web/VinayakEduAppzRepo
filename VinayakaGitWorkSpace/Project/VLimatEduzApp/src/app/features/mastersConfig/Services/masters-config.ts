@@ -20,9 +20,9 @@ export class MastersConfig {
     this.http.post(url, { category: configuration }).subscribe({
       next: data => {
         this.masterConfigList.set(data);
-        
       },
       error: err => {
+        console.error('API error for masterConfigList:', err);
         this.masterConfigList.set([]); // fallback to empty array or sensible default
       }
     });
