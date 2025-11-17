@@ -34,8 +34,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.currentTheme = theme;
     });
     this.labelSubscription = this.menuLabelService.label$.subscribe(label => {
-      this.selectedMenuLabel = label;
-      this.selectedLabel = label;
+      this.selectedMenuLabel = label.label;
+      this.selectedLabel = label.label;
       this.cdr.detectChanges();
     });
   }

@@ -63,7 +63,7 @@ export class SidebarComponent {
       }
     }
     this.selectedLabel = label;
-    this.menuLabelService.setLabel(label);
+    this.menuLabelService.setLabel(main || { key: '', label: '', icon: '', route: '', isActive: false, children: [], isExpanded: false });
     this.router.navigate(['/mastersConfig/dashboard', encryptedKey]);
   }
 
@@ -105,7 +105,7 @@ export class SidebarComponent {
     const found = this.menuItems.find(item => item.key === menu);
     if (found) {
       this.selectedLabel = found.label;
-      this.menuLabelService.setLabel(found.label);
+      this.menuLabelService.setLabel(found);
     }
   }
 
@@ -116,7 +116,7 @@ export class SidebarComponent {
     const child = parent?.children?.find(c => c.key === subMenu);
     if (child) {
       this.selectedLabel = child.label;
-      this.menuLabelService.setLabel(child.label);
+      this.menuLabelService.setLabel(child);
     }
   }
 

@@ -1,16 +1,17 @@
-import { Component, OnInit, inject, effect } from '@angular/core';
+import { Component, OnInit, inject, effect, signal, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MasterConfig } from './models/MasterConfig.model';
 import { MastersConfig } from './Services/masters-config';
 import { ActivatedRoute } from '@angular/router';
-
 import { DataGridComponent } from './Shared/component/data-grid-component/data-grid-component';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MenuLabelService } from '../../shared/services/menu-label.service';
+import { EncryptionService } from '../../shared/services/encryption.service';
 
 
 @Component({
   selector: 'app-masters-config-dashboard-component',
-  imports: [CommonModule, DataGridComponent, FormsModule],
+  imports: [CommonModule, DataGridComponent, ReactiveFormsModule],
   templateUrl: './masters-config-dashboard-component.html',
   styleUrl: './masters-config-dashboard-component.scss'
 })
@@ -20,78 +21,109 @@ export class MastersConfigDashboardComponent implements OnInit {
   private route = inject(ActivatedRoute);
   gridData: MasterConfig[] = [];
   gridTitle: string = 'Master Configuration';
-  newItem: MasterConfig = {
-    id: '',
-    configValue: '',
-    configKey: '',
-    description: ''
-  };
+  form: FormGroup;
+  private fb = inject(FormBuilder);
   editIndex: number | null = null;
   keyParam: string = '';
-
+  private encryptionService = inject(EncryptionService);
   constructor() {
-    console.log('MastersConfigDashboardComponent initialized');
+    
+    this.form = this.fb.group({
+      id:0,
+      configValue: ['', Validators.required],
+      configKey: ['', Validators.required],
+      description: ['', Validators.required],
+      configuration: ['', Validators.required]
+    });
     this.route.paramMap.subscribe(params => {
       this.keyParam = params.get('key') || 'ClassGroup';
+    let key =   this.encryptionService.decrypt( this.keyParam);
+      this.form.patchValue({ configuration: key });
       this.mastersConfig.fetchMasterConfig("1klk", this.keyParam);
     });
     effect(() => {
-      const data = this.mastersConfig.masterConfig();
+      const data = this.mastersConfig.masterConfigList();
       if (data && Array.isArray(data)) {
-        this.gridData = data;
+        this.gridData = data;      
+      }
+    });
+    effect(() => {
+      const result = this.mastersConfig.masterConfig();
+      if (result) {
+        this.form.setValue({
+          id: result.id,
+          configValue: result.configValue,
+          configKey: result.configKey,
+          description: result.description,
+          configuration: result.configuration
+        });
+      }
+    });
+   
+  }
+
+  addGridItem() {
+    console.log('Adding/Updating grid item');
+    console.log('Form Values:', this.form.value);
+    console.log('Form Validity:', this.form.valid);
+  //   Object.keys(this.form.controls).forEach(key => {
+  //   const control = this.form.get(key);
+  //   if (control && control.invalid) {
+  //     console.log(`Control "${key}" is invalid. Errors:`, control.errors);
+  //   }
+  // });
+    if (this.form.invalid) return;
+    const config = this.form.value;
+    if(this.editIndex === null) {
+    this.mastersConfig.createMasterConfig(config).subscribe({
+      next: (res) => {
+        // Optionally refresh grid data or show success
+        this.mastersConfig.fetchMasterConfig("1klk", this.keyParam);
+        
+      },
+      error: (err) => {
+        // Optionally show error
+        console.error('Create failed', err);
+      }
+    });
+  } else {
+    this.mastersConfig.updateMasterConfig(config).subscribe({
+      next: (res) => {
+        // Optionally refresh grid data or show success
+        this.mastersConfig.fetchMasterConfig("1klk", this.keyParam);
+        
+      },
+      error: (err) => {
+        // Optionally show error
+        console.error('Create failed', err);
       }
     });
   }
-  addGridItem() {
-  if (!this.newItem.configValue.trim() || !this.newItem.configKey.trim() || !this.newItem.description.trim()) return;
-    if (this.editIndex !== null) {
-      // Update existing item
-      this.gridData[this.editIndex] = { ...this.newItem };
+    this.resetForm();
+}
+
+    resetForm() {
+      this.form.reset();
+          let key =   this.encryptionService.decrypt( this.keyParam);
+      this.form.patchValue({ id: 0 , configValue: '', configKey: '', description: '', configuration: key });
       this.editIndex = null;
-    } else {
-      // Add new item
-      const itemToAdd: MasterConfig = {
-        ...this.newItem,
-        id: 'CONF' + (this.gridData.length + 1).toString().padStart(3, '0')
-      };
-      this.gridData = [...this.gridData, itemToAdd];
+      
     }
-  this.newItem = { id: '', configValue: '', configKey: '', description: '' };
-  }
 
   ngOnInit() {
-    // Fetch master config data from API
    
   }
-  
-
-  // Removed loadSampleData; now data is loaded from API
 
   onModify(item: MasterConfig) {
-  const index = this.gridData.findIndex(i => i.id === item.id);
-    if (index !== -1) {
-      this.newItem = { ...item };
-      this.editIndex = index;
+    if (item.id) {      
+        this.editIndex = item.id;
+        this.mastersConfig.fetchMasterConfigGet(item.id);      
     }
   }
 
   onDelete(item: MasterConfig) {
-    console.log('Delete item:', item);
-    // Implement delete logic
-  this.gridData = this.gridData.filter(i => i.id !== item.id);
+    this.gridData = this.gridData.filter(i => i.id !== item.id);
   }
 
-
-  onAddNew() {
-    console.log('Add new item');
-    // Implement add new logic
-    const newItem: MasterConfig = {
-      id: 'CONF' + (this.gridData.length + 1).toString().padStart(3, '0'),
-      configValue: 'New Configuration',
-      configKey: 'NEW_CONFIG',
-      description: 'New configuration item description'
-    };
-    this.gridData = [...this.gridData, newItem];
-  }
 
 }

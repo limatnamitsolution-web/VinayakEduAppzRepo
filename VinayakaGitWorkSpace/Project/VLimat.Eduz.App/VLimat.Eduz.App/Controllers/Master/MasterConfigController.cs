@@ -60,23 +60,117 @@ namespace VLimat.Eduz.App.Controllers.Master
             }
         }
 
-        [HttpGet("Get")]
-        public async Task<IActionResult> GetByConfiguration(int Id, CancellationToken cancellationToken)
+        [HttpGet("Get/{id}")]
+        public async Task<IActionResult> GetByConfiguration(int id, CancellationToken cancellationToken)
         {
             //var query = _queryFactory.CreateEntityGetMasterConfig(Id);
-            var query = _queryFactory.CreateGetMasterConfig(Id);
+            var query = _queryFactory.CreateGetMasterConfig(id);
             var result = await _mediator.Send(query, cancellationToken);
             if (result == null) return NotFound();
             return Ok(result);
         }
-        //[HttpPost]
-        //public async Task<IActionResult> Create([FromBody] MasterConfigRequest request, CancellationToken cancellationToken)
-        //{
-        //    var command = new CreateCommand(request);
-        //    var created = await _mediator.Send(command, cancellationToken);
-        //    // Return Created pointing to GetAllByConfiguration; ensure route values match action parameter names
-        //    return CreatedAtAction(nameof(GetAllByConfiguration), new { academicId = created.AcademicId, Configuration = created.Configuration }, created);
-        //}
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] MasterConfigRequest request, CancellationToken cancellationToken)
+        {
+            if (request == null)
+                return BadRequest("Request body is required.");
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var command = _queryFactory.CreateCreateMasterConfigCommand(request);
+                var created = await _mediator.Send(command, cancellationToken);
+
+                if (created == null)
+                    return BadRequest("Creation failed.");
+
+                // normalize to object for pattern matching
+                object result = created!;
+
+                switch (result)
+                {
+                    case int id when id > 0:
+                        return CreatedAtAction(nameof(GetByConfiguration), new { id }, result);
+                    case long id when id > 0:
+                        return CreatedAtAction(nameof(GetByConfiguration), new { id }, result);
+                    case bool b when b:
+                        return Ok(result);
+                    case bool b when !b:
+                        return BadRequest("Creation reported failure.");
+                    default:
+                        return Ok(result);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (CryptographicException)
+            {
+                return BadRequest("Decryption failed. Check key/format.");
+            }
+            catch (Exception)
+            {
+                // Consider logging the exception here.
+                return StatusCode(500, "An unexpected error occurred while creating the resource.");
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] MasterConfigRequest request, CancellationToken cancellationToken)
+        {
+            if (request == null)
+                return BadRequest("Request body is required.");
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var command = _queryFactory.CreateUpdateMasterConfigCommand(request);
+                var updated = await _mediator.Send(command, cancellationToken);
+
+                if (updated == null)
+                    return NotFound();
+
+                object result = updated!;
+
+                // Interpret common update handler return types:
+                // - bool true  => success (204 NoContent)
+                // - bool false => failure (400)
+                // - int/long > 0 => affected rows => success (204)
+                // - any other object => return updated object (200)
+                switch (result)
+                {
+                    case bool b when b:
+                        return NoContent();
+                    case bool b when !b:
+                        return BadRequest("Update reported failure.");
+                    case int i when i > 0:
+                        return NoContent();
+                    case long l when l > 0:
+                        return NoContent();
+                    default:
+                        return Ok(result);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (CryptographicException)
+            {
+                return BadRequest("Decryption failed. Check key/format.");
+            }
+            catch (Exception)
+            {
+                // Consider logging the exception here.
+                return StatusCode(500, "An unexpected error occurred while updating the resource.");
+            }
+        }
 
         // Simple request DTO for POST body
         public class GetAllMasterConfigRequest

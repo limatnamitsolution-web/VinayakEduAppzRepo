@@ -1,6 +1,7 @@
 export interface MasterConfig {
-  id: string;
+  id: number;
   configValue: string;
   configKey: string;
   description: string;
+  configuration: string;
 }

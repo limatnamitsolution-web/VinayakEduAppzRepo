@@ -10,17 +10,18 @@ using VLimat.Eduz.Domain.Repositories;
 namespace VLimat.Eduz.Application.Features.MasterConfig.Handlers
 {
     // Uses IMasterConfigRepository so DI can provide the Dapper implementation (DapperMasterConfigRepository).
-    public class CreateMasterConfigHandler : IRequestHandler<CreateCommand, MasterConfigResponse>
+    public class UpdateMasterConfigHandler : IRequestHandler<UpdateCommand, MasterConfigResponse>
     {
         private readonly IMasterConfigRepository _repo;
 
-        public CreateMasterConfigHandler(IMasterConfigRepository repo) => _repo = repo;
+        public UpdateMasterConfigHandler(IMasterConfigRepository repo) => _repo = repo;
 
-        public async Task<MasterConfigResponse> Handle(CreateCommand request, CancellationToken cancellationToken)
+        public async Task<MasterConfigResponse> Handle(UpdateCommand request, CancellationToken cancellationToken)
         {
             var r = request.Request;
             var entity = new VLimat.Eduz.Domain.Features.Masters.MasterConfig
             {
+                Id = r.Id,
                 AcademicId = r.AcademicId,
                 Configuration = r.Configuration,
                 ConfigKey = r.ConfigKey,
@@ -33,20 +34,21 @@ namespace VLimat.Eduz.Application.Features.MasterConfig.Handlers
                 CreatedDate = DateTime.UtcNow
             };
 
-            var added = await _repo.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+            await _repo.UpdateAsync(entity, cancellationToken).ConfigureAwait(false);
 
+            // Since UpdateAsync returns void, use the entity for response
             return new MasterConfigResponse
             {
-                AcademicId = added.AcademicId,
-                Configuration = added.Configuration,
-                ConfigKey = added.ConfigKey,
-                ConfigValue = added.ConfigValue,
-                Description = added.Description,
-                SortOrder = added.SortOrder,
-                AC_Yr = added.AC_Yr,
-                IsActive = added.IsActive,
-                CreatedDate = added.CreatedDate,
-                CreatedBy = added.CreatedBy
+                AcademicId = entity.AcademicId,
+                Configuration = entity.Configuration,
+                ConfigKey = entity.ConfigKey,
+                ConfigValue = entity.ConfigValue,
+                Description = entity.Description,
+                SortOrder = entity.SortOrder,
+                AC_Yr = entity.AC_Yr,
+                IsActive = entity.IsActive,
+                CreatedDate = entity.CreatedDate,
+                CreatedBy = entity.CreatedBy
             };
         }
     }

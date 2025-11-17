@@ -2,20 +2,20 @@
   <div class="layout">
     <section class="panel">
       <div class="panel-body">
-        <form (ngSubmit)="addGridItem()" style="margin-bottom:16px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-          <input type="text" [(ngModel)]="newItem.configValue" name="configValue" placeholder="Name" style="flex:1; min-width:120px; padding:6px 10px; border-radius:4px; border:1px solid #ccc;" required />
-          <input type="text" [(ngModel)]="newItem.configKey" name="configKey" placeholder="Code" style="flex:1; min-width:120px; padding:6px 10px; border-radius:4px; border:1px solid #ccc;" required />
-          <input type="text" [(ngModel)]="newItem.description" name="description" placeholder="Description" style="flex:2; min-width:180px; padding:6px 10px; border-radius:4px; border:1px solid #ccc;" required />
-          <button type="submit" style="padding:6px 16px; background:var(--primary-blue); color:#fff; border:none; border-radius:4px; font-weight:500; cursor:pointer;">Add</button>
+        <form [formGroup]="form" (ngSubmit)="addGridItem()" style="margin-bottom:16px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <input type="text" formControlName="configValue" placeholder="Name" style="flex:1; min-width:120px; padding:6px 10px; border-radius:4px; border:1px solid #ccc;" required />
+          <input type="text" formControlName="configKey" placeholder="Code" style="flex:1; min-width:120px; padding:6px 10px; border-radius:4px; border:1px solid #ccc;" required />
+          <input type="text" formControlName="description" placeholder="Description" style="flex:2; min-width:180px; padding:6px 10px; border-radius:4px; border:1px solid #ccc;" required />
+          <button type="submit"  style="padding:6px 16px; background:var(--primary-blue); color:#fff; border:none; border-radius:4px; font-weight:500; cursor:pointer;">{{ editIndex !== null ? 'Update' : 'Add' }}</button>
+            <button type="button" (click)="resetForm()" style="padding:6px 16px; background:#f44336; color:#fff; border:none; border-radius:4px; font-weight:500; cursor:pointer;">Reset</button>
         </form>
-        <app-data-grid
-          [data]="gridData"
-          [title]="gridTitle"
-          [hideHeader]="true"
-          (modify)="onModify($event)"
-          (delete)="onDelete($event)"
-          (addNew)="onAddNew()">
-        </app-data-grid>
+          <app-data-grid
+            [data]="gridData"
+            [title]="gridTitle"
+            [hideHeader]="true"
+            (modify)="onModify($event)"
+            (delete)="onDelete($event)">
+          </app-data-grid>
       </div>
     </section>
   </div>

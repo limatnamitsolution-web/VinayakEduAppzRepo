@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VLimat.Eduz.Application.Features.MasterConfig.Commands;
+using VLimat.Eduz.Application.Features.MasterConfig.DTOs;
 using VLimat.Eduz.Application.Features.MasterConfig.Queries;
 
 namespace VLimat.Eduz.Application.Features.MasterConfig.Providers
@@ -20,5 +22,13 @@ namespace VLimat.Eduz.Application.Features.MasterConfig.Providers
 
         public EntityGetMasterConfigQuery CreateEntityGetMasterConfig(int Id)
             => new EntityGetMasterConfigQuery(Id);
+
+        public CreateCommand CreateCreateMasterConfigCommand(MasterConfigRequest request)
+            => new CreateCommand(request);
+
+
+        public UpdateCommand CreateUpdateMasterConfigCommand(MasterConfigRequest request)
+            => new UpdateCommand(request);
+
     }
 }

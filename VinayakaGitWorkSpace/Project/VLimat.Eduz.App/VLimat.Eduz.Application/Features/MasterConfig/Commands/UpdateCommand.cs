@@ -8,6 +8,6 @@ using VLimat.Eduz.Application.Features.MasterConfig.DTOs;
 
 namespace VLimat.Eduz.Application.Features.MasterConfig.Commands
     {
-        public record EntityCreateCommand(MasterConfigRequest Request) : IRequest<MasterConfigResponse>;
-          public record CreateCommand(MasterConfigRequest Request) : IRequest<MasterConfigResponse>;
+        public record EntityUpdateCommand(MasterConfigRequest Request) : IRequest<MasterConfigResponse>;
+        public record UpdateCommand(MasterConfigRequest Request) : IRequest<MasterConfigResponse>;
 }

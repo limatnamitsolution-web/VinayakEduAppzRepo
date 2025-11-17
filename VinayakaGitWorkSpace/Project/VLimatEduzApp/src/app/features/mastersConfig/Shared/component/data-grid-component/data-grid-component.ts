@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { MasterConfig } from '../../../models/MasterConfig.model';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-data-grid',
@@ -17,7 +18,6 @@ export class DataGridComponent {
   @Output() modify = new EventEmitter<MasterConfig>();
   @Output() delete = new EventEmitter<MasterConfig>();
   @Output() view = new EventEmitter<MasterConfig>();
-  @Output() addNew = new EventEmitter<void>();
 
   // Pagination and filtering
   filteredData: MasterConfig[] = [];
@@ -45,7 +45,6 @@ export class DataGridComponent {
 
   filterData() {
     let result = [...this.data];
-
     // Apply search filter
     if (this.searchText) {
       const searchLower = this.searchText.toLowerCase();
@@ -53,7 +52,7 @@ export class DataGridComponent {
         item.configValue.toLowerCase().includes(searchLower) ||
         item.configKey.toLowerCase().includes(searchLower) ||
         item.description.toLowerCase().includes(searchLower) ||
-        item.id.toLowerCase().includes(searchLower)
+        item.id.toString().includes(searchLower)
       );
     }
 
@@ -158,6 +157,7 @@ export class DataGridComponent {
 
   // Event handlers with confirmation
   onModify(item: MasterConfig) {
+   // console.log('Modify item:', item);
     this.selectedItem = item;
     this.modify.emit(item);
   }
@@ -173,7 +173,5 @@ export class DataGridComponent {
     this.view.emit(item);
   }
 
-  onAddNew() {
-    this.addNew.emit();
-  }
+ 
 }

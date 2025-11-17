@@ -26,10 +26,9 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
         public async Task<MasterConfig?> GetAsync(int Id, CancellationToken cancellationToken = default)
         {
             const string sql = @"
-                SELECT TOP (1) *
+                SELECT *
                 FROM mst.MasterConfigs
-                WHERE Id = @Id
-                ORDER BY SortOrder;";
+                WHERE Id = @Id;";
 
             if (_uow.Transaction != null)
             {
@@ -67,11 +66,11 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             const string sql = @"
-INSERT INTO MasterConfigs
-    (AcademicId, Configuration, ConfigKey, ConfigValue, Description, SortOrder, AC_Yr, IsActive, CreatedDate, CreatedBy, ModifiedDate, ModifiedBy)
-VALUES
-    (@AcademicId, @Configuration, @ConfigKey, @ConfigValue, @Description, @SortOrder, @AC_Yr, @IsActive, @CreatedDate, @CreatedBy, @ModifiedDate, @ModifiedBy);
-SELECT CAST(SCOPE_IDENTITY() AS int);";
+                                INSERT INTO mst.MasterConfigs
+                                    (AcademicId, Configuration, ConfigKey, ConfigValue, Description, SortOrder, AC_Yr, IsActive, CreatedDate, CreatedBy, ModifiedDate, ModifiedBy)
+                                VALUES
+                                    (1, @Configuration, @ConfigKey, @ConfigValue, @Description, @SortOrder, @AC_Yr, @IsActive, @CreatedDate, @CreatedBy, @ModifiedDate, @ModifiedBy);
+                                SELECT CAST(SCOPE_IDENTITY() AS int);";
 
             var startedLocal = false;
             try
@@ -107,17 +106,18 @@ SELECT CAST(SCOPE_IDENTITY() AS int);";
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             const string sql = @"
-UPDATE MasterConfigs
-SET Configuration = @Configuration,
-    ConfigKey = @ConfigKey,
-    ConfigValue = @ConfigValue,
-    Description = @Description,
-    SortOrder = @SortOrder,
-    AC_Yr = @AC_Yr,
-    IsActive = @IsActive,
-    ModifiedDate = @ModifiedDate,
-    ModifiedBy = @ModifiedBy
-WHERE Id = @Id;";
+                                UPDATE mst.MasterConfigs
+                                SET Configuration = @Configuration,
+                                    AcademicId=1,
+                                    ConfigKey =  @ConfigKey,
+                                    ConfigValue = @ConfigValue,
+                                    Description = @Description,
+                                    SortOrder = 1,
+                                    AC_Yr = 1,
+                                    IsActive = 1,
+                                    CreatedBy=1,
+                                    ModifiedBy =1
+                                WHERE Id = @Id;";
 
             var startedLocal = false;
             try

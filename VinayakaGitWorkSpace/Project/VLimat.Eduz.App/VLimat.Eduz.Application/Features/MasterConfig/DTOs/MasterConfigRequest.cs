@@ -3,6 +3,7 @@ namespace VLimat.Eduz.Application.Features.MasterConfig.DTOs
 {
     public class MasterConfigRequest
     {
+        public int Id { get; set; }
         public int AcademicId { get; set; }
         public string Configuration { get; set; } = string.Empty;
         public string ConfigKey { get; set; } = string.Empty;

@@ -10,9 +10,7 @@
           [(ngModel)]="searchText"
           (input)="onSearch()">
       </div>
-      <button class="btn btn-primary" (click)="onAddNew()">
-        <i class="fas fa-plus"></i> Add New
-      </button>
+
     </div>
   </div>
 
@@ -94,8 +92,7 @@
     <div *ngIf="filteredData.length === 0" class="empty-state">
       <i class="fas fa-inbox"></i>
       <p>No data found</p>
-      <p class="empty-subtitle" *ngIf="searchText">Try adjusting your search criteria</p>
-      <button class="btn btn-primary" (click)="onAddNew()">Add First Item</button>
+      <p class="empty-subtitle" *ngIf="searchText">Try adjusting your search criteria</p>      
     </div>
   </div>
 

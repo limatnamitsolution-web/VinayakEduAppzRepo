@@ -25,6 +25,7 @@ namespace VLimat.Eduz.Application.Features.MasterConfig.Handlers
                     var item = e!;
                     return new MasterConfigResponse
                     {
+                        ID = item.Id,
                         AcademicId = item.AcademicId,
                         Configuration = item.Configuration,
                         ConfigKey = item.ConfigKey,
