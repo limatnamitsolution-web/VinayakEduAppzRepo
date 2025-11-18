@@ -33,9 +33,18 @@
 	padding-left: 20px;
 	padding-right: 20px;
 	/* panel-body is the scroll container now */
-	overflow: auto;
+	overflow: hidden;
 	-webkit-overflow-scrolling: touch;
 	flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+app-admission-grid {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Ensure the table's sticky thead sticks to the panel-body top (no overlap) */
