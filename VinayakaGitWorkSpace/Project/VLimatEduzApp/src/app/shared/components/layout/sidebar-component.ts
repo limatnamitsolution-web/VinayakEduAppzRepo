@@ -68,9 +68,7 @@ export class SidebarComponent {
 
   async ngOnInit(): Promise<void> {
     // fetch sidebar JSON from public folder (served as asset). Using absolute path so it works with different base href.
-    this.http.get<MenuItem[]>('/Frontdesk.json').subscribe({
-      next: async (data) => {
-        await this.loadingMenuItemService.setMenuItems(data || []);
+    this.loadingMenuItemService.setMenuItems();
         // initialize expandedMenus for groups
         for (const item of this.menuItems) {
           if (item.children && item.children.length) {
@@ -79,12 +77,8 @@ export class SidebarComponent {
             }
           }
         }
-      },
-      error: (err) => {
-        // silent fallback: keep hard-coded behavior if fetch fails
-        console.error('Failed to load sidebar-data.json', err);
-      }
-    });
+      
+    
   }
 
   toggleSidebar() {

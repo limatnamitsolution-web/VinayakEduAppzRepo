@@ -1,0 +1,100 @@
+// Grid Component Styles
+/* Minimal data-grid component styles
+   - This file keeps only table-related and small component-specific rules.
+   - Common variables, button, and layout rules are provided by global `src/styles.scss`.
+*/
+
+.grid-container {
+  /* Use parent panel background and spacing; avoid duplicating box-shadow/margins */
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  background: transparent;
+  border-radius: inherit;
+  overflow: visible;
+  width: 100%;
+}
+
+.grid-header {
+  /* keep only layout hints for search + actions when header is used */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-box {
+  position: relative;
+
+  i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); }
+
+  input { padding-left: 34px; }
+}
+
+.table-responsive { overflow-x: auto; width: 100%; }
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 0; /* allow table to shrink to container width */
+  box-sizing: border-box;
+
+  thead { position: sticky; top: 0; z-index: 5; }
+
+    th {
+       padding: 7px 12px;
+       text-align: left;
+       vertical-align: top;
+       background: var(--primary-blue);
+       color: #fff;
+       border-bottom: 2px solid var(--border);
+       font-weight: 600;
+       letter-spacing: 0.5px;
+       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+       transition: background 0.3s;
+    }
+    td {
+       padding: 7px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+  tbody tr:hover { background: rgba(0,0,0,0.02); }
+}
+
+.id-badge, .code-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; }
+
+.action-buttons { display: flex; gap: 6px; }
+
+.action-buttons i, .action-buttons .icon {
+  color: var(--primary-blue);
+  background: #fff;
+  border-radius: 50%;
+  padding: 4px;
+  transition: color 0.3s, background 0.3s;
+   cursor: pointer;
+}
+
+.action-buttons button.btn-action:hover i {
+  color: #fff;
+  background: var(--primary-blue);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+.empty-state { text-align: center; padding: 36px 12px; }
+
+.grid-footer { display:flex; justify-content:space-between; align-items:center; gap:12px; padding-top:12px; }
+.grid-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+  background: var(--surface);
+  color: var(--text);
+  border-top: 2px solid var(--border);
+}
+/* responsive tweaks kept minimal */
+@media (max-width: 768px) {
+  .data-table { min-width: 600px; }
+}

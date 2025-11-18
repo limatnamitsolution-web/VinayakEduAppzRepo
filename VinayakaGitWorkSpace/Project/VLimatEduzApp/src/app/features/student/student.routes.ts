@@ -1,7 +1,6 @@
 // app/modules/student/student.routes.ts
 import { Routes } from '@angular/router';
 import { StudentLayoutComponent } from './student-layout-component';
-import { StudentDashboardComponent } from './student-dashboard-component';
 export const StudentRoutes: Routes = [
   {
     path: '',
@@ -11,7 +10,11 @@ export const StudentRoutes: Routes = [
       { 
         path: 'dashboard', 
         loadComponent: () => import('./student-dashboard-component').then(c => c.StudentDashboardComponent)
-      }
+      },
+       { 
+        path: 'Admission', 
+        loadComponent: () => import('./admission-component/admission-component').then(c => c.AdmissionComponent)
+      },
       // Add other student routes here
     ]
   }

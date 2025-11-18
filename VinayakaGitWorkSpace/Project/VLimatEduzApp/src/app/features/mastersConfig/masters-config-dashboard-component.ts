@@ -4,14 +4,14 @@ import { MasterConfig } from './models/MasterConfig.model';
 import { MastersConfig } from './Services/masters-config';
 import { ActivatedRoute } from '@angular/router';
 import { DataGridComponent } from './Shared/component/data-grid-component/data-grid-component';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormsModule } from '@angular/forms';
 import { MenuLabelService } from '../../shared/services/menu-label.service';
 import { EncryptionService } from '../../shared/services/encryption.service';
 
 
 @Component({
   selector: 'app-masters-config-dashboard-component',
-  imports: [CommonModule, DataGridComponent, ReactiveFormsModule],
+  imports: [CommonModule, DataGridComponent, ReactiveFormsModule,FormsModule],
   templateUrl: './masters-config-dashboard-component.html',
   styleUrl: './masters-config-dashboard-component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -21,12 +21,15 @@ export class MastersConfigDashboardComponent implements OnInit {
   private mastersConfig = inject(MastersConfig);
   private route = inject(ActivatedRoute);
   gridData = signal<MasterConfig[]>([]);
+  filteredGridData = signal<MasterConfig[]>([]);
   gridTitle: string = 'Master Configuration';
   form: FormGroup;
   private fb = inject(FormBuilder);
   editIndex: number | null = null;
   keyParam: string = '';
   private encryptionService = inject(EncryptionService);
+  // Single search property for all fields
+  searchTerm: string = '';
   constructor() {
     this.form = this.fb.group({
       id:0,
@@ -39,6 +42,7 @@ export class MastersConfigDashboardComponent implements OnInit {
       const data = this.mastersConfig.masterConfigList();
       if (data && Array.isArray(data)) {
         this.gridData.set([...data]); // force new reference for change detection
+        this.applyFilters();
       }
     });
     effect(() => {
@@ -53,6 +57,24 @@ export class MastersConfigDashboardComponent implements OnInit {
         });
       }
     });
+  }
+
+  // Filtering logic for search
+  applyFilters(): void {
+    const term = this.searchTerm.toLowerCase();
+    const allData = this.gridData();
+    this.filteredGridData.set(
+      allData.filter((item: MasterConfig) =>
+        (item.configValue || '').toLowerCase().includes(term) ||
+        (item.configKey || '').toLowerCase().includes(term) ||
+        (item.description || '').toLowerCase().includes(term) ||
+        (item.configuration || '').toLowerCase().includes(term)
+      )
+    );
+  }
+
+  onSearchChange(): void {
+    this.applyFilters();
   }
 
   addGridItem() {
@@ -109,6 +131,7 @@ export class MastersConfigDashboardComponent implements OnInit {
       let key = this.encryptionService.decrypt(this.keyParam);      
       this.form.patchValue({ configuration: key });
       this.mastersConfig.fetchMasterConfig("1klk", this.keyParam);
+      this.applyFilters();
     });
   }
 
@@ -121,6 +144,7 @@ export class MastersConfigDashboardComponent implements OnInit {
 
   onDelete(item: MasterConfig) {
     this.gridData.set(this.gridData().filter(i => i.id !== item.id));
+    this.applyFilters();
   }
 
 
