@@ -12,7 +12,7 @@ export const StudentRoutes: Routes = [
         loadComponent: () => import('./student-dashboard-component').then(c => c.StudentDashboardComponent)
       },
        { 
-        path: 'Admission', 
+        path: 'admission', 
         loadComponent: () => import('./admission-component/admission-component').then(c => c.AdmissionComponent)
       },
       // Add other student routes here

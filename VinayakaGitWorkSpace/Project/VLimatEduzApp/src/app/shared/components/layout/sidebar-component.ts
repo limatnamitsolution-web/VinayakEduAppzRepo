@@ -63,7 +63,13 @@ export class SidebarComponent {
     }
     this.selectedLabel = label;
     this.menuLabelService.setLabel({ key: this.main?.label||this.child?.label||'' });
+    console.log(this.main?.route,this.child?.route);
+    if(this.child?.route?.includes('dashboard') || this.main?.route?.includes('dashboard'))
     this.router.navigate(['/mastersConfig/dashboard', encryptedKey]);
+    else if(this.child?.route)
+    this.router.navigate([this.child.route]);
+    else if(this.main?.route)
+    this.router.navigate([this.main.route]);
   }
 
   async ngOnInit(): Promise<void> {
