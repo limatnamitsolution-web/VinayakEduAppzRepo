@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VLimat.Eduz.Domain.Features.Masters
 {
-    [Table("MasterConfigs", Schema = "mst")]
+    [Table("vklmt_MasterConfigs", Schema = "mst")]
     public class MasterConfig
     {
         public int Id { get; set; }

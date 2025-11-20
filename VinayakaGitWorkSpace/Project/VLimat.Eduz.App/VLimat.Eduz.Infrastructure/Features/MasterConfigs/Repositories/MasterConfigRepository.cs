@@ -27,7 +27,7 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
         {
             const string sql = @"
                 SELECT *
-                FROM mst.MasterConfigs
+                FROM mst.vklmt_MasterConfigs
                 WHERE Id = @Id;";
 
             if (_uow.Transaction != null)
@@ -44,7 +44,7 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
         {
             const string sql = @"
                                 SELECT *
-                                FROM mst.MasterConfigs
+                                FROM mst.vklmt_MasterConfigs
                                 WHERE AcademicId = @academicId
                                   AND Configuration = @configuration
                                   AND IsActive = 1
@@ -66,7 +66,7 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             const string sql = @"
-                                INSERT INTO mst.MasterConfigs
+                                INSERT INTO mst.vklmt_MasterConfigs
                                     (AcademicId, Configuration, ConfigKey, ConfigValue, Description, SortOrder, AC_Yr, IsActive, CreatedDate, CreatedBy, ModifiedDate, ModifiedBy)
                                 VALUES
                                     (1, @Configuration, @ConfigKey, @ConfigValue, @Description, @SortOrder, @AC_Yr, @IsActive, @CreatedDate, @CreatedBy, @ModifiedDate, @ModifiedBy);
@@ -106,7 +106,7 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             const string sql = @"
-                                UPDATE mst.MasterConfigs
+                                UPDATE mst.vklmt_MasterConfigs
                                 SET Configuration = @Configuration,
                                     AcademicId=1,
                                     ConfigKey =  @ConfigKey,
