@@ -166,23 +166,23 @@
 
 /* Crazy theme - Rainbow */
 [data-theme="crazy"] {
-  --primary-blue: #ec4899;
-  --secondary-blue: #f0abfc;
-  --dark-blue: #db2777;
-  --light-blue: #fce7f3;
+  --primary-blue: #06b6d4;
+  --secondary-blue: #67e8f9;
+  --dark-blue: #0891b2;
+  --light-blue: rgba(6, 182, 212, 0.15);
 
   --accent-gold: #f59e0b;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f97316;
 
-  --bg: #fef3c7;
-  --surface: rgba(255, 255, 255, 0.95);
-  --muted-surface: rgba(255, 255, 255, 0.85);
-  --border: #fbbf24;
-  --text: #7c2d12;
-  --text-2: #92400e;
-  --text-3: #b45309;
+  --bg: linear-gradient(135deg, #831843, #7c2d12, #064e3b, #1e3a8a);
+  --surface: rgba(15, 23, 42, 0.85);
+  --muted-surface: rgba(30, 41, 59, 0.85);
+  --border: rgba(255, 255, 255, 0.2);
+  --text: #f0f9ff;
+  --text-2: #e2e8f0;
+  --text-3: #cbd5e1;
 
   --radius-sm: 6px;
   --radius-md: 8px;
@@ -547,7 +547,7 @@ body {
 }
 
 .theme-crazy .theme-color-box {
-  background: linear-gradient(45deg, #ec4899, #f59e0b, #10b981, #3b82f6, #8b5cf6);
+  background: linear-gradient(45deg, #06b6d4, #3b82f6, #8b5cf6, #10b981);
   background-size: 200% 200%;
   animation: gradientShift 3s ease infinite;
   border-color: #fbbf24;
@@ -1394,13 +1394,10 @@ body {
 
 /* ===== CRAZY THEME STYLES ===== */
 [data-theme="crazy"] body {
-  background: linear-gradient(-45deg, #fef3c7, #dbeafe, #fce7f3, #bbf7d0, #fef3c7);
+  background: linear-gradient(45deg, #ec4899, #f59e0b, #10b981, #3b82f6);
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
+  background-attachment: fixed;
 }
 
 [data-theme="crazy"] .app-layout {
@@ -1436,7 +1433,7 @@ body {
 }
 
 [data-theme="crazy"] .btn-primary {
-  background: linear-gradient(45deg, #ec4899, #f59e0b, #10b981);
+  background: linear-gradient(45deg, #06b6d4, #3b82f6, #8b5cf6);
   background-size: 200% 200%;
   animation: buttonGradient 3s ease infinite;
   border: none;
@@ -1465,7 +1462,7 @@ body {
 }
 
 [data-theme="crazy"] .brand-title {
-  background: linear-gradient(45deg, #ec4899, #f59e0b, #10b981, #3b82f6);
+  background: linear-gradient(45deg, #06b6d4, #3b82f6, #8b5cf6, #10b981);
   background-size: 200% 200%;
   animation: textGradient 3s ease infinite;
   -webkit-background-clip: text;
@@ -1474,21 +1471,21 @@ body {
 }
 
 [data-theme="crazy"] .brand-badge {
-  background: linear-gradient(45deg, #ec4899, #f59e0b, #10b981, #3b82f6);
+  background: linear-gradient(45deg, #06b6d4, #3b82f6, #8b5cf6, #10b981);
   background-size: 200% 200%;
   animation: badgeGradient 3s ease infinite;
   border: 2px solid white;
 }
 
 [data-theme="crazy"] .module-switcher-btn {
-  background: linear-gradient(45deg, #ec4899, #f59e0b, #10b981);
+  background: linear-gradient(45deg, #06b6d4, #3b82f6, #8b5cf6);
   background-size: 200% 200%;
   animation: buttonGradient 3s ease infinite;
   border: none;
 }
 
 [data-theme="crazy"] .theme-crazy .theme-color-box {
-  background: linear-gradient(45deg, #ec4899, #f59e0b, #10b981, #3b82f6, #8b5cf6);
+  background: linear-gradient(45deg, #06b6d4, #3b82f6, #8b5cf6, #10b981);
   background-size: 200% 200%;
   animation: gradientShift 3s ease infinite;
   border: 2px solid var(--border);
@@ -1526,6 +1523,31 @@ body {
   color: white;
   border-radius: var(--radius-md);
   animation: pulse 2s infinite;
+}
+
+/* Dark Gradient Inputs */
+[data-theme="crazy"] input,
+[data-theme="crazy"] select,
+[data-theme="crazy"] textarea,
+[data-theme="crazy"] .form-control {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+[data-theme="crazy"] input:focus,
+[data-theme="crazy"] select:focus,
+[data-theme="crazy"] textarea:focus,
+[data-theme="crazy"] .form-control:focus {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: #06b6d4;
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.25);
+}
+
+[data-theme="crazy"] ::placeholder {
+  color: rgba(240, 249, 255, 0.5);
 }
 
 /* ===== ANIMATIONS ===== */
@@ -1828,4 +1850,52 @@ body {
 
 @media (max-width: 768px) {
   .data-table { min-width: 600px; }
+}
+
+/* Apply the crazy animated gradient background to active menu items and grid headers */
+[data-theme="crazy"] .snav-item.active,
+[data-theme="crazy"] .snav-sub-item.active {
+  background: linear-gradient(45deg, #ff00cc, #f59e0b, #10b981);
+  background-size: 200% 200%;
+  animation: buttonGradient 3s ease infinite;
+  color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(255, 0, 204, 0.3);
+}
+
+[data-theme="crazy"] .grid-header,
+[data-theme="crazy"] .data-table thead th {
+  background: linear-gradient(45deg, #ff00cc, #f59e0b, #10b981);
+  background-size: 200% 200%;
+  animation: buttonGradient 3s ease infinite;
+  color: white;
+  border-bottom: none;
+}
+
+/* Apply the color changing animation to icons */
+[data-theme="crazy"] .snav-icon i,
+[data-theme="crazy"] .snav-sub-icon i,
+[data-theme="crazy"] .action-buttons i,
+[data-theme="crazy"] .btn i {
+  animation: colorChange 2s linear infinite;
+}
+
+/* Dark Gradient Backgrounds for Grid, Modals, Panels */
+[data-theme="crazy"] .grid-container,
+[data-theme="crazy"] .modal-content,
+[data-theme="crazy"] .panel,
+[data-theme="crazy"] .card {
+  background: linear-gradient(135deg, rgba(131, 24, 67, 0.8), rgba(124, 45, 18, 0.8), rgba(6, 78, 59, 0.8), rgba(30, 58, 138, 0.8));
+  background-size: 300% 300%;
+  animation: gradientShift 10s ease infinite;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="crazy"] .modal-header,
+[data-theme="crazy"] .modal-footer {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.1);
 }
