@@ -126,13 +126,13 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  padding: 16px;
-  margin-bottom: 16px;
+  padding: 8px;
+  margin-bottom: 8px;
   box-shadow: var(--shadow-1);
 
   .section-title {
-    margin: 0 0 16px;
-    font-size: 0.95rem;
+    margin: 0 0 4px;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--text);
     display: flex;
@@ -141,11 +141,11 @@
     &::before {
       content: '';
       display: block;
-      width: 4px;
-      height: 14px;
+      width: 3px;
+      height: 12px;
       background: var(--primary-blue);
       border-radius: 2px;
-      margin-right: 8px;
+      margin-right: 6px;
     }
   }
 }
@@ -153,9 +153,9 @@
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 8px;
   
-  @media (max-width: 1400px) {
+  @media (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @media (max-width: 768px) {
@@ -166,7 +166,7 @@
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 8px;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -176,26 +176,29 @@
 .form-field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 
   &.full-width {
     grid-column: 1 / -1;
   }
 
   label {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 500;
     color: var(--text);
   }
 
   input, select, textarea {
-    padding: 6px 10px;
+    padding: 4px 8px;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text);
     background: var(--surface);
     transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0; /* Prevent overflow in grid items */
 
     &:focus {
       outline: none;

@@ -76,7 +76,11 @@
       white-space: nowrap;
     }
 
-  tbody tr:hover { background: rgba(0,0,0,0.02); }
+  tbody tr:hover { 
+    background: var(--light-blue);
+    color: var(--dark-blue);
+    cursor: pointer;
+  }
 }
 
 .id-badge, .code-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; }

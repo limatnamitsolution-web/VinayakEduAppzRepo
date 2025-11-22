@@ -97,71 +97,71 @@
   --shadow-3: 0 10px 15px rgba(0, 188, 212, 0.1);
 }
 
-/* Dark theme */
+/* Dark theme - Dracula Inspired (Rainbow Dark) */
 [data-theme="dark"] {
-  --primary-blue: #8b5cf6;
-  --secondary-blue: #a78bfa;
-  --dark-blue: #7c3aed;
-  --light-blue: #4c1d95;
+  --primary-blue: #bd93f9; /* Purple */
+  --secondary-blue: #ff79c6; /* Pink */
+  --dark-blue: #8be9fd; /* Cyan */
+  --light-blue: #44475a; /* Current Line / Selection */
 
-  --accent-gold: #f59e0b;
-  --success: #10b981;
+  --accent-gold: #f1fa8c; /* Yellow */
+  --success: #50fa7b; /* Green */
+  --danger: #ff5555; /* Red */
+  --warning: #ffb86c; /* Orange */
+
+  --bg: #282a36; /* Dark Blue/Grey */
+  --surface: #343746; /* Slightly lighter */
+  --muted-surface: #44475a; /* Muted */
+  --border: #6272a4; /* Grey/Blue */
+  --text: #f8f8f2; /* White-ish */
+  --text-2: #d6acff; /* Light Purple */
+  --text-3: #9ca3af; /* Grey */
+}
+
+/* Color theme - Vibrant Amber */
+[data-theme="color"] {
+  --primary-blue: #f59e0b; /* Amber 500 */
+  --secondary-blue: #fcd34d; /* Amber 300 */
+  --dark-blue: #d97706; /* Amber 600 */
+  --light-blue: #fffbeb; /* Amber 50 */
+
+  --accent-gold: #fbbf24;
+  --success: #22c55e;
   --danger: #ef4444;
   --warning: #f97316;
 
-  --bg: #0f172a;
-  --surface: #1e293b;
-  --muted-surface: #334155;
-  --border: #475569;
-  --text: #f1f5f9;
-  --text-2: #cbd5e1;
-  --text-3: #94a3b8;
-}
-
-/* Color theme - Amber */
-[data-theme="color"] {
-  --primary-blue: #dc2626;
-  --secondary-blue: #fca5a5;
-  --dark-blue: #b91c1c;
-  --light-blue: #fef2f2;
-
-  --accent-gold: #ea580c;
-  --success: #059669;
-  --danger: #dc2626;
-  --warning: #d97706;
-
-  --bg: #fef7ed;
+  --bg: #fff8f1; /* Very warm white */
   --surface: #ffffff;
-  --muted-surface: #fffbeb;
-  --border: #fed7aa;
-  --text: #431407;
-  --text-2: #78350f;
-  --text-3: #92400e;
+  --muted-surface: #fff1e0;
+  --border: #fde68a; /* Amber 200 */
+  --text: #451a03; /* Amber 950 */
+  --text-2: #78350f; /* Amber 900 */
+  --text-3: #92400e; /* Amber 800 */
 }
 
 /* Dark Color theme - Neon */
 [data-theme="dark-color"] {
-  --primary-blue: #ec4899;
-  --secondary-blue: #f0abfc;
-  --dark-blue: #db2777;
-  --light-blue: #701a75;
+  --primary-blue: #10b981;
+  --secondary-blue: #34d399;
+  --dark-blue: #059669;
+  --light-blue: #064e3b;
 
   --accent-gold: #f59e0b;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f97316;
 
-  --bg: #0f172a;
-  --surface: #1e1b4b;
-  --muted-surface: #312e81;
-  --border: #6366f1;
-  --text: #e0e7ff;
-  --text-2: #c7d2fe;
-  --text-3: #a5b4fc;
+  --bg: #022c22;
+  --surface: #064e3b;
+  --muted-surface: #065f46;
+  --border: #10b981;
+  --text: #ecfdf5;
+  --text-2: #d1fae5;
+  --text-3: #6ee7b7;
 
-  --shadow-1: 0 1px 3px rgba(99, 102, 241, 0.2);
-  --shadow-2: 0 4px 6px rgba(99, 102, 241, 0.3);
-  --shadow-3: 0 10px 15px rgba(99, 102, 241, 0.4);
+  --shadow-1: 0 1px 3px rgba(16, 185, 129, 0.2);
+  --shadow-2: 0 4px 6px rgba(16, 185, 129, 0.3);
+  --shadow-3: 0 10px 15px rgba(16, 185, 129, 0.4);
 }
 
 /* Crazy theme - Rainbow */
@@ -184,9 +184,9 @@
   --text-2: #92400e;
   --text-3: #b45309;
 
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
 
   --shadow-1: 0 4px 12px rgba(251, 191, 36, 0.3);
   --shadow-2: 0 8px 24px rgba(251, 191, 36, 0.4);
@@ -801,29 +801,6 @@ body {
   position: relative;
 }
 
-.left-panel.collapsed .snav-item.snav-toggle .snav-icon::after {
-  content: '';
-  position: absolute;
-  right: 6px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  background: var(--text-3);
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.02) inset;
-  display: block;
-  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
-  opacity: 0.95;
-}
-
-/* On hover, make the indicator match the active/hover state */
-.left-panel.collapsed .snav-item.snav-toggle:hover .snav-icon::after,
-.left-panel.collapsed .snav-group:has(.snav-sub-item.active) > .snav-item.snav-toggle .snav-icon::after {
-  background: var(--primary-blue);
-  transform: translateY(-50%) scale(1.1);
-}
-
 /* Hide label tooltip shift so indicator isn't overlapped (optional) */
 .left-panel.collapsed .snav-item .tooltip {
   left: calc(100% + 16px);
@@ -936,21 +913,15 @@ body {
 }
 
 .snav-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--muted-surface);
   color: var(--text-2);
   font-size: 14px;
   transition: all 0.2s ease;
   flex-shrink: 0;
+  margin-right: 8px;
 }
 
 .snav-item:hover .snav-icon {
-  background: var(--primary-blue);
-  color: white;
+  color: var(--primary-blue);
   transform: scale(1.1);
 }
 
@@ -961,8 +932,7 @@ body {
 
 
 .snav-item.active .snav-icon {
-  background: var(--primary-blue);
-  color: white;
+  color: var(--primary-blue);
 }
 
 /* Tooltip for collapsed sidebar */
@@ -1074,14 +1044,11 @@ body {
 }
 
 .snav-sub-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  display: grid;
-  place-items: center;
-  background: transparent;
   color: var(--text-2);
   font-size: 14px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-right: 8px;
 }
 
 .snav-sub-icon i { font-size: 14px; }
@@ -1097,8 +1064,7 @@ body {
 }
 
 .snav-group:hover > .snav-item.snav-toggle .snav-icon {
-  background: var(--primary-blue);
-  color: white;
+  color: var(--primary-blue);
   transform: scale(1.1);
 }
 
@@ -1108,8 +1074,7 @@ body {
 }
 
 .snav-group:has(.snav-sub-item:hover) > .snav-item.snav-toggle .snav-icon {
-  background: var(--primary-blue);
-  color: white;
+  color: var(--primary-blue);
   transform: scale(1.1);
 }
 
@@ -1126,8 +1091,7 @@ body {
 }
 
 .snav-group:has(.snav-sub-item.active) > .snav-item.snav-toggle .snav-icon {
-  background: var(--primary-blue);
-  color: white;
+  color: var(--primary-blue);
 }
 
 .snav-sub-item:hover {
@@ -1443,8 +1407,7 @@ body {
 [data-theme="crazy"] .panel,
 [data-theme="crazy"] .card {
   background: var(--surface);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* backdrop-filter removed to prevent stacking context issues with modals */
   border: 2px solid var(--border);
 }
 
@@ -1696,7 +1659,7 @@ body {
 }
 
 /* Sidebar icon circle backgrounds */
-.snav-icon, .sidebar-heading-icon, .snav-sub-icon {
+.sidebar-heading-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1705,7 +1668,7 @@ body {
 }
 
 /* Parent menu icon circle size matches font size */
-.snav-icon, .sidebar-heading-icon {
+.sidebar-heading-icon {
   width: 20px;
   height: 20px;
   font-size: 13px;
@@ -1713,14 +1676,11 @@ body {
 
 /* Child menu icon circle size matches font size */
 .snav-sub-icon {
-  width: 16px;
-  height: 16px;
   font-size: 11px;
+  margin-right: 6px;
 }
 
 /* For extra small/long label icons */
 [data-long-label] .snav-sub-icon {
-  width: 14px;
-  height: 14px;
   font-size: 10px;
 }

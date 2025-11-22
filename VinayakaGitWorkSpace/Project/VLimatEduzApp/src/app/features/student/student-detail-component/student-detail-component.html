@@ -1,15 +1,6 @@
 <div class="modal-overlay">
   <div class="modal-content modern-modal">
-    <div class="modal-header">
-      <div class="header-content">
-        <h2>New Student Registration</h2>
-        <p>Enter the details for the new student admission.</p>
-      </div>
-      <button class="close-btn" (click)="onCancel()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-    </div>
-    
+   
     <div class="tabs-nav">
       <button *ngFor="let tab of tabs" 
               [class.active]="activeTab === tab.id" 
@@ -28,7 +19,7 @@
           
           <div class="grid-2">
             <div class="form-section">
-              <h3 class="section-title">Basic Information</h3>
+              <h3 class="section-title">Basic Details</h3>
               <div class="grid-3">
                 <div class="form-field">
                   <label>Admission Number</label>
@@ -112,7 +103,7 @@
           <div class="grid-2">
             <div class="form-section">
               <h3 class="section-title">Parent / Guardian Details</h3>
-              <div class="grid-2">
+              <div class="grid-3">
                 <div class="form-field">
                   <label>Father's Name</label>
                   <input type="text" formControlName="fatherName" placeholder="Full Name">
@@ -134,7 +125,7 @@
 
             <div class="form-section">
               <h3 class="section-title">Address Information</h3>
-              <div class="grid-2">
+              <div class="grid-3">
                 <div class="form-field full-width">
                   <label>Present Address</label>
                   <textarea formControlName="presentAddress" rows="2" placeholder="Street Address, City, State"></textarea>
@@ -160,76 +151,80 @@
             <!-- Father Details -->
             <div class="form-section">
               <h3 class="section-title">Father Detail</h3>
-              <div class="form-field">
-                <label>Qualification</label>
-                <select formControlName="fatherQualification"><option value="">Select</option></select>
-              </div>
-              <div class="form-field">
-                <label>Occupation</label>
-                <select formControlName="fatherOccupation"><option value="">Select</option></select>
-              </div>
-              <div class="form-field">
-                <label>Designation</label>
-                <select formControlName="fatherDesignation"><option value="">Select</option></select>
-              </div>
-              <div class="form-field">
-                <label>Email</label>
-                <input type="email" formControlName="fatherEmail">
-              </div>
-              <div class="form-field">
-                <label>Office Address</label>
-                <input type="text" formControlName="fatherOfficeAddress">
-              </div>
-              <div class="form-field">
-                <label>Annual Income</label>
-                <input type="text" formControlName="fatherIncome">
-              </div>
-              <div class="form-field">
-                <label>Adhar Card No.</label>
-                <input type="text" formControlName="fatherAdhar">
-              </div>
-              <div class="form-field checkbox-field">
-                <label>
-                  <input type="checkbox" formControlName="isFatherEmployee"> Is Father Campus Employee
-                </label>
+              <div class="grid-3">
+                <div class="form-field">
+                  <label>Qualification</label>
+                  <select formControlName="fatherQualification"><option value="">Select</option></select>
+                </div>
+                <div class="form-field">
+                  <label>Occupation</label>
+                  <select formControlName="fatherOccupation"><option value="">Select</option></select>
+                </div>
+                <div class="form-field">
+                  <label>Designation</label>
+                  <select formControlName="fatherDesignation"><option value="">Select</option></select>
+                </div>
+                <div class="form-field">
+                  <label>Email</label>
+                  <input type="email" formControlName="fatherEmail">
+                </div>
+                <div class="form-field">
+                  <label>Office Address</label>
+                  <input type="text" formControlName="fatherOfficeAddress">
+                </div>
+                <div class="form-field">
+                  <label>Annual Income</label>
+                  <input type="text" formControlName="fatherIncome">
+                </div>
+                <div class="form-field">
+                  <label>Adhar Card No.</label>
+                  <input type="text" formControlName="fatherAdhar">
+                </div>
+                <div class="form-field checkbox-field">
+                  <label>
+                    <input type="checkbox" formControlName="isFatherEmployee"> Is Father Campus Employee
+                  </label>
+                </div>
               </div>
             </div>
 
             <!-- Mother Details -->
             <div class="form-section">
               <h3 class="section-title">Mother Detail</h3>
-              <div class="form-field">
-                <label>Qualification</label>
-                <select formControlName="motherQualification"><option value="">Select</option></select>
-              </div>
-              <div class="form-field">
-                <label>Occupation</label>
-                <select formControlName="motherOccupation"><option value="">Select</option></select>
-              </div>
-              <div class="form-field">
-                <label>Designation</label>
-                <select formControlName="motherDesignation"><option value="">Select</option></select>
-              </div>
-              <div class="form-field">
-                <label>Email</label>
-                <input type="email" formControlName="motherEmail">
-              </div>
-              <div class="form-field">
-                <label>Office Address</label>
-                <input type="text" formControlName="motherOfficeAddress">
-              </div>
-              <div class="form-field">
-                <label>Annual Income</label>
-                <input type="text" formControlName="motherIncome">
-              </div>
-              <div class="form-field">
-                <label>Adhar Card No.</label>
-                <input type="text" formControlName="motherAdhar">
-              </div>
-              <div class="form-field checkbox-field">
-                <label>
-                  <input type="checkbox" formControlName="isMotherEmployee"> Is Mother Campus Employee
-                </label>
+              <div class="grid-3">
+                <div class="form-field">
+                  <label>Qualification</label>
+                  <select formControlName="motherQualification"><option value="">Select</option></select>
+                </div>
+                <div class="form-field">
+                  <label>Occupation</label>
+                  <select formControlName="motherOccupation"><option value="">Select</option></select>
+                </div>
+                <div class="form-field">
+                  <label>Designation</label>
+                  <select formControlName="motherDesignation"><option value="">Select</option></select>
+                </div>
+                <div class="form-field">
+                  <label>Email</label>
+                  <input type="email" formControlName="motherEmail">
+                </div>
+                <div class="form-field">
+                  <label>Office Address</label>
+                  <input type="text" formControlName="motherOfficeAddress">
+                </div>
+                <div class="form-field">
+                  <label>Annual Income</label>
+                  <input type="text" formControlName="motherIncome">
+                </div>
+                <div class="form-field">
+                  <label>Adhar Card No.</label>
+                  <input type="text" formControlName="motherAdhar">
+                </div>
+                <div class="form-field checkbox-field">
+                  <label>
+                    <input type="checkbox" formControlName="isMotherEmployee"> Is Mother Campus Employee
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -237,7 +232,7 @@
           <!-- Guardian Details -->
           <div class="form-section">
             <h3 class="section-title">Guardian Details</h3>
-            <div class="grid-2">
+            <div class="grid-3">
               <div class="form-field">
                 <label>Guardian 1 Name</label>
                 <input type="text" formControlName="guardian1Name">
