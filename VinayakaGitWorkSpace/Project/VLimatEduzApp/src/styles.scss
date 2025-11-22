@@ -99,22 +99,22 @@
 
 /* Dark theme - Dracula Inspired (Rainbow Dark) */
 [data-theme="dark"] {
-  --primary-blue: #bd93f9; /* Purple */
+  --primary-blue: #44475a; /* Purple */
   --secondary-blue: #ff79c6; /* Pink */
   --dark-blue: #8be9fd; /* Cyan */
-  --light-blue: #44475a; /* Current Line / Selection */
+  --light-blue: #282a36; /* Current Line / Selection */
 
   --accent-gold: #f1fa8c; /* Yellow */
   --success: #50fa7b; /* Green */
   --danger: #ff5555; /* Red */
   --warning: #ffb86c; /* Orange */
 
-  --bg: #282a36; /* Dark Blue/Grey */
-  --surface: #343746; /* Slightly lighter */
-  --muted-surface: #44475a; /* Muted */
+  --bg: #101013; /* Very Dark */
+  --surface: #282a36; /* Dracula Background */
+  --muted-surface: #282a36; /* Muted */
   --border: #6272a4; /* Grey/Blue */
-  --text: #f8f8f2; /* White-ish */
-  --text-2: #d6acff; /* Light Purple */
+  --text: #cbd5e1; /* Light Gray */
+  --text-2: #cbd5e1; /* Light Gray */
   --text-3: #9ca3af; /* Grey */
 }
 
@@ -250,6 +250,13 @@ body {
 [data-theme="dark-color"] .snav-icon i,
 [data-theme="dark-color"] .snav-sub-icon i {
   color: var(--primary-blue) !important;
+}
+
+/* Specific icon color for Dark Theme */
+[data-theme="dark"] .snav-icon,
+[data-theme="dark"] .snav-sub-icon,
+[data-theme="dark"] .sidebar-heading-icon {
+  color: #e2e8f0 !important; /* Light Gray for icons only */
 }
 
 /* ===== LAYOUT STYLES ===== */
@@ -1680,7 +1687,145 @@ body {
   margin-right: 6px;
 }
 
-/* For extra small/long label icons */
-[data-long-label] .snav-sub-icon {
-  font-size: 10px;
+/* Global Data Grid Styles */
+.grid-container {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  background: transparent;
+  border-radius: inherit;
+  overflow: hidden;
+  width: 100%;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.grid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box i { 
+  position: absolute; 
+  left: 10px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+}
+
+.search-box input { 
+  padding-left: 34px; 
+}
+
+.table-responsive { 
+  overflow: auto; 
+  width: 100%; 
+  flex: 1;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.data-table thead { 
+  position: sticky; 
+  top: 0; 
+  z-index: 5; 
+}
+
+.data-table th {
+  padding: 4px 8px;
+  text-align: left;
+  vertical-align: top;
+  background: var(--primary-blue);
+  color: #fff;
+  border-bottom: 2px solid var(--border);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 4px 8px;
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.data-table tbody tr:hover { 
+  background: var(--light-blue);
+  color: var(--dark-blue);
+  cursor: pointer;
+}
+
+.id-badge, .code-badge { 
+  display: inline-block; 
+  padding: 4px 8px; 
+  border-radius: 4px; 
+  font-size: 0.75rem; 
+}
+
+.action-buttons { 
+  display: flex; 
+  gap: 6px; 
+}
+
+.btn-action {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-buttons i, .action-buttons .icon {
+  color: var(--primary-blue);
+  background: var(--surface);
+  border-radius: 50%;
+  padding: 3px;
+  font-size: 0.8rem;
+  transition: color 0.3s, background 0.3s;
+  cursor: pointer;
+}
+
+.action-buttons button.btn-action:hover i {
+  color: #fff;
+  background: var(--primary-blue);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+.empty-state { 
+  text-align: center; 
+  padding: 36px 12px; 
+}
+
+.grid-footer { 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+  background: var(--surface);
+  color: var(--text);
+  border-top: 2px solid var(--border);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .data-table { min-width: 600px; }
 }
