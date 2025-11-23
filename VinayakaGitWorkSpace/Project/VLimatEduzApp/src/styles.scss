@@ -1402,6 +1402,63 @@ body {
 /* When a module needs internal-only scrolling, add this class to body to hide page scroll */
 /* body.no-page-scroll removed — rely on layout and .panel-body internal scrolling like student dashboard */
 
+/* Common Form & Toolbar Styles */
+.toolbar-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.form-row {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.input-control {
+  flex: 1;
+  min-width: 120px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-control:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px var(--light-blue);
+}
+
+.input-search {
+  min-width: 200px;
+  border-color: var(--border);
+}
+
+.input-wide {
+  flex: 2;
+  min-width: 180px;
+}
+
+.btn-sm {
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+}
+
 /* ===== CRAZY THEME STYLES ===== */
 [data-theme="crazy"] body {
   background: linear-gradient(45deg, #ec4899, #f59e0b, #10b981, #3b82f6);
