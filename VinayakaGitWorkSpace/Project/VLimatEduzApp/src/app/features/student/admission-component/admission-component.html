@@ -5,8 +5,8 @@
           <div style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; align-items:center;">
             <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" placeholder="Search all fields..." style="flex:1; min-width:200px; padding:6px 10px; border-radius:4px; border:1px solid #90caf9;" />
             <div style="display:flex; gap:8px;">
-              <button type="button" (click)="openAddModal()" style="padding:6px 16px; background:var(--primary-blue); color:#fff; border:none; border-radius:4px; font-weight:500; cursor:pointer;">{{ editIndex !== null ? 'Update' : 'Add' }}</button>
-              <button type="button" (click)="resetForm()" style="padding:6px 16px; background:#f44336; color:#fff; border:none; border-radius:4px; font-weight:500; cursor:pointer;">Reset</button>
+              <button type="button" (click)="openAddModal()" class="btn-primary" style="padding:6px 16px; border-radius:4px; font-weight:500; cursor:pointer;">{{ editIndex !== null ? 'Update' : 'Add' }}</button>
+              <button type="button" (click)="resetForm()" class="btn-reset" style="padding:6px 16px; border-radius:4px; font-weight:500; cursor:pointer;">Reset</button>
             </div>
           </div>
           <app-student-detail *ngIf="showModal" (close)="closeModal()" (save)="onSaveStudent($event)"></app-student-detail>

@@ -1384,6 +1384,16 @@ body {
   background: linear-gradient(135deg, var(--dark-blue), #007c91);
 }
 
+.btn-reset {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+}
+
+.btn-reset:hover {
+  background: #d32f2f;
+}
+
 .btn-ghost { 
   background: transparent; 
   border-color: var(--border); 
@@ -1437,6 +1447,14 @@ body {
   background-size: 200% 200%;
   animation: buttonGradient 3s ease infinite;
   border: none;
+}
+
+[data-theme="crazy"] .btn-reset {
+  background: linear-gradient(45deg, #ef4444, #f59e0b);
+  background-size: 200% 200%;
+  animation: buttonGradient 3s ease infinite;
+  border: none;
+  color: white;
 }
 
 [data-theme="crazy"] .icon-btn {
