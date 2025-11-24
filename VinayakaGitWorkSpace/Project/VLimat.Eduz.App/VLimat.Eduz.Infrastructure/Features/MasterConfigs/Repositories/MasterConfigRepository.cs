@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using VLimat.Eduz.Domain.Features.Masters;
 using VLimat.Eduz.Domain.Repositories;
 using VLimat.Eduz.Infrastructure.Persistence;
+using VLimat.Eduz.Domain.Security;
 
 namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
 {
@@ -16,48 +17,45 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
     {
         private readonly DapperDbContext _db;
         private readonly IDapperUnitOfWork _uow;
+        private readonly ICurrentUser _currentUser;
 
-        public MasterConfigRepository(DapperDbContext db, IDapperUnitOfWork uow)
+        public MasterConfigRepository(DapperDbContext db, IDapperUnitOfWork uow, ICurrentUser currentUser)
         {
             _db = db ?? throw new ArgumentNullException(nameof(db));
             _uow = uow ?? throw new ArgumentNullException(nameof(uow));
+            _currentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
         }
 
         public async Task<MasterConfig?> GetAsync(int Id, CancellationToken cancellationToken = default)
         {
-            const string sql = @"
-                SELECT *
-                FROM mst.vklmt_MasterConfigs
-                WHERE Id = @Id;";
+            const string sp = "mst.usp_vklmt_MasterConfigs_GetById";
 
             if (_uow.Transaction != null)
             {
-                var result = await _uow.Connection.QueryFirstOrDefaultAsync<MasterConfig>(new CommandDefinition(sql, new { Id = Id }, _uow.Transaction, cancellationToken: cancellationToken));
+                var result = await _uow.Connection.QueryFirstOrDefaultAsync<MasterConfig>(
+                    new CommandDefinition(sp, new { Id }, _uow.Transaction, commandType: CommandType.StoredProcedure, cancellationToken: cancellationToken));
                 return result;
             }
 
             using var conn = await _db.CreateOpenConnectionAsync(cancellationToken).ConfigureAwait(false);
-            return await conn.QueryFirstOrDefaultAsync<MasterConfig>(new CommandDefinition(sql, new { Id = Id}, cancellationToken: cancellationToken));
+            return await conn.QueryFirstOrDefaultAsync<MasterConfig>(
+                new CommandDefinition(sp, new { Id }, commandType: CommandType.StoredProcedure, cancellationToken: cancellationToken));
         }
 
         public async Task<IEnumerable<MasterConfig?>> GetAllAsync(int academicId, string configuration, CancellationToken cancellationToken = default)
         {
-            const string sql = @"
-                                SELECT *
-                                FROM mst.vklmt_MasterConfigs
-                                WHERE AcademicId = @academicId
-                                  AND Configuration = @configuration
-                                  AND IsActive = 1
-                                ORDER BY SortOrder;";
+            const string sp = "mst.usp_vklmt_MasterConfigs_GetByAcademicAndConfiguration";
 
             if (_uow.Transaction != null)
             {
-                var results = await _uow.Connection.QueryAsync<MasterConfig>(new CommandDefinition(sql, new { AcademicId = academicId, Configuration = configuration }, _uow.Transaction, cancellationToken: cancellationToken));
+                var results = await _uow.Connection.QueryAsync<MasterConfig>(
+                    new CommandDefinition(sp, new { AcademicId = _currentUser.AcademicId, Configuration = configuration }, _uow.Transaction, commandType: CommandType.StoredProcedure, cancellationToken: cancellationToken));
                 return results.Cast<MasterConfig?>().ToList();
             }
 
             using var conn = await _db.CreateOpenConnectionAsync(cancellationToken).ConfigureAwait(false);
-            var list = await conn.QueryAsync<MasterConfig>(new CommandDefinition(sql, new { AcademicId = academicId, Configuration = configuration }, cancellationToken: cancellationToken));
+            var list = await conn.QueryAsync<MasterConfig>(
+                new CommandDefinition(sp, new { AcademicId = _currentUser.AcademicId, Configuration = configuration }, commandType: CommandType.StoredProcedure, cancellationToken: cancellationToken));
             return list.Cast<MasterConfig?>().ToList();
         }
 
@@ -65,12 +63,7 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            const string sql = @"
-                                INSERT INTO mst.vklmt_MasterConfigs
-                                    (AcademicId, Configuration, ConfigKey, ConfigValue, Description, SortOrder, AC_Yr, IsActive, CreatedDate, CreatedBy, ModifiedDate, ModifiedBy)
-                                VALUES
-                                    (1, @Configuration, @ConfigKey, @ConfigValue, @Description, @SortOrder, @AC_Yr, @IsActive, @CreatedDate, @CreatedBy, @ModifiedDate, @ModifiedBy);
-                                SELECT CAST(SCOPE_IDENTITY() AS int);";
+            const string sp = "mst.usp_vklmt_MasterConfigs_Insert";
 
             var startedLocal = false;
             try
@@ -81,7 +74,24 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
                     startedLocal = true;
                 }
 
-                var id = await _uow.Connection.QuerySingleAsync<int>(new CommandDefinition(sql, entity, _uow.Transaction, cancellationToken: cancellationToken)).ConfigureAwait(false);
+                // Stored proc returns NewId via final SELECT CAST(SCOPE_IDENTITY() AS INT)
+                var id = await _uow.Connection.QuerySingleAsync<int>(
+                    new CommandDefinition(sp, new
+                    {
+                        AcademicId = _currentUser.AcademicId,
+                        Configuration = entity.Configuration,
+                        ConfigKey = entity.ConfigKey,
+                        ConfigValue = entity.ConfigValue,
+                        Description = entity.Description,
+                        SortOrder = entity.SortOrder,
+                        AC_Yr = entity.AC_Yr,
+                        IsActive = entity.IsActive,
+                        CreatedDate = entity.CreatedDate,
+                        CreatedBy = entity.CreatedBy,
+                        ModifiedDate = entity.ModifiedDate,
+                        ModifiedBy = entity.ModifiedBy
+                    }, _uow.Transaction, commandType: CommandType.StoredProcedure, cancellationToken: cancellationToken)).ConfigureAwait(false);
+
                 entity.Id = id;
 
                 if (startedLocal)
@@ -105,19 +115,7 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            const string sql = @"
-                                UPDATE mst.vklmt_MasterConfigs
-                                SET Configuration = @Configuration,
-                                    AcademicId=1,
-                                    ConfigKey =  @ConfigKey,
-                                    ConfigValue = @ConfigValue,
-                                    Description = @Description,
-                                    SortOrder = 1,
-                                    AC_Yr = 1,
-                                    IsActive = 1,
-                                    CreatedBy=1,
-                                    ModifiedBy =1
-                                WHERE Id = @Id;";
+            const string sp = "mst.usp_vklmt_MasterConfigs_Update";
 
             var startedLocal = false;
             try
@@ -128,7 +126,21 @@ namespace VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories
                     startedLocal = true;
                 }
 
-                await _uow.Connection.ExecuteAsync(new CommandDefinition(sql, entity, _uow.Transaction, cancellationToken: cancellationToken)).ConfigureAwait(false);
+                await _uow.Connection.ExecuteAsync(
+                    new CommandDefinition(sp, new
+                    {
+                        Id = entity.Id,
+                        AcademicId = _currentUser.AcademicId,
+                        Configuration = entity.Configuration,
+                        ConfigKey = entity.ConfigKey,
+                        ConfigValue = entity.ConfigValue,
+                        Description = entity.Description,
+                        SortOrder = entity.SortOrder,
+                        AC_Yr = entity.AC_Yr,
+                        IsActive = entity.IsActive,
+                        ModifiedDate = entity.ModifiedDate,
+                        ModifiedBy = entity.ModifiedBy
+                    }, _uow.Transaction, commandType: CommandType.StoredProcedure, cancellationToken: cancellationToken)).ConfigureAwait(false);
 
                 if (startedLocal)
                 {

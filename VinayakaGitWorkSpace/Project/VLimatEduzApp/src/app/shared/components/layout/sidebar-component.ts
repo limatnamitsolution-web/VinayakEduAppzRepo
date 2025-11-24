@@ -1,5 +1,5 @@
 // app/layout/sidebar.component.ts
-import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnInit, effect, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
@@ -16,7 +16,7 @@ import { LoadingMenuItemService } from '../../services/loading-menu-item.service
   templateUrl: './sidebar-component.html',
   styleUrls : ['./sidebar-component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   // Use signal from LoadingMenuItemService
   get menuItems(): MenuItem[] {
     return this.loadingMenuItemService.getMenuItems();
@@ -38,8 +38,23 @@ export class SidebarComponent {
     private router: Router,
     private encryptionService: EncryptionService,
     private menuLabelService: MenuLabelService,
-    private loadingMenuItemService: LoadingMenuItemService
-  ) {}
+    private loadingMenuItemService: LoadingMenuItemService,
+    private cdr: ChangeDetectorRef
+  ) {
+    effect(() => {
+      const items = this.loadingMenuItemService.menuItems();
+      if (items && items.length) {
+        items.forEach(item => {
+          if (item.children && item.children.length) {
+            if (!(item.key in this.expandedMenus)) {
+              this.expandedMenus[item.key] = false;
+            }
+          }
+        });
+        this.cdr.markForCheck();
+      }
+    });
+  }
   // If label$ is consumed, use signal: this.menuLabelService.label$()
   // Call this method to navigate to dashboard with encrypted key
   child: MenuItem | undefined;
@@ -75,16 +90,6 @@ export class SidebarComponent {
   async ngOnInit(): Promise<void> {
     // fetch sidebar JSON from public folder (served as asset). Using absolute path so it works with different base href.
     this.loadingMenuItemService.setMenuItems();
-        // initialize expandedMenus for groups
-        for (const item of this.menuItems) {
-          if (item.children && item.children.length) {
-            if (!(item.key in this.expandedMenus)) {
-              this.expandedMenus[item.key] = false;
-            }
-          }
-        }
-      
-    
   }
 
   toggleSidebar() {

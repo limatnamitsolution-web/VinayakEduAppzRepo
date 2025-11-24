@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VLimat.Eduz.Application.DependencyInjection;
 using VLimat.Eduz.Infrastructure.DependencyInjection; // if you created DI extension in Infrastructure
 using VLimat.Eduz.Infrastructure.Persistence;
-using VLimat.Eduz.Application.DependencyInjection;
+using VVLimat.Eduz.App.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 // read connection string
@@ -53,6 +54,8 @@ builder.Services.AddSwaggerGen().AddSwaggerGenNewtonsoftSupport();
 // Register MediatR to scan Application assembly for handlers/requests
 //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("VLimat.Eduz.Application")));
 builder.Services.AddApplicationMediator();
+// Add IHttpContextAccessor BEFORE registering infrastructure services that depend on it
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddInfrastructureRepositories(builder.Configuration);
 
 // ✅ Add authentication (if using JWT, cookies, etc.)
@@ -74,6 +77,7 @@ if (app.Environment.IsDevelopment())
 //app.UseHttpsRedirection();
 app.UseCors("AllowAngularDev");
 // ✅ Add authentication/authorization in correct order
+app.UseMiddleware<HeaderToClaimsMiddleware>();
 app.UseAuthentication(); // optional, but must come before authorization
 app.UseAuthorization();
 

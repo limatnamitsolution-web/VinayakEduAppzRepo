@@ -2,8 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VLimat.Eduz.Domain.Repositories;
+using VLimat.Eduz.Domain.Security;
 using VLimat.Eduz.Infrastructure.Features.MasterConfigs.Repositories;
 using VLimat.Eduz.Infrastructure.Persistence;
+using VLimat.Eduz.Infrastructure.Security;
 
 namespace VLimat.Eduz.Infrastructure.DependencyInjection
 {
@@ -19,11 +21,10 @@ namespace VLimat.Eduz.Infrastructure.DependencyInjection
             {
                 throw new Exception("Connection string is null or empty");
             }
+            services.AddScoped<IUserContext, UserContext>();
+            // Register domain-level current user abstraction with infra implementation
+            services.AddScoped<ICurrentUser, CurrentUser>();
             services.AddScoped<IEntityMasterConfigRepository, EfMasterConfigRepository>();
-
-            
-
-
             services.AddScoped<IMasterConfigRepository, MasterConfigRepository>();
             services.AddSingleton(sp =>
             {

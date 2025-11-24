@@ -1,10 +1,11 @@
 // app/layout/layout.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./header-component";
 import { SidebarComponent } from "./sidebar-component";
 import { LoaderComponent } from '../loader/loader.component';
+import { AppStateService } from '../../../core/services/app-state.service';
 
 
 
@@ -15,4 +16,10 @@ import { LoaderComponent } from '../loader/loader.component';
   templateUrl: './layout-component.html',
   styleUrls: ['./layout-component.scss']
 })
-export class LayoutComponent { }
+export class LayoutComponent implements OnInit {
+  private appState = inject(AppStateService);
+
+  ngOnInit() {
+    // Initialize global state here (e.g., from API or LocalStorage)
+  }
+}

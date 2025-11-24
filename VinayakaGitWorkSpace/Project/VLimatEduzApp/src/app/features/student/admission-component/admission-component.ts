@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormsModule } from '@angular/forms';
 import { AdmissionGridComponent } from './admission-grid-component';
 import { StudentDetailComponent } from '../student-detail-component/student-detail-component';
+import { StudentService } from '../services/student.service';
 
 @Component({
   selector: 'app-admission-component',
@@ -17,6 +18,7 @@ export class AdmissionComponent implements OnInit {
   gridTitle: string = 'Admission Management';
   form: FormGroup;
   private fb = inject(FormBuilder);
+  private studentService = inject(StudentService);
   editIndex: number | null = null;
   searchTerm: string = '';
   showModal = false;
@@ -305,6 +307,13 @@ export class AdmissionComponent implements OnInit {
 
   ngOnInit(): void {
       // Any init logic
+      this.studentService.getAdmissions().subscribe({
+        next: (data) => {
+          console.log('Admissions loaded', data);
+          // this.gridData.set(data); // Uncomment when API is ready
+        },
+        error: (err) => console.error('Error loading admissions', err)
+      });
   }
 
   // Filtering logic for search

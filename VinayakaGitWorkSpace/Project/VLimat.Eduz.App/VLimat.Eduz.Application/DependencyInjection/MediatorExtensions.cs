@@ -14,6 +14,7 @@ namespace VLimat.Eduz.Application.DependencyInjection
             // Registers MediatR handlers found in this assembly
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddTransient<IProviderMasterConfigFactory, ProviderMasterConfigFactory>();
+
             // If you want to wire your pipeline behaviors from the Application / Infrastructure assemblies,
             // register them here (the types already exist in the project):
             // services.AddTransient(typeof(IPipelineBehavior<,>), typeof(Application.Common.Behaviors.ApplicationExceptionBehavior<,>));
