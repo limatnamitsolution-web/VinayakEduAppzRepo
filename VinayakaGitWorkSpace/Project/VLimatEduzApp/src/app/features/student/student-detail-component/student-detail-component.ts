@@ -22,8 +22,50 @@ export class StudentDetailComponent {
     { id: 'Academic', label: 'Academic', index: 3 },
     { id: 'DocumentUpload', label: 'Document Upload', index: 4 },
     { id: 'Other', label: 'Other', index: 5 },
-    { id: 'History', label: 'History', index: 6 },
+    { id: 'Record', label: 'Record', index: 6 },
     { id: 'CategoryCertificate', label: 'Category Certificate', index: 7 }
+  ];
+
+  // Dropdown Data
+  branches = [
+    { id: '1', name: 'Main Branch' },
+    { id: '2', name: 'City Branch' },
+    { id: '3', name: 'North Campus' }
+  ];
+
+  genders = [
+    { id: 'Male', name: 'Male' },
+    { id: 'Female', name: 'Female' },
+    { id: 'Other', name: 'Other' }
+  ];
+
+  bloodGroups = [
+    { id: 'A+', name: 'A+' },
+    { id: 'A-', name: 'A-' },
+    { id: 'B+', name: 'B+' },
+    { id: 'B-', name: 'B-' },
+    { id: 'O+', name: 'O+' },
+    { id: 'O-', name: 'O-' },
+    { id: 'AB+', name: 'AB+' },
+    { id: 'AB-', name: 'AB-' }
+  ];
+
+  religions = [
+    { id: '1', name: 'Hindu' },
+    { id: '2', name: 'Muslim' },
+    { id: '3', name: 'Christian' },
+    { id: '4', name: 'Sikh' },
+    { id: '5', name: 'Jain' },
+    { id: '6', name: 'Buddhist' },
+    { id: '7', name: 'Other' }
+  ];
+
+  castes = [
+    { id: '1', name: 'General' },
+    { id: '2', name: 'OBC' },
+    { id: '3', name: 'SC' },
+    { id: '4', name: 'ST' },
+    { id: '5', name: 'Other' }
   ];
 
   constructor(private fb: FormBuilder) {
@@ -35,7 +77,7 @@ export class StudentDetailComponent {
         this.fb.group({}), // Academic
         this.fb.group({}), // Document Upload
         this.fb.group({}), // Other
-        this.fb.group({}), // History
+        this.fb.group({}), // Record
         this.fb.group({})  // Category Certificate
       ])
     });
@@ -47,16 +89,22 @@ export class StudentDetailComponent {
 
   createStudentGroup(): FormGroup {
     return this.fb.group({
-      branchName: [''],
-      admissionNo: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: [''],
-      admissionDate: [''],
-      dateOfJoining: [''],
-      srNo: [''],
-      gender: ['Male'],
-      dob: [''],
-      religion: [''],
+      adm_branch_Id: [''],
+      adm_no: ['', Validators.required],
+      adm_date: [''],
+      adm_doj: [''],
+      sess_stud_first_name: ['', Validators.required],
+      sess_stud_last_name: [''],
+      adm_ssr_no: [''],
+      adm_dob: [''],
+      adm_gender_id: [''],
+      adm_blood_grp_id: [''],
+      sess_religion_id: [''],
+      sess_caste_id: [''],
+      adm_stud_mobile_no: [''],
+      sess_student_aadhar_no: [''],
+      adm_stud_email_ddress: [''],
+
       
       // Parent/Contact Info (Basic)
       fatherTitle: ['Mr.'],

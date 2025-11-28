@@ -26,8 +26,8 @@
     "children": [
       { "key": "studentDashboard", "label": "Dashboard", "icon": "fas fa-tachometer-alt", "route": "/student/dashboard" },
       { "key": "studentProfileCreate", "label": "Create Student Profile", "icon": "fas fa-user-plus", "route": "/student/registration" },
+        { "key": "studentQuickAdmission", "label": "Quick Admission", "icon": "fas fa-bolt", "route": "/student/quickAdmission" },
       { "key": "studentFullAdmission", "label": "Full Admission Process", "icon": "fas fa-user-check", "route": "/student/admission" },
-      { "key": "studentQuickEnroll", "label": "Quick Student Enrollment", "icon": "fas fa-bolt", "route": "/student/quick-admission" },
       { "key": "studentPromotionProcess", "label": "Promotion Process", "icon": "fas fa-arrow-up", "route": "/student/promotion" },
       {
         "key": "studentDocsSection",
