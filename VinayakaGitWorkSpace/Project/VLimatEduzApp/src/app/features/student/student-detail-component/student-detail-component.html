@@ -117,23 +117,95 @@
               </div>
             </div>
 
+          <div class="grid-2">
             <div class="form-section">
               <h3 class="section-title">Address Information</h3>
               <div class="grid-3">
-                <div class="form-field full-width">
-                  <label>Present Address</label>
-                  <textarea formControlName="presentAddress" rows="2" placeholder="Street Address, City, State"></textarea>
+                <!-- Row 1 -->
+                <div class="form-field">
+                  <label>Country</label>
+                  <select formControlName="sess_country_id">
+                    <option value="">Select Country</option>
+                    @for (country of countries; track country.id) {
+                    <option [value]="country.id">{{ country.name }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label>State</label>
+                  <select formControlName="sess_state_id">
+                    <option value="">Select State</option>
+                    @for (state of states; track state.id) {
+                    <option [value]="state.id">{{ state.name }}</option>
+                    }
+                  </select>
                 </div>
                 <div class="form-field">
                   <label>City</label>
-                  <input type="text" formControlName="presentCity">
+                  <select formControlName="sess_city_id">
+                    <option value="">Select City</option>
+                    @for (city of cities; track city.id) {
+                    <option [value]="city.id">{{ city.name }}</option>
+                    }
+                  </select>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="form-field span-2">
+                  <label>Address</label>
+                  <textarea formControlName="sess_address" placeholder="Enter Address" rows="3" style="resize: vertical;"></textarea>
                 </div>
                 <div class="form-field">
-                  <label>Pincode</label>
-                  <input type="text" formControlName="presentPincode">
+                  <label>Pin Code</label>
+                  <input type="text" formControlName="sess_pin_code" placeholder="Enter Pin Code">
                 </div>
               </div>
             </div>
+
+            <div class="form-section">
+              <h3 class="section-title">Permanent Address Information</h3>
+              <div class="grid-3">
+                <!-- Row 1 -->
+                <div class="form-field">
+                  <label>Country</label>
+                  <select formControlName="sess_permanent_country_id">
+                    <option value="">Select Country</option>
+                    @for (country of countries; track country.id) {
+                    <option [value]="country.id">{{ country.name }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label>State</label>
+                  <select formControlName="sess_permanent_state_id">
+                    <option value="">Select State</option>
+                    @for (state of states; track state.id) {
+                    <option [value]="state.id">{{ state.name }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label>City</label>
+                  <select formControlName="sess_permanent_city_id">
+                    <option value="">Select City</option>
+                    @for (city of cities; track city.id) {
+                    <option [value]="city.id">{{ city.name }}</option>
+                    }
+                  </select>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="form-field span-2">
+                  <label>Address</label>
+                  <textarea formControlName="sess_permanent_address" placeholder="Enter Address" rows="3" style="resize: vertical;"></textarea>
+                </div>
+                <div class="form-field">
+                  <label>Pin Code</label>
+                  <input type="text" formControlName="sess_permanent_pin_code" placeholder="Enter Pin Code">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>        <!-- Academic Tab Content -->
         <div *ngIf="activeTab === 'Academic'" [formGroupName]="1" class="tab-content fade-in">
           <!-- Admission Details Section -->

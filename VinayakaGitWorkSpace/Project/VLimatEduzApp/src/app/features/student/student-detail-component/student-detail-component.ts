@@ -68,6 +68,24 @@ export class StudentDetailComponent {
     { id: '5', name: 'Other' }
   ];
 
+  countries = [
+    { id: '1', name: 'India' },
+    { id: '2', name: 'USA' },
+    { id: '3', name: 'UK' }
+  ];
+
+  states = [
+    { id: '1', name: 'Delhi' },
+    { id: '2', name: 'Maharashtra' },
+    { id: '3', name: 'Karnataka' }
+  ];
+
+  cities = [
+    { id: '1', name: 'New Delhi' },
+    { id: '2', name: 'Mumbai' },
+    { id: '3', name: 'Bangalore' }
+  ];
+
   // Academic Dropdown Data
   categories = [
     { id: '1', name: 'General' },
@@ -149,6 +167,19 @@ export class StudentDetailComponent {
       sess_student_aadhar_no: [''],
       adm_stud_email_ddress: [''],
 
+      // Address Info
+      sess_country_id: [''],
+      sess_state_id: [''],
+      sess_city_id: [''],
+      sess_address: [''],
+      sess_pin_code: [''],
+
+      // Permanent Address Info
+      sess_permanent_country_id: [''],
+      sess_permanent_state_id: [''],
+      sess_permanent_city_id: [''],
+      sess_permanent_address: [''],
+      sess_permanent_pin_code: [''],
       
       // Parent/Contact Info (Basic)
       fatherTitle: ['Mr.'],
