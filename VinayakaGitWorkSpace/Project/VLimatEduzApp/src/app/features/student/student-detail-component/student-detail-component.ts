@@ -17,9 +17,9 @@ export class StudentDetailComponent {
   activeTab: string = 'Student';
   tabs = [
     { id: 'Student', label: 'Student', index: 0 },
-    { id: 'Parents', label: "Parent's", index: 1 },
-    { id: 'Transport', label: 'Transport', index: 2 },
-    { id: 'Academic', label: 'Academic', index: 3 },
+    { id: 'Academic', label: 'Academic', index: 1 },
+    { id: 'Parents', label: "Parent's", index: 2 },
+    { id: 'Transport', label: 'Transport', index: 3 },
     { id: 'DocumentUpload', label: 'Document Upload', index: 4 },
     { id: 'Other', label: 'Other', index: 5 },
     { id: 'Record', label: 'Record', index: 6 },
@@ -68,13 +68,57 @@ export class StudentDetailComponent {
     { id: '5', name: 'Other' }
   ];
 
+  // Academic Dropdown Data
+  categories = [
+    { id: '1', name: 'General' },
+    { id: '2', name: 'OBC' },
+    { id: '3', name: 'SC/ST' }
+  ];
+
+  groups = [
+    { id: '1', name: 'Science' },
+    { id: '2', name: 'Commerce' },
+    { id: '3', name: 'Arts' }
+  ];
+
+  streams = [
+    { id: '1', name: 'PCM' },
+    { id: '2', name: 'PCB' },
+    { id: '3', name: 'Commerce with Maths' }
+  ];
+
+  classes = [
+    { id: '1', name: 'Class 1' },
+    { id: '2', name: 'Class 2' },
+    { id: '3', name: 'Class 3' },
+    { id: '4', name: 'Class 4' },
+    { id: '5', name: 'Class 5' }
+  ];
+
+  sections = [
+    { id: '1', name: 'A' },
+    { id: '2', name: 'B' },
+    { id: '3', name: 'C' }
+  ];
+
+  concessions = [
+    { id: '1', name: 'None' },
+    { id: '2', name: 'Sibling' },
+    { id: '3', name: 'Staff' }
+  ];
+
+  feeGroups = [
+    { id: '1', name: 'Regular' },
+    { id: '2', name: 'Scholarship' }
+  ];
+
   constructor(private fb: FormBuilder) {
     this.studentForm = this.fb.group({
       tabs: this.fb.array([
         this.createStudentGroup(),
+        this.createAcademicGroup(), // Academic
         this.createParentGroup(),
         this.fb.group({}), // Transport
-        this.fb.group({}), // Academic
         this.fb.group({}), // Document Upload
         this.fb.group({}), // Other
         this.fb.group({}), // Record
@@ -179,6 +223,30 @@ export class StudentDetailComponent {
       guardian2Address: [''],
       
       otherDetails: ['']
+    });
+  }
+
+  createAcademicGroup(): FormGroup {
+    return this.fb.group({
+      // Admission Details
+      adm_cat_id: [''],
+      adm_grp_id: [''],
+      adm_stream_id: [''],
+      adm_class_id: [''],
+      adm_section_id: [''],
+      adm_rollno: [''],
+      adm_concession_id: [''],
+      adm_fee_group_id: [''],
+
+      // Session Details
+      sess_cat_id: [''],
+      sess_grp_id: [''],
+      sess_stream_id: [''],
+      sess_class_id: [''],
+      sess_section_id: [''],
+      sess_roll_no: [''],
+      sess_concession_id: [''],
+      sess_fee_group_id: ['']
     });
   }
 

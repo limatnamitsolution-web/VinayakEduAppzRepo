@@ -19,168 +19,100 @@
         <!-- Student Tab Content -->
         <div *ngIf="activeTab === 'Student'" [formGroupName]="0" class="tab-content fade-in">
           
-          <div class="grid-2">
-            <div class="form-section">
-              <h3 class="section-title">Student Details</h3>
-              <div class="grid-3">
-                <!-- Row 1 -->
-                <div class="form-field">
-                  <label>Branch</label>
-                  <select formControlName="adm_branch_Id">
-                    <option value="">Select Branch</option>
-                    @for (branch of branches; track branch.id) {
-                    <option [value]="branch.id">{{ branch.name }}</option>
-                    }
-                  </select>
-                </div>
-                <div class="form-field">
-                  <label>Admission No</label>
-                  <input type="text" formControlName="adm_no">
-                </div>
-                <div class="form-field">
-                  <label>Admission Date</label>
-                  <input type="date" formControlName="adm_date">
-                </div>
+          <div class="form-section">
+            <h3 class="section-title">Student Details</h3>
+            <div class="grid-4">
+              <!-- Row 1 -->
+              <div class="form-field">
+                <label>Branch</label>
+                <select formControlName="adm_branch_Id">
+                  <option value="">Select Branch</option>
+                  @for (branch of branches; track branch.id) {
+                  <option [value]="branch.id">{{ branch.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Admission No</label>
+                <input type="text" formControlName="adm_no">
+              </div>
+              <div class="form-field">
+                <label>Admission Date</label>
+                <input type="date" formControlName="adm_date">
+              </div>
+              <div class="form-field">
+                <label>Date of Joining</label>
+                <input type="date" formControlName="adm_doj">
+              </div>
 
-                <!-- Row 2 -->
-                <div class="form-field">
-                  <label>Date of Joining</label>
-                  <input type="date" formControlName="adm_doj">
-                </div>
-                <div class="form-field">
-                  <label>First Name</label>
-                  <input type="text" formControlName="sess_stud_first_name">
-                </div>
-                <div class="form-field">
-                  <label>Last Name</label>
-                  <input type="text" formControlName="sess_stud_last_name">
-                </div>
+              <!-- Row 2 -->
+              <div class="form-field">
+                <label>First Name</label>
+                <input type="text" formControlName="sess_stud_first_name">
+              </div>
+              <div class="form-field">
+                <label>Last Name</label>
+                <input type="text" formControlName="sess_stud_last_name">
+              </div>
+              <div class="form-field">
+                <label>SSR No</label>
+                <input type="text" formControlName="adm_ssr_no">
+              </div>
+              <div class="form-field">
+                <label>Date of Birth</label>
+                <input type="date" formControlName="adm_dob">
+              </div>
 
-                <!-- Row 3 -->
-                <div class="form-field">
-                  <label>SSR No</label>
-                  <input type="text" formControlName="adm_ssr_no">
-                </div>
-                <div class="form-field">
-                  <label>Date of Birth</label>
-                  <input type="date" formControlName="adm_dob">
-                </div>
-                <div class="form-field">
-                  <label>Gender</label>
-                  <select formControlName="adm_gender_id">
-                    <option value="">Select Gender</option>
-                    @for (gender of genders; track gender.id) {
-                    <option [value]="gender.id">{{ gender.name }}</option>
-                    }
-                  </select>
-                </div>
+              <!-- Row 3 -->
+              <div class="form-field">
+                <label>Gender</label>
+                <select formControlName="adm_gender_id">
+                  <option value="">Select Gender</option>
+                  @for (gender of genders; track gender.id) {
+                  <option [value]="gender.id">{{ gender.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Blood Group</label>
+                <select formControlName="adm_blood_grp_id">
+                  <option value="">Select Group</option>
+                  @for (bg of bloodGroups; track bg.id) {
+                  <option [value]="bg.id">{{ bg.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Religion</label>
+                <select formControlName="sess_religion_id">
+                  <option value="">Select Religion</option>
+                  @for (religion of religions; track religion.id) {
+                  <option [value]="religion.id">{{ religion.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Caste</label>
+                <select formControlName="sess_caste_id">
+                  <option value="">Select Caste</option>
+                  @for (caste of castes; track caste.id) {
+                  <option [value]="caste.id">{{ caste.name }}</option>
+                  }
+                </select>
+              </div>
 
-                <!-- Row 4 -->
-                <div class="form-field">
-                  <label>Blood Group</label>
-                  <select formControlName="adm_blood_grp_id">
-                    <option value="">Select Group</option>
-                    @for (bg of bloodGroups; track bg.id) {
-                    <option [value]="bg.id">{{ bg.name }}</option>
-                    }
-                  </select>
-                </div>
-                <div class="form-field">
-                  <label>Religion</label>
-                  <select formControlName="sess_religion_id">
-                    <option value="">Select Religion</option>
-                    @for (religion of religions; track religion.id) {
-                    <option [value]="religion.id">{{ religion.name }}</option>
-                    }
-                  </select>
-                </div>
-                <div class="form-field">
-                  <label>Caste</label>
-                  <select formControlName="sess_caste_id">
-                    <option value="">Select Caste</option>
-                    @for (caste of castes; track caste.id) {
-                    <option [value]="caste.id">{{ caste.name }}</option>
-                    }
-                  </select>
-                </div>
-
-                <!-- Row 5 -->
-                <div class="form-field">
-                  <label>Mobile No</label>
-                  <input type="text" formControlName="adm_stud_mobile_no">
-                </div>
-                <div class="form-field">
-                  <label>Aadhar No</label>
-                  <input type="text" formControlName="sess_student_aadhar_no">
-                </div>
+              <!-- Row 4 -->
+              <div class="form-field">
+                <label>Mobile No</label>
+                <input type="text" formControlName="adm_stud_mobile_no">
+              </div>
+              <div class="form-field">
+                <label>Aadhar No</label>
+                <input type="text" formControlName="sess_student_aadhar_no">
+              </div>
                 <div class="form-field">
                   <label>Email Address</label>
                   <input type="text" formControlName="adm_stud_email_ddress">
-                </div>
-              </div>
-            </div>
-
-            <div class="form-section">
-              <h3 class="section-title">Academic Details</h3>
-              <div class="grid-3">
-                <div class="form-field">
-                  <label>Class</label>
-                  <select formControlName="currentClass">
-                    <option value="">Select Class</option>
-                    <option value="1">Class 1</option>
-                    <option value="2">Class 2</option>
-                    <option value="3">Class 3</option>
-                  </select>
-                </div>
-                <div class="form-field">
-                  <label>Section</label>
-                  <select formControlName="currentSection">
-                    <option value="">Select Section</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                  </select>
-                </div>
-                <div class="form-field">
-                  <label>Roll Number</label>
-                  <input type="text" formControlName="currentRollNo" placeholder="Roll No">
-                </div>
-                <div class="form-field">
-                  <label>Admission Date</label>
-                  <input type="date" formControlName="admissionDate">
-                </div>
-                <div class="form-field">
-                  <label>Category</label>
-                  <select formControlName="category">
-                    <option value="">General</option>
-                    <option value="OBC">OBC</option>
-                    <option value="SC">SC</option>
-                    <option value="ST">ST</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="form-section">
-              <h3 class="section-title">Parent / Guardian Details</h3>
-              <div class="grid-3">
-                <div class="form-field">
-                  <label>Father's Name</label>
-                  <input type="text" formControlName="fatherName" placeholder="Full Name">
-                </div>
-                <div class="form-field">
-                  <label>Father's Mobile</label>
-                  <input type="text" formControlName="fatherMobile" placeholder="+91 ...">
-                </div>
-                <div class="form-field">
-                  <label>Mother's Name</label>
-                  <input type="text" formControlName="motherName" placeholder="Full Name">
-                </div>
-                <div class="form-field">
-                  <label>Mother's Mobile</label>
-                  <input type="text" formControlName="motherMobile" placeholder="+91 ...">
                 </div>
               </div>
             </div>
@@ -202,12 +134,161 @@
                 </div>
               </div>
             </div>
+        </div>        <!-- Academic Tab Content -->
+        <div *ngIf="activeTab === 'Academic'" [formGroupName]="1" class="tab-content fade-in">
+          <!-- Admission Details Section -->
+          <div class="form-section">
+            <h3 class="section-title">Admission Details</h3>
+            <div class="grid-4">
+              <div class="form-field">
+                <label>Admission Category</label>
+                <select formControlName="adm_cat_id">
+                  <option value="">Select Category</option>
+                  @for (cat of categories; track cat.id) {
+                  <option [value]="cat.id">{{ cat.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Admission Group</label>
+                <select formControlName="adm_grp_id">
+                  <option value="">Select Group</option>
+                  @for (grp of groups; track grp.id) {
+                  <option [value]="grp.id">{{ grp.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Admission Stream</label>
+                <select formControlName="adm_stream_id">
+                  <option value="">Select Stream</option>
+                  @for (stream of streams; track stream.id) {
+                  <option [value]="stream.id">{{ stream.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Admission Class</label>
+                <select formControlName="adm_class_id">
+                  <option value="">Select Class</option>
+                  @for (cls of classes; track cls.id) {
+                  <option [value]="cls.id">{{ cls.name }}</option>
+                  }
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label>Admission Section</label>
+                <select formControlName="adm_section_id">
+                  <option value="">Select Section</option>
+                  @for (sec of sections; track sec.id) {
+                  <option [value]="sec.id">{{ sec.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Admission Roll No</label>
+                <input type="text" formControlName="adm_rollno">
+              </div>
+              <div class="form-field">
+                <label>Admission Concession</label>
+                <select formControlName="adm_concession_id">
+                  <option value="">Select Concession</option>
+                  @for (conc of concessions; track conc.id) {
+                  <option [value]="conc.id">{{ conc.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Admission Fee Group</label>
+                <select formControlName="adm_fee_group_id">
+                  <option value="">Select Fee Group</option>
+                  @for (fg of feeGroups; track fg.id) {
+                  <option [value]="fg.id">{{ fg.name }}</option>
+                  }
+                </select>
+              </div>
+            </div>
           </div>
 
+          <!-- Current Session Details Section -->
+          <div class="form-section">
+            <h3 class="section-title">Current Session Details</h3>
+            <div class="grid-4">
+              <div class="form-field">
+                <label>Session Category</label>
+                <select formControlName="sess_cat_id">
+                  <option value="">Select Category</option>
+                  @for (cat of categories; track cat.id) {
+                  <option [value]="cat.id">{{ cat.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Session Group</label>
+                <select formControlName="sess_grp_id">
+                  <option value="">Select Group</option>
+                  @for (grp of groups; track grp.id) {
+                  <option [value]="grp.id">{{ grp.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Session Stream</label>
+                <select formControlName="sess_stream_id">
+                  <option value="">Select Stream</option>
+                  @for (stream of streams; track stream.id) {
+                  <option [value]="stream.id">{{ stream.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Session Class</label>
+                <select formControlName="sess_class_id">
+                  <option value="">Select Class</option>
+                  @for (cls of classes; track cls.id) {
+                  <option [value]="cls.id">{{ cls.name }}</option>
+                  }
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label>Session Section</label>
+                <select formControlName="sess_section_id">
+                  <option value="">Select Section</option>
+                  @for (sec of sections; track sec.id) {
+                  <option [value]="sec.id">{{ sec.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Session Roll No</label>
+                <input type="text" formControlName="sess_roll_no">
+              </div>
+              <div class="form-field">
+                <label>Session Concession</label>
+                <select formControlName="sess_concession_id">
+                  <option value="">Select Concession</option>
+                  @for (conc of concessions; track conc.id) {
+                  <option [value]="conc.id">{{ conc.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Session Fee Group</label>
+                <select formControlName="sess_fee_group_id">
+                  <option value="">Select Fee Group</option>
+                  @for (fg of feeGroups; track fg.id) {
+                  <option [value]="fg.id">{{ fg.name }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Parent's Tab Content -->
-        <div *ngIf="activeTab === 'Parents'" [formGroupName]="1" class="tab-content fade-in">
+        <div *ngIf="activeTab === 'Parents'" [formGroupName]="2" class="tab-content fade-in">
           
           <div class="grid-2">
             <!-- Father Details -->
