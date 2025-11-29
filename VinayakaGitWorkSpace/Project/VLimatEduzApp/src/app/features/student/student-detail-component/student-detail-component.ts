@@ -130,6 +130,20 @@ export class StudentDetailComponent {
     { id: '2', name: 'Scholarship' }
   ];
 
+  qualifications = [
+    { id: '1', name: 'Graduate' },
+    { id: '2', name: 'Post Graduate' },
+    { id: '3', name: 'Doctorate' },
+    { id: '4', name: 'Other' }
+  ];
+
+  occupations = [
+    { id: '1', name: 'Service' },
+    { id: '2', name: 'Business' },
+    { id: '3', name: 'Self Employed' },
+    { id: '4', name: 'Other' }
+  ];
+
   constructor(private fb: FormBuilder) {
     this.studentForm = this.fb.group({
       tabs: this.fb.array([
@@ -228,12 +242,40 @@ export class StudentDetailComponent {
 
   createParentGroup(): FormGroup {
     return this.fb.group({
-      fatherQualification: [''],
-      fatherOccupation: [''],
-      fatherDesignation: [''],
+      // Father Details
+      sess_father_name: [''],
+      sess_father_mobile_no: [''],
+      sess_father_qualification_id: [''],
+      sess_father_occupation_id: [''],
+      sess_father_designation_id: [''],
+      sess_father_annual_income: [''],
+      sess_father_office_address: [''],
+      sess_is_fse: [false],
+      
+      // Mother Details
+      sess_mother_name: [''],
+      sess_mother_mobile_no: [''],
+      sess_mother_qualification_id: [''],
+      sess_mother_occupation_id: [''],
+      sess_mother_designation_id: [''],
+      sess_mother_annual_income: [''],
+      sess_mother_office_address: [''],
+      sess_is_mse: [false],
+
+      // Guardian Details
+      sess_g1_name: [''],
+      sess_g1_mobile_no: [''],
+      sess_g1_address: [''],
+      sess_g2_name: [''],
+      sess_g2_mobile_no: [''],
+      sess_g2_address: [''],
+
+      fatherQualification: [''], // Deprecated? Keeping for safety
+      fatherOccupation: [''], // Deprecated?
+      fatherDesignation: [''], // Deprecated?
       fatherEmail: [''],
-      fatherOfficeAddress: [''],
-      fatherIncome: [''],
+      fatherOfficeAddress: [''], // Deprecated?
+      fatherIncome: [''], // Deprecated?
       fatherAdhar: [''],
       isFatherEmployee: [false],
 

@@ -365,40 +365,52 @@
           <div class="grid-2">
             <!-- Father Details -->
             <div class="form-section">
-              <h3 class="section-title">Father Detail</h3>
-              <div class="grid-3">
+              <h3 class="section-title">Father Details</h3>
+              <div class="grid-4">
+                <!-- Row 1 -->
+                <div class="form-field">
+                  <label>Father Name</label>
+                  <input type="text" formControlName="sess_father_name">
+                </div>
+                <div class="form-field">
+                  <label>Father Mobile No</label>
+                  <input type="text" formControlName="sess_father_mobile_no">
+                </div>
                 <div class="form-field">
                   <label>Qualification</label>
-                  <select formControlName="fatherQualification"><option value="">Select</option></select>
+                  <select formControlName="sess_father_qualification_id">
+                    <option value="">Select</option>
+                    @for (qual of qualifications; track qual.id) {
+                    <option [value]="qual.id">{{ qual.name }}</option>
+                    }
+                  </select>
                 </div>
                 <div class="form-field">
                   <label>Occupation</label>
-                  <select formControlName="fatherOccupation"><option value="">Select</option></select>
+                  <select formControlName="sess_father_occupation_id">
+                    <option value="">Select</option>
+                    @for (occ of occupations; track occ.id) {
+                    <option [value]="occ.id">{{ occ.name }}</option>
+                    }
+                  </select>
                 </div>
+
+                <!-- Row 2 -->
                 <div class="form-field">
                   <label>Designation</label>
-                  <select formControlName="fatherDesignation"><option value="">Select</option></select>
-                </div>
-                <div class="form-field">
-                  <label>Email</label>
-                  <input type="email" formControlName="fatherEmail">
-                </div>
-                <div class="form-field">
-                  <label>Office Address</label>
-                  <input type="text" formControlName="fatherOfficeAddress">
+                  <input type="text" formControlName="sess_father_designation_id">
                 </div>
                 <div class="form-field">
                   <label>Annual Income</label>
-                  <input type="text" formControlName="fatherIncome">
+                  <input type="text" formControlName="sess_father_annual_income">
                 </div>
                 <div class="form-field">
-                  <label>Adhar Card No.</label>
-                  <input type="text" formControlName="fatherAdhar">
+                  <label>Office Address</label>
+                  <input type="text" formControlName="sess_father_office_address">
                 </div>
-                <div class="form-field checkbox-field">
-                  <label>
-                    <input type="checkbox" formControlName="isFatherEmployee"> Is Father Campus Employee
-                  </label>
+                <div class="form-field">
+                  <label>Is Campus Employee</label>
+                  <input type="checkbox" formControlName="sess_is_fse">
                 </div>
               </div>
             </div>
@@ -406,39 +418,51 @@
             <!-- Mother Details -->
             <div class="form-section">
               <h3 class="section-title">Mother Detail</h3>
-              <div class="grid-3">
+              <div class="grid-4">
+                <!-- Row 1 -->
+                <div class="form-field">
+                  <label>Mother Name</label>
+                  <input type="text" formControlName="sess_mother_name">
+                </div>
+                <div class="form-field">
+                  <label>Mother Mobile No</label>
+                  <input type="text" formControlName="sess_mother_mobile_no">
+                </div>
                 <div class="form-field">
                   <label>Qualification</label>
-                  <select formControlName="motherQualification"><option value="">Select</option></select>
+                  <select formControlName="sess_mother_qualification_id">
+                    <option value="">Select</option>
+                    @for (qual of qualifications; track qual.id) {
+                    <option [value]="qual.id">{{ qual.name }}</option>
+                    }
+                  </select>
                 </div>
                 <div class="form-field">
                   <label>Occupation</label>
-                  <select formControlName="motherOccupation"><option value="">Select</option></select>
+                  <select formControlName="sess_mother_occupation_id">
+                    <option value="">Select</option>
+                    @for (occ of occupations; track occ.id) {
+                    <option [value]="occ.id">{{ occ.name }}</option>
+                    }
+                  </select>
                 </div>
+
+                <!-- Row 2 -->
                 <div class="form-field">
                   <label>Designation</label>
-                  <select formControlName="motherDesignation"><option value="">Select</option></select>
-                </div>
-                <div class="form-field">
-                  <label>Email</label>
-                  <input type="email" formControlName="motherEmail">
-                </div>
-                <div class="form-field">
-                  <label>Office Address</label>
-                  <input type="text" formControlName="motherOfficeAddress">
+                  <input type="text" formControlName="sess_mother_designation_id">
                 </div>
                 <div class="form-field">
                   <label>Annual Income</label>
-                  <input type="text" formControlName="motherIncome">
+                  <input type="text" formControlName="sess_mother_annual_income">
                 </div>
                 <div class="form-field">
-                  <label>Adhar Card No.</label>
-                  <input type="text" formControlName="motherAdhar">
+                  <label>Office Address</label>
+                  <input type="text" formControlName="sess_mother_office_address">
                 </div>
-                <div class="form-field checkbox-field">
-                  <label>
-                    <input type="checkbox" formControlName="isMotherEmployee"> Is Mother Campus Employee
-                  </label>
+                <div class="form-field">
+                  <label>Is Campus Employee</label>
+                  <input type="checkbox" formControlName="sess_is_mse">
                 </div>
               </div>
             </div>
@@ -450,28 +474,28 @@
             <div class="grid-3">
               <div class="form-field">
                 <label>Guardian 1 Name</label>
-                <input type="text" formControlName="guardian1Name">
+                <input type="text" formControlName="sess_g1_name">
               </div>
               <div class="form-field">
                 <label>Guardian 1 Mobile</label>
-                <input type="text" formControlName="guardian1Mobile">
+                <input type="text" formControlName="sess_g1_mobile_no">
               </div>
-              <div class="form-field full-width">
+              <div class="form-field">
                 <label>Guardian 1 Address</label>
-                <input type="text" formControlName="guardian1Address">
+                <input type="text" formControlName="sess_g1_address">
               </div>
               
               <div class="form-field">
                 <label>Guardian 2 Name</label>
-                <input type="text" formControlName="guardian2Name">
+                <input type="text" formControlName="sess_g2_name">
               </div>
               <div class="form-field">
                 <label>Guardian 2 Mobile</label>
-                <input type="text" formControlName="guardian2Mobile">
+                <input type="text" formControlName="sess_g2_mobile_no">
               </div>
-              <div class="form-field full-width">
+              <div class="form-field">
                 <label>Guardian 2 Address</label>
-                <input type="text" formControlName="guardian2Address">
+                <input type="text" formControlName="sess_g2_address">
               </div>
             </div>
           </div>
