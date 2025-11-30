@@ -514,6 +514,152 @@
             </div>
           </div>
         </div>
+
+        <!-- Transport Tab Content -->
+        <div *ngIf="activeTab === 'Transport'" [formGroupName]="3" class="tab-content fade-in">
+          <div class="form-section">
+            <h3 class="section-title">Transport Details</h3>
+            <div class="grid-2">
+              <!-- Row 1 -->
+              <div class="form-field">
+                <label>Transport Mode</label>
+                <select formControlName="transportMode">
+                  <option value="">Select Mode</option>
+                  @for (mode of transportModes; track mode.id) {
+                  <option [value]="mode.id">{{ mode.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Pick / Drop</label>
+                <select formControlName="pickDrop">
+                  <option value="">Select Option</option>
+                  @for (opt of pickDropOptions; track opt.id) {
+                  <option [value]="opt.id">{{ opt.name }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <!-- Pick Details -->
+              <div class="form-section">
+                <h4 class="section-subtitle">Pick Details</h4>
+                <div class="grid-2">
+                  <div class="form-field">
+                    <label>Pick Area</label>
+                    <select formControlName="pickArea">
+                      <option value="">Select Area</option>
+                      @for (area of transportAreas; track area.id) {
+                      <option [value]="area.id">{{ area.name }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label>Pick Stand</label>
+                    <select formControlName="pickStand">
+                      <option value="">Select Stand</option>
+                      @for (stand of transportStands; track stand.id) {
+                      <option [value]="stand.id">{{ stand.name }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label>Pick Route</label>
+                    <select formControlName="pickRoute">
+                      <option value="">Select Route</option>
+                      @for (route of transportRoutes; track route.id) {
+                      <option [value]="route.id">{{ route.name }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label>Pick Driver</label>
+                    <select formControlName="pickDriver">
+                      <option value="">Select Driver</option>
+                      @for (driver of transportDrivers; track driver.id) {
+                      <option [value]="driver.id">{{ driver.name }}</option>
+                      }
+                    </select>
+                    <small class="text-success">ABCD</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Drop Details -->
+              <div class="form-section">
+                <h4 class="section-subtitle">Drop Details</h4>
+                <div class="grid-2">
+                  <div class="form-field">
+                    <label>Drop Area</label>
+                    <select formControlName="dropArea">
+                      <option value="">Select Area</option>
+                      @for (area of transportAreas; track area.id) {
+                      <option [value]="area.id">{{ area.name }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label>Drop Stand</label>
+                    <select formControlName="dropStand">
+                      <option value="">Select Stand</option>
+                      @for (stand of transportStands; track stand.id) {
+                      <option [value]="stand.id">{{ stand.name }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label>Drop Route</label>
+                    <select formControlName="dropRoute">
+                      <option value="">Select Route</option>
+                      @for (route of transportRoutes; track route.id) {
+                      <option [value]="route.id">{{ route.name }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label>Drop Driver</label>
+                    <select formControlName="dropDriver">
+                      <option value="">Select Driver</option>
+                      @for (driver of transportDrivers; track driver.id) {
+                      <option [value]="driver.id">{{ driver.name }}</option>
+                      }
+                    </select>
+                    <small class="text-success">ABCD</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Months Selection -->
+            <div class="form-section">
+              <h3 class="section-title">Months</h3>
+              <div class="months-grid" formArrayName="months">
+                @for (month of transportMonthsList; track $index) {
+                <div class="month-item">
+                  <label [for]="'month-'+$index">{{ month.label }}</label>
+                  <input type="checkbox" [formControlName]="$index" [id]="'month-'+$index">
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Document Upload Tab Content -->
+        <div *ngIf="activeTab === 'DocumentUpload'" [formGroupName]="4" class="tab-content fade-in">
+          <div class="form-section">
+            <h3 class="section-title">Document Upload</h3>
+            <div class="grid-2">
+              @for (doc of documentTypes; track doc.doc_id) {
+              <div class="form-field" [formGroupName]="doc.doc_id">
+                <label>{{ doc.doc_label }}</label>
+                <input type="file" formControlName="doc_File" (change)="onFileSelected($event, doc.doc_id)">
+              </div>
+              }
+            </div>
+          </div>
+        </div>
       </div>
       </div>
 

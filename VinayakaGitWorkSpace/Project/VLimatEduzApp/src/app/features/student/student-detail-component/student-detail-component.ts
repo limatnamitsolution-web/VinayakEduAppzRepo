@@ -144,14 +144,76 @@ export class StudentDetailComponent {
     { id: '4', name: 'Other' }
   ];
 
+  // Transport Dropdown Data
+  transportModes = [
+    { id: '1', name: 'Own' },
+    { id: '2', name: 'School Transport' }
+  ];
+
+  pickDropOptions = [
+    { id: '1', name: 'Both' },
+    { id: '2', name: 'Pick Only' },
+    { id: '3', name: 'Drop Only' }
+  ];
+
+  transportAreas = [
+    { id: '1', name: 'Area 1' },
+    { id: '2', name: 'Area 2' }
+  ];
+
+  transportStands = [
+    { id: '1', name: 'Stand 1' },
+    { id: '2', name: 'Stand 2' }
+  ];
+
+  transportRoutes = [
+    { id: '1', name: 'Route 1' },
+    { id: '2', name: 'Route 2' }
+  ];
+
+  transportDrivers = [
+    { id: '1', name: 'Driver 1' },
+    { id: '2', name: 'Driver 2' }
+  ];
+
+  transportMonthsList = [
+    { label: 'Apr', monthId: 4 },
+    { label: 'May', monthId: 5 },
+    { label: 'Jun', monthId: 6 },
+    { label: 'Jul', monthId: 7 },
+    { label: 'Aug', monthId: 8 },
+    { label: 'Sep', monthId: 9 },
+    { label: 'Oct', monthId: 10 },
+    { label: 'Nov', monthId: 11 },
+    { label: 'Dec', monthId: 12 },
+    { label: 'Jan', monthId: 1 },
+    { label: 'Feb', monthId: 2 },
+    { label: 'Mar', monthId: 3 }
+  ];
+
+  documentTypes = [
+    { doc_id: 'dobProof', doc_label: 'Date of Birth Proof', doc_File: '' },
+    { doc_id: 'aadharCard', doc_label: 'Aadhar Card', doc_File: '' },
+    { doc_id: 'signature', doc_label: 'Signature', doc_File: '' },
+    { doc_id: 'fatherAadhar', doc_label: 'Father Aadharcard', doc_File: '' },
+    { doc_id: 'motherAadhar', doc_label: 'Mother Aadharcard', doc_File: '' },
+    { doc_id: 'incomeCert', doc_label: 'Income Certificate', doc_File: '' },
+    { doc_id: 'casteCert', doc_label: 'Caste Certificate', doc_File: '' },
+    { doc_id: 'addressProof1', doc_label: 'Address Proof 1', doc_File: '' },
+    { doc_id: 'addressProof2', doc_label: 'Address Proof 2', doc_File: '' },
+    { doc_id: 'migrationCert', doc_label: 'Migration Certificate', doc_File: '' }
+  ];
+
+  selectedFiles: { [key: string]: File } = {};
+
   constructor(private fb: FormBuilder) {
     this.studentForm = this.fb.group({
       tabs: this.fb.array([
         this.createStudentGroup(),
         this.createAcademicGroup(), // Academic
         this.createParentGroup(),
-        this.fb.group({}), // Transport
-        this.fb.group({}), // Document Upload
+        this.createTransportGroup(), // Transport
+        this.createDocumentUploadGroup(), // Document Upload
         this.fb.group({}), // Other
         this.fb.group({}), // Record
         this.fb.group({})  // Category Certificate
@@ -323,8 +385,43 @@ export class StudentDetailComponent {
     });
   }
 
-  setActiveTab(tab: string) {
-    this.activeTab = tab;
+  createTransportGroup(): FormGroup {
+    return this.fb.group({
+      transportMode: [''],
+      pickArea: [''],
+      pickDrop: [''],
+      pickStand: [''],
+      pickRoute: [''],
+      pickDriver: [''],
+      dropArea: [''],
+      dropStand: [''],
+      dropRoute: [''],
+      dropDriver: [''],
+      months: this.fb.array(this.transportMonthsList.map(() => false))
+    });
+  }
+
+  createDocumentUploadGroup(): FormGroup {
+    const group: any = {};
+    this.documentTypes.forEach(doc => {
+      group[doc.doc_id] = this.fb.group({
+        doc_id: [doc.doc_id],
+        doc_label: [doc.doc_label],
+        doc_File: ['']
+      });
+    });
+    return this.fb.group(group);
+  }
+
+  setActiveTab(tabId: string) {
+    this.activeTab = tabId;
+  }
+
+  onFileSelected(event: any, key: string) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFiles[key] = file;
+    }
   }
 
   onSubmit() {
@@ -335,6 +432,7 @@ export class StudentDetailComponent {
         ...formValue.tabs[0],
         ...formValue.tabs[1],
         // ... merge other tabs
+        documents: this.selectedFiles // Include the selected files
       };
       this.save.emit(combinedValue);
     }
