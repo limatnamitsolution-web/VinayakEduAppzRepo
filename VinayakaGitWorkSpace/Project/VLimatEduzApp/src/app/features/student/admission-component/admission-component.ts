@@ -351,7 +351,7 @@ export class AdmissionComponent implements OnInit {
     
     this.gridData.set([...currentData, newStudent]);
     this.applyFilters();
-    this.closeModal();
+    // this.closeModal();
   }
 
   addGridItem() {

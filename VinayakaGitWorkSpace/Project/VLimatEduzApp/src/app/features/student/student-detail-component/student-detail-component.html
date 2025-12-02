@@ -28,7 +28,7 @@
                 <select formControlName="adm_branch_Id">
                   <option value="">Select Branch</option>
                   @for (branch of branches; track branch.id) {
-                  <option [value]="branch.id">{{ branch.name }}</option>
+                  <option [ngValue]="branch.id">{{ branch.name }}</option>
                   }
                 </select>
               </div>
@@ -87,7 +87,7 @@
                 <select formControlName="sess_religion_id">
                   <option value="">Select Religion</option>
                   @for (religion of religions; track religion.id) {
-                  <option [value]="religion.id">{{ religion.name }}</option>
+                  <option [ngValue]="religion.id">{{ religion.name }}</option>
                   }
                 </select>
               </div>
@@ -96,7 +96,7 @@
                 <select formControlName="sess_caste_id">
                   <option value="">Select Caste</option>
                   @for (caste of castes; track caste.id) {
-                  <option [value]="caste.id">{{ caste.name }}</option>
+                  <option [ngValue]="caste.id">{{ caste.name }}</option>
                   }
                 </select>
               </div>
@@ -127,7 +127,7 @@
                   <select formControlName="sess_country_id">
                     <option value="">Select Country</option>
                     @for (country of countries; track country.id) {
-                    <option [value]="country.id">{{ country.name }}</option>
+                    <option [ngValue]="country.id">{{ country.name }}</option>
                     }
                   </select>
                 </div>
@@ -136,7 +136,7 @@
                   <select formControlName="sess_state_id">
                     <option value="">Select State</option>
                     @for (state of states; track state.id) {
-                    <option [value]="state.id">{{ state.name }}</option>
+                    <option [ngValue]="state.id">{{ state.name }}</option>
                     }
                   </select>
                 </div>
@@ -145,7 +145,7 @@
                   <select formControlName="sess_city_id">
                     <option value="">Select City</option>
                     @for (city of cities; track city.id) {
-                    <option [value]="city.id">{{ city.name }}</option>
+                    <option [ngValue]="city.id">{{ city.name }}</option>
                     }
                   </select>
                 </div>
@@ -171,7 +171,7 @@
                   <select formControlName="sess_permanent_country_id">
                     <option value="">Select Country</option>
                     @for (country of countries; track country.id) {
-                    <option [value]="country.id">{{ country.name }}</option>
+                    <option [ngValue]="country.id">{{ country.name }}</option>
                     }
                   </select>
                 </div>
@@ -180,7 +180,7 @@
                   <select formControlName="sess_permanent_state_id">
                     <option value="">Select State</option>
                     @for (state of states; track state.id) {
-                    <option [value]="state.id">{{ state.name }}</option>
+                    <option [ngValue]="state.id">{{ state.name }}</option>
                     }
                   </select>
                 </div>
@@ -189,7 +189,7 @@
                   <select formControlName="sess_permanent_city_id">
                     <option value="">Select City</option>
                     @for (city of cities; track city.id) {
-                    <option [value]="city.id">{{ city.name }}</option>
+                    <option [ngValue]="city.id">{{ city.name }}</option>
                     }
                   </select>
                 </div>
@@ -217,7 +217,7 @@
                 <select formControlName="adm_cat_id">
                   <option value="">Select Category</option>
                   @for (cat of categories; track cat.id) {
-                  <option [value]="cat.id">{{ cat.name }}</option>
+                  <option [ngValue]="cat.id">{{ cat.name }}</option>
                   }
                 </select>
               </div>
@@ -226,7 +226,7 @@
                 <select formControlName="adm_grp_id">
                   <option value="">Select Group</option>
                   @for (grp of groups; track grp.id) {
-                  <option [value]="grp.id">{{ grp.name }}</option>
+                  <option [ngValue]="grp.id">{{ grp.name }}</option>
                   }
                 </select>
               </div>
@@ -235,7 +235,7 @@
                 <select formControlName="adm_stream_id">
                   <option value="">Select Stream</option>
                   @for (stream of streams; track stream.id) {
-                  <option [value]="stream.id">{{ stream.name }}</option>
+                  <option [ngValue]="stream.id">{{ stream.name }}</option>
                   }
                 </select>
               </div>
@@ -244,7 +244,7 @@
                 <select formControlName="adm_class_id">
                   <option value="">Select Class</option>
                   @for (cls of classes; track cls.id) {
-                  <option [value]="cls.id">{{ cls.name }}</option>
+                  <option [ngValue]="cls.id">{{ cls.name }}</option>
                   }
                 </select>
               </div>
@@ -254,7 +254,7 @@
                 <select formControlName="adm_section_id">
                   <option value="">Select Section</option>
                   @for (sec of sections; track sec.id) {
-                  <option [value]="sec.id">{{ sec.name }}</option>
+                  <option [ngValue]="sec.id">{{ sec.name }}</option>
                   }
                 </select>
               </div>
@@ -267,7 +267,7 @@
                 <select formControlName="adm_concession_id">
                   <option value="">Select Concession</option>
                   @for (conc of concessions; track conc.id) {
-                  <option [value]="conc.id">{{ conc.name }}</option>
+                  <option [ngValue]="conc.id">{{ conc.name }}</option>
                   }
                 </select>
               </div>
@@ -276,7 +276,7 @@
                 <select formControlName="adm_fee_group_id">
                   <option value="">Select Fee Group</option>
                   @for (fg of feeGroups; track fg.id) {
-                  <option [value]="fg.id">{{ fg.name }}</option>
+                  <option [ngValue]="fg.id">{{ fg.name }}</option>
                   }
                 </select>
               </div>
@@ -292,7 +292,7 @@
                 <select formControlName="sess_cat_id">
                   <option value="">Select Category</option>
                   @for (cat of categories; track cat.id) {
-                  <option [value]="cat.id">{{ cat.name }}</option>
+                  <option [ngValue]="cat.id">{{ cat.name }}</option>
                   }
                 </select>
               </div>
@@ -301,7 +301,7 @@
                 <select formControlName="sess_grp_id">
                   <option value="">Select Group</option>
                   @for (grp of groups; track grp.id) {
-                  <option [value]="grp.id">{{ grp.name }}</option>
+                  <option [ngValue]="grp.id">{{ grp.name }}</option>
                   }
                 </select>
               </div>
@@ -310,7 +310,7 @@
                 <select formControlName="sess_stream_id">
                   <option value="">Select Stream</option>
                   @for (stream of streams; track stream.id) {
-                  <option [value]="stream.id">{{ stream.name }}</option>
+                  <option [ngValue]="stream.id">{{ stream.name }}</option>
                   }
                 </select>
               </div>
@@ -319,7 +319,7 @@
                 <select formControlName="sess_class_id">
                   <option value="">Select Class</option>
                   @for (cls of classes; track cls.id) {
-                  <option [value]="cls.id">{{ cls.name }}</option>
+                  <option [ngValue]="cls.id">{{ cls.name }}</option>
                   }
                 </select>
               </div>
@@ -329,7 +329,7 @@
                 <select formControlName="sess_section_id">
                   <option value="">Select Section</option>
                   @for (sec of sections; track sec.id) {
-                  <option [value]="sec.id">{{ sec.name }}</option>
+                  <option [ngValue]="sec.id">{{ sec.name }}</option>
                   }
                 </select>
               </div>
@@ -342,7 +342,7 @@
                 <select formControlName="sess_concession_id">
                   <option value="">Select Concession</option>
                   @for (conc of concessions; track conc.id) {
-                  <option [value]="conc.id">{{ conc.name }}</option>
+                  <option [ngValue]="conc.id">{{ conc.name }}</option>
                   }
                 </select>
               </div>
@@ -351,7 +351,7 @@
                 <select formControlName="sess_fee_group_id">
                   <option value="">Select Fee Group</option>
                   @for (fg of feeGroups; track fg.id) {
-                  <option [value]="fg.id">{{ fg.name }}</option>
+                  <option [ngValue]="fg.id">{{ fg.name }}</option>
                   }
                 </select>
               </div>
@@ -381,7 +381,7 @@
                   <select formControlName="sess_father_qualification_id">
                     <option value="">Select</option>
                     @for (qual of qualifications; track qual.id) {
-                    <option [value]="qual.id">{{ qual.name }}</option>
+                    <option [ngValue]="qual.id">{{ qual.name }}</option>
                     }
                   </select>
                 </div>
@@ -390,7 +390,7 @@
                   <select formControlName="sess_father_occupation_id">
                     <option value="">Select</option>
                     @for (occ of occupations; track occ.id) {
-                    <option [value]="occ.id">{{ occ.name }}</option>
+                    <option [ngValue]="occ.id">{{ occ.name }}</option>
                     }
                   </select>
                 </div>
@@ -433,7 +433,7 @@
                   <select formControlName="sess_mother_qualification_id">
                     <option value="">Select</option>
                     @for (qual of qualifications; track qual.id) {
-                    <option [value]="qual.id">{{ qual.name }}</option>
+                    <option [ngValue]="qual.id">{{ qual.name }}</option>
                     }
                   </select>
                 </div>
@@ -442,7 +442,7 @@
                   <select formControlName="sess_mother_occupation_id">
                     <option value="">Select</option>
                     @for (occ of occupations; track occ.id) {
-                    <option [value]="occ.id">{{ occ.name }}</option>
+                    <option [ngValue]="occ.id">{{ occ.name }}</option>
                     }
                   </select>
                 </div>
@@ -526,7 +526,7 @@
                 <select formControlName="transportMode">
                   <option value="">Select Mode</option>
                   @for (mode of transportModes; track mode.id) {
-                  <option [value]="mode.id">{{ mode.name }}</option>
+                  <option [ngValue]="mode.id">{{ mode.name }}</option>
                   }
                 </select>
               </div>
@@ -535,7 +535,7 @@
                 <select formControlName="pickDrop">
                   <option value="">Select Option</option>
                   @for (opt of pickDropOptions; track opt.id) {
-                  <option [value]="opt.id">{{ opt.name }}</option>
+                  <option [ngValue]="opt.id">{{ opt.name }}</option>
                   }
                 </select>
               </div>
@@ -551,7 +551,7 @@
                     <select formControlName="pickArea">
                       <option value="">Select Area</option>
                       @for (area of transportAreas; track area.id) {
-                      <option [value]="area.id">{{ area.name }}</option>
+                      <option [ngValue]="area.id">{{ area.name }}</option>
                       }
                     </select>
                   </div>
@@ -560,7 +560,7 @@
                     <select formControlName="pickStand">
                       <option value="">Select Stand</option>
                       @for (stand of transportStands; track stand.id) {
-                      <option [value]="stand.id">{{ stand.name }}</option>
+                      <option [ngValue]="stand.id">{{ stand.name }}</option>
                       }
                     </select>
                   </div>
@@ -569,7 +569,7 @@
                     <select formControlName="pickRoute">
                       <option value="">Select Route</option>
                       @for (route of transportRoutes; track route.id) {
-                      <option [value]="route.id">{{ route.name }}</option>
+                      <option [ngValue]="route.id">{{ route.name }}</option>
                       }
                     </select>
                   </div>
@@ -578,7 +578,7 @@
                     <select formControlName="pickDriver">
                       <option value="">Select Driver</option>
                       @for (driver of transportDrivers; track driver.id) {
-                      <option [value]="driver.id">{{ driver.name }}</option>
+                      <option [ngValue]="driver.id">{{ driver.name }}</option>
                       }
                     </select>
                     <small class="text-success">ABCD</small>
@@ -595,7 +595,7 @@
                     <select formControlName="dropArea">
                       <option value="">Select Area</option>
                       @for (area of transportAreas; track area.id) {
-                      <option [value]="area.id">{{ area.name }}</option>
+                      <option [ngValue]="area.id">{{ area.name }}</option>
                       }
                     </select>
                   </div>
@@ -604,7 +604,7 @@
                     <select formControlName="dropStand">
                       <option value="">Select Stand</option>
                       @for (stand of transportStands; track stand.id) {
-                      <option [value]="stand.id">{{ stand.name }}</option>
+                      <option [ngValue]="stand.id">{{ stand.name }}</option>
                       }
                     </select>
                   </div>
@@ -613,7 +613,7 @@
                     <select formControlName="dropRoute">
                       <option value="">Select Route</option>
                       @for (route of transportRoutes; track route.id) {
-                      <option [value]="route.id">{{ route.name }}</option>
+                      <option [ngValue]="route.id">{{ route.name }}</option>
                       }
                     </select>
                   </div>
@@ -622,7 +622,7 @@
                     <select formControlName="dropDriver">
                       <option value="">Select Driver</option>
                       @for (driver of transportDrivers; track driver.id) {
-                      <option [value]="driver.id">{{ driver.name }}</option>
+                      <option [ngValue]="driver.id">{{ driver.name }}</option>
                       }
                     </select>
                     <small class="text-success">ABCD</small>
@@ -647,14 +647,14 @@
         </div>
 
         <!-- Document Upload Tab Content -->
-        <div *ngIf="activeTab === 'DocumentUpload'" [formGroupName]="4" class="tab-content fade-in">
+        <div *ngIf="activeTab === 'DocumentUpload'" [formArrayName]="4" class="tab-content fade-in">
           <div class="form-section">
             <h3 class="section-title">Document Upload</h3>
             <div class="grid-2">
-              @for (doc of documentTypes; track doc.doc_id) {
-              <div class="form-field" [formGroupName]="doc.doc_id">
-                <label>{{ doc.doc_label }}</label>
-                <input type="file" formControlName="doc_File" (change)="onFileSelected($event, doc.doc_id)">
+              @for (docGroup of getDocsArray().controls; track $index) {
+              <div class="form-field" [formGroupName]="$index">
+                <label>{{ docGroup.get('doc_label')?.value }}</label>
+                <input type="file" (change)="onFileSelected($event, $index)">
               </div>
               }
             </div>

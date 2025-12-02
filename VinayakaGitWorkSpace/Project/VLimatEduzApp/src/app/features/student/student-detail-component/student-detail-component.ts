@@ -28,9 +28,9 @@ export class StudentDetailComponent {
 
   // Dropdown Data
   branches = [
-    { id: '1', name: 'Main Branch' },
-    { id: '2', name: 'City Branch' },
-    { id: '3', name: 'North Campus' }
+    { id: 1, name: 'Main Branch' },
+    { id: 2, name: 'City Branch' },
+    { id: 3, name: 'North Campus' }
   ];
 
   genders = [
@@ -51,129 +51,129 @@ export class StudentDetailComponent {
   ];
 
   religions = [
-    { id: '1', name: 'Hindu' },
-    { id: '2', name: 'Muslim' },
-    { id: '3', name: 'Christian' },
-    { id: '4', name: 'Sikh' },
-    { id: '5', name: 'Jain' },
-    { id: '6', name: 'Buddhist' },
-    { id: '7', name: 'Other' }
+    { id: 1, name: 'Hindu' },
+    { id: 2, name: 'Muslim' },
+    { id: 3, name: 'Christian' },
+    { id: 4, name: 'Sikh' },
+    { id: 5, name: 'Jain' },
+    { id: 6, name: 'Buddhist' },
+    { id: 7, name: 'Other' }
   ];
 
   castes = [
-    { id: '1', name: 'General' },
-    { id: '2', name: 'OBC' },
-    { id: '3', name: 'SC' },
-    { id: '4', name: 'ST' },
-    { id: '5', name: 'Other' }
+    { id: 1, name: 'General' },
+    { id: 2, name: 'OBC' },
+    { id: 3, name: 'SC' },
+    { id: 4, name: 'ST' },
+    { id: 5, name: 'Other' }
   ];
 
   countries = [
-    { id: '1', name: 'India' },
-    { id: '2', name: 'USA' },
-    { id: '3', name: 'UK' }
+    { id: 1, name: 'India' },
+    { id: 2, name: 'USA' },
+    { id: 3, name: 'UK' }
   ];
 
   states = [
-    { id: '1', name: 'Delhi' },
-    { id: '2', name: 'Maharashtra' },
-    { id: '3', name: 'Karnataka' }
+    { id: 1, name: 'Delhi' },
+    { id: 2, name: 'Maharashtra' },
+    { id: 3, name: 'Karnataka' }
   ];
 
   cities = [
-    { id: '1', name: 'New Delhi' },
-    { id: '2', name: 'Mumbai' },
-    { id: '3', name: 'Bangalore' }
+    { id: 1, name: 'New Delhi' },
+    { id: 2, name: 'Mumbai' },
+    { id: 3, name: 'Bangalore' }
   ];
 
   // Academic Dropdown Data
   categories = [
-    { id: '1', name: 'General' },
-    { id: '2', name: 'OBC' },
-    { id: '3', name: 'SC/ST' }
+    { id: 1, name: 'General' },
+    { id: 2, name: 'OBC' },
+    { id: 3, name: 'SC/ST' }
   ];
 
   groups = [
-    { id: '1', name: 'Science' },
-    { id: '2', name: 'Commerce' },
-    { id: '3', name: 'Arts' }
+    { id: 1, name: 'Science' },
+    { id: 2, name: 'Commerce' },
+    { id: 3, name: 'Arts' }
   ];
 
   streams = [
-    { id: '1', name: 'PCM' },
-    { id: '2', name: 'PCB' },
-    { id: '3', name: 'Commerce with Maths' }
+    { id: 1, name: 'PCM' },
+    { id: 2, name: 'PCB' },
+    { id: 3, name: 'Commerce with Maths' }
   ];
 
   classes = [
-    { id: '1', name: 'Class 1' },
-    { id: '2', name: 'Class 2' },
-    { id: '3', name: 'Class 3' },
-    { id: '4', name: 'Class 4' },
-    { id: '5', name: 'Class 5' }
+    { id: 1, name: 'Class 1' },
+    { id: 2, name: 'Class 2' },
+    { id: 3, name: 'Class 3' },
+    { id: 4, name: 'Class 4' },
+    { id: 5, name: 'Class 5' }
   ];
 
   sections = [
-    { id: '1', name: 'A' },
-    { id: '2', name: 'B' },
-    { id: '3', name: 'C' }
+    { id: 1, name: 'A' },
+    { id: 2, name: 'B' },
+    { id: 3, name: 'C' }
   ];
 
   concessions = [
-    { id: '1', name: 'None' },
-    { id: '2', name: 'Sibling' },
-    { id: '3', name: 'Staff' }
+    { id: 1, name: 'None' },
+    { id: 2, name: 'Sibling' },
+    { id: 3, name: 'Staff' }
   ];
 
   feeGroups = [
-    { id: '1', name: 'Regular' },
-    { id: '2', name: 'Scholarship' }
+    { id: 1, name: 'Regular' },
+    { id: 2, name: 'Scholarship' }
   ];
 
   qualifications = [
-    { id: '1', name: 'Graduate' },
-    { id: '2', name: 'Post Graduate' },
-    { id: '3', name: 'Doctorate' },
-    { id: '4', name: 'Other' }
+    { id: 1, name: 'Graduate' },
+    { id: 2, name: 'Post Graduate' },
+    { id: 3, name: 'Doctorate' },
+    { id: 4, name: 'Other' }
   ];
 
   occupations = [
-    { id: '1', name: 'Service' },
-    { id: '2', name: 'Business' },
-    { id: '3', name: 'Self Employed' },
-    { id: '4', name: 'Other' }
+    { id: 1, name: 'Service' },
+    { id: 2, name: 'Business' },
+    { id: 3, name: 'Self Employed' },
+    { id: 4, name: 'Other' }
   ];
 
   // Transport Dropdown Data
   transportModes = [
-    { id: '1', name: 'Own' },
-    { id: '2', name: 'School Transport' }
+    { id: 1, name: 'Own' },
+    { id: 2, name: 'School Transport' }
   ];
 
   pickDropOptions = [
-    { id: '1', name: 'Both' },
-    { id: '2', name: 'Pick Only' },
-    { id: '3', name: 'Drop Only' }
+    { id: 1, name: 'Both' },
+    { id: 2, name: 'Pick Only' },
+    { id: 3, name: 'Drop Only' }
   ];
 
   transportAreas = [
-    { id: '1', name: 'Area 1' },
-    { id: '2', name: 'Area 2' }
+    { id: 1, name: 'Area 1' },
+    { id: 2, name: 'Area 2' }
   ];
 
   transportStands = [
-    { id: '1', name: 'Stand 1' },
-    { id: '2', name: 'Stand 2' }
+    { id: 1, name: 'Stand 1' },
+    { id: 2, name: 'Stand 2' }
   ];
 
   transportRoutes = [
-    { id: '1', name: 'Route 1' },
-    { id: '2', name: 'Route 2' }
+    { id: 1, name: 'Route 1' },
+    { id: 2, name: 'Route 2' }
   ];
 
   transportDrivers = [
-    { id: '1', name: 'Driver 1' },
-    { id: '2', name: 'Driver 2' }
+    { id: 1, name: 'Driver 1' },
+    { id: 2, name: 'Driver 2' }
   ];
 
   transportMonthsList = [
@@ -192,16 +192,16 @@ export class StudentDetailComponent {
   ];
 
   documentTypes = [
-    { doc_id: 'dobProof', doc_label: 'Date of Birth Proof', doc_File: '' },
-    { doc_id: 'aadharCard', doc_label: 'Aadhar Card', doc_File: '' },
-    { doc_id: 'signature', doc_label: 'Signature', doc_File: '' },
-    { doc_id: 'fatherAadhar', doc_label: 'Father Aadharcard', doc_File: '' },
-    { doc_id: 'motherAadhar', doc_label: 'Mother Aadharcard', doc_File: '' },
-    { doc_id: 'incomeCert', doc_label: 'Income Certificate', doc_File: '' },
-    { doc_id: 'casteCert', doc_label: 'Caste Certificate', doc_File: '' },
-    { doc_id: 'addressProof1', doc_label: 'Address Proof 1', doc_File: '' },
-    { doc_id: 'addressProof2', doc_label: 'Address Proof 2', doc_File: '' },
-    { doc_id: 'migrationCert', doc_label: 'Migration Certificate', doc_File: '' }
+    { doc_id: 101, doc_Code: 'dobProof', doc_label: 'Date of Birth Proof', doc_File: '' },
+    { doc_id: 102, doc_Code: 'aadharCard', doc_label: 'Aadhar Card', doc_File: '' },
+    { doc_id: 103, doc_Code: 'signature', doc_label: 'Signature', doc_File: '' },
+    { doc_id: 104, doc_Code: 'fatherAadhar', doc_label: 'Father Aadharcard', doc_File: '' },
+    { doc_id: 105, doc_Code: 'motherAadhar', doc_label: 'Mother Aadharcard', doc_File: '' },
+    { doc_id: 106, doc_Code: 'incomeCert', doc_label: 'Income Certificate', doc_File: '' },
+    { doc_id: 107, doc_Code: 'casteCert', doc_label: 'Caste Certificate', doc_File: '' },
+    { doc_id: 108, doc_Code: 'addressProof1', doc_label: 'Address Proof 1', doc_File: '' },
+    { doc_id: 109, doc_Code: 'addressProof2', doc_label: 'Address Proof 2', doc_File: '' },
+    { doc_id: 110, doc_Code: 'migrationCert', doc_label: 'Migration Certificate', doc_File: '' }
   ];
 
   selectedFiles: { [key: string]: File } = {};
@@ -223,6 +223,10 @@ export class StudentDetailComponent {
 
   get tabsArray(): FormArray {
     return this.studentForm.get('tabs') as FormArray;
+  }
+
+  getDocsArray(): FormArray {
+    return this.tabsArray.at(4) as FormArray;
   }
 
   createStudentGroup(): FormGroup {
@@ -255,50 +259,7 @@ export class StudentDetailComponent {
       sess_permanent_state_id: [''],
       sess_permanent_city_id: [''],
       sess_permanent_address: [''],
-      sess_permanent_pin_code: [''],
-      
-      // Parent/Contact Info (Basic)
-      fatherTitle: ['Mr.'],
-      fatherName: [''],
-      motherTitle: ['Mrs.'],
-      motherName: [''],
-      fatherMobile: [''],
-      motherMobile: [''],
-      studentMobile: [''],
-      smsAlert: [''],
-      admnCategory: [''],
-      bloodGroup: [''],
-      category: [''],
-      caste: [''],
-
-      // Academic Info (Admit/Current)
-      admitGroup: [''], currentGroup: [''],
-      admitStream: [''], currentStream: [''],
-      admitClass: [''], currentClass: [''],
-      admitSection: [''], currentSection: [''],
-      admitRollNo: [''], currentRollNo: [''],
-      admitSemester: [''], currentSemester: [''],
-      admitConcession: [''], currentConcession: [''],
-      admitFeeGroup: [''], currentFeeGroup: [''],
-      admitClub: [''], currentClub: [''],
-      admitHouse: [''], currentHouse: [''],
-
-      // Addresses
-      presentAddress: [''],
-      presentState: [''],
-      presentCity: [''],
-      presentPincode: [''],
-      permanentAddress: [''],
-      permanentState: [''],
-      permanentCity: [''],
-      permanentPincode: [''],
-
-      // Documents
-      docsAddressProof: [false],
-      docsBaptismCert: [false],
-      docsCasteCert: [false],
-      docsDobCert: [false],
-      docsTransferCert: [false]
+      sess_permanent_pin_code: ['']
     });
   }
 
@@ -331,31 +292,6 @@ export class StudentDetailComponent {
       sess_g2_name: [''],
       sess_g2_mobile_no: [''],
       sess_g2_address: [''],
-
-      fatherQualification: [''], // Deprecated? Keeping for safety
-      fatherOccupation: [''], // Deprecated?
-      fatherDesignation: [''], // Deprecated?
-      fatherEmail: [''],
-      fatherOfficeAddress: [''], // Deprecated?
-      fatherIncome: [''], // Deprecated?
-      fatherAdhar: [''],
-      isFatherEmployee: [false],
-
-      motherQualification: [''],
-      motherOccupation: [''],
-      motherDesignation: [''],
-      motherEmail: [''],
-      motherOfficeAddress: [''],
-      motherIncome: [''],
-      motherAdhar: [''],
-      isMotherEmployee: [false],
-
-      guardian1Name: [''],
-      guardian1Mobile: [''],
-      guardian1Address: [''],
-      guardian2Name: [''],
-      guardian2Mobile: [''],
-      guardian2Address: [''],
       
       otherDetails: ['']
     });
@@ -401,40 +337,64 @@ export class StudentDetailComponent {
     });
   }
 
-  createDocumentUploadGroup(): FormGroup {
-    const group: any = {};
-    this.documentTypes.forEach(doc => {
-      group[doc.doc_id] = this.fb.group({
+  createDocumentUploadGroup(): FormArray {
+    const controls = this.documentTypes.map(doc => {
+      return this.fb.group({
         doc_id: [doc.doc_id],
+        doc_Code: [doc.doc_Code],
         doc_label: [doc.doc_label],
         doc_File: ['']
       });
     });
-    return this.fb.group(group);
+    return this.fb.array(controls);
   }
 
   setActiveTab(tabId: string) {
     this.activeTab = tabId;
   }
 
-  onFileSelected(event: any, key: string) {
+  onFileSelected(event: any, index: number) {
     const file = event.target.files[0];
     if (file) {
-      this.selectedFiles[key] = file;
+      // Update the form control value with the ACTUAL File object, not the string path
+      const docArray = this.getDocsArray();
+      const docGroup = docArray.at(index) as FormGroup;
+      docGroup.patchValue({
+        doc_File: file
+      });
     }
   }
 
   onSubmit() {
+    console.log('Form Valid:', this.studentForm.valid);
+    console.log('Form Value:', this.studentForm.value);
+    console.log('Form Raw Value:', this.studentForm.getRawValue());
+
     if (this.studentForm.valid) {
       // Combine all tab values into one object if needed, or send as is
       const formValue = this.studentForm.value;
+
+      // Transform months boolean array to monthId array
+      const transportData = formValue.tabs[3];
+      const selectedMonthIds = transportData.months
+        .map((isSelected: boolean, index: number) => isSelected ? this.transportMonthsList[index].monthId : null)
+        .filter((id: number | null) => id !== null);
+
       const combinedValue = {
         ...formValue.tabs[0],
         ...formValue.tabs[1],
+        ...formValue.tabs[2],
+        ...transportData,
+        months: selectedMonthIds,
+        Docs: formValue.tabs[4], // Document Upload array
+        ...formValue.tabs[5], // Other
         // ... merge other tabs
-        documents: this.selectedFiles // Include the selected files
+        // documents: this.selectedFiles // Include the selected files
       };
+      console.log('Combined Value:', combinedValue);
       this.save.emit(combinedValue);
+    } else {
+      console.log('Form is invalid');
     }
   }
 
